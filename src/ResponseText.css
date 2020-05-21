@@ -1,0 +1,137 @@
+* {
+  font-family: 'Poppins', sans-serif;
+}
+#start-quiz, #start-new-quiz {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 100px 50px auto;
+}
+
+.feedback .correct-answer {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.question-screen img{
+  /* height: 10vh; */
+  width: 9vw;
+  height:18vh;
+
+}
+
+.question-img{
+  display: flex;
+  justify-content: space-evenly;
+}
+.correct {
+  background-color: #19a7d2a8;
+}
+.incorrect {
+  background-color: #f08080ad
+}
+.center-button{
+
+  display: flex;
+  justify-content: center;
+
+}
+.salsa-dance-quiz {
+  height: 100vh;
+  background-image: url("img/poc.jpeg");
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+.salsa-dance-quiz h2 {
+background: rgba(0, 0, 0, 0.75);
+margin-top: 0px;
+margin-bottom: 0px;
+color: white;
+text-align: center;
+}
+.start-end-screen  {
+  /* border: solid black 1px; */
+  display: grid;
+  grid-template-areas: "....header....";
+}
+
+.question-screen  {
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas: ".header header.";
+
+}
+
+.question-screen h3 {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+.question-screen h4 {
+    margin: 0px;
+    margin-bottom: 15px;
+    text-align: center;
+    background:aliceblue;
+    margin: 0px;
+}
+.question-screen h5,.question-screen h2,.question-screen hr {
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+
+.start-end-info{
+  text-align: center;
+  margin-top:0;
+  background:#ddd;
+  color:#555;
+  font-size: .8em;
+  font-weight: bolder;
+}
+
+/* Button Classes */
+.myButton {
+  margin-top:10px;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #f9f9f9 5%, #e9e9e9 100%);
+	background-color:#f9f9f9;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	color:#666666;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #e9e9e9 5%, #f9f9f9 100%);
+	background-color:#e9e9e9;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+@media screen and (max-width: 700px) {
+  .question-screen  {
+
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-areas: "header";
+  
+  }
+
+  #start-quiz {
+    margin: 150px 50px auto;
+  }
+  .question-screen img{
+    /* height: 10vh; */
+    width: 19vw;
+    height:19vh;
+  
+  }
+}
