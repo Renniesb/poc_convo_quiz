@@ -19,6 +19,7 @@ export default function ResponseText(props) {
           <h3>Question 1 of 5</h3>
           <h5 class="score">0 correct, 0 incorrect</h5>
           <hr/>
+        <p>
         {
           parse(question.responseText, {
             replace: domNode => {
@@ -30,6 +31,7 @@ export default function ResponseText(props) {
             }   
           })
         }
+        </p>
         </header>
         <div style={{marginTop: "10px"}}
          className="feedback"></div>

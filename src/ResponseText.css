@@ -74,6 +74,10 @@ text-align: center;
     background:aliceblue;
     margin: 0px;
 }
+
+.question-screen p {
+    line-height: 38px;
+}
 .question-screen h5,.question-screen h2,.question-screen hr {
   margin-top: 5px;
   margin-bottom: 0;
