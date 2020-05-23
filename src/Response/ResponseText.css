@@ -76,11 +76,19 @@ text-align: center;
   margin-top: 10px;
   margin-bottom: 0;
 }
-.question-screen h4 {
+
+.question-text {
+  margin-top: 40px;
+  margin-bottom: 30px;
+  text-align: center;
+  background: #f5f5dc7d;
+}
+.poc-convo-title {
+    color: indianred;
     margin: 0px;
     margin-bottom: 15px;
     text-align: center;
-    background: rgba(239, 209, 221, 0.41);
+    /* background: rgba(239, 209, 221, 0.41); */
     margin: 0px;
 }
 
