@@ -1,17 +1,23 @@
 import React from 'react';
-import ResponseText from './ResponseText';
+import ResponseText from './Response/ResponseText';
 import { Route } from 'react-router-dom';
 
 
 class App extends React.Component {
-  state = {inputs:[] }
+  state = {questionNum:1 }
+  constructor(props){
+    super(props)
+  }
   handleOnChange = e => {
      this.setState({[e.target.name]:e.target.value})
-     console.log("target value")
   }
-  handleSubmit(question){
+  handleSubmit = (question)=> {
       let userAnswer = ""
+
+
       question.blanks.forEach((blank) => {
+        // var text = "   ";
+        // text.trim().length == 0;
          userAnswer += this.state[blank].trim().toLowerCase()
       })
       console.log(userAnswer);
@@ -23,8 +29,11 @@ class App extends React.Component {
         console.log("incorrect")
       }
   }
-  handleNextQuestion(history){
-    history.push('/question/2')
+  handleNextQuestion = (history)=>{
+    
+    this.setState({questionNum:this.state.questionNum + 1},()=>{
+      history.push(`/question/${this.state.questionNum}` );
+    });
   }
   render() { 
     return ( 
