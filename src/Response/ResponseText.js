@@ -43,10 +43,14 @@ export default function ResponseText(props) {
           className="feedback"></div>
 
           <div className="correct-answer"></div>
-          <button onClick={() => {
-            props.submitAnswers(question)          
-          }} disabled={props.isDisabled} id="submit-answer" className="myButton">Submit answer</button>
-          <button id="next" className="myButton" onClick={()=>{props.nextQuestion(props.history)}}>Next</button>
+          <div className="submit">
+            <button onClick={() => {
+              props.submitAnswers(question)          
+            }} disabled={props.isDisabled} id="submit-answer" className="myButton">Submit answer</button>
+          </div>
+          <div className="next">
+            <button id="next" className="myButton" onClick={()=>{props.nextQuestion(props.history)}}>Next</button>
+          </div>
         </section>
       </div>
     </section> );

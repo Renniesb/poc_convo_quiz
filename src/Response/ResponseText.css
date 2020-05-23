@@ -134,6 +134,17 @@ text-align: center;
   cursor: default;
 }
 
+
+.submit{
+  display: flex;
+  justify-content: left;
+}
+
+.next {
+  display: flex;
+  justify-content: flex-end;
+}
+
 @media screen and (max-width: 700px) {
   .question-screen  {
 
