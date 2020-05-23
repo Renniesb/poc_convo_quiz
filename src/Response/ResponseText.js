@@ -2,6 +2,8 @@ import React from 'react';
 import questions from '../questions.js';
 import parse from 'html-react-parser';
 import './ResponseText.css';
+import Submit from './../Submit/Submit';
+import Next from './../Next/Next'
 
 
 
@@ -43,14 +45,8 @@ export default function ResponseText(props) {
           className="feedback"></div>
 
           <div className="correct-answer"></div>
-          <div className="submit">
-            <button onClick={() => {
-              props.submitAnswers(question)          
-            }} disabled={props.isDisabled} id="submit-answer" className="myButton">Submit answer</button>
-          </div>
-          <div className="next">
-            <button id="next" className="myButton" onClick={()=>{props.nextQuestion(props.history)}}>Next</button>
-          </div>
+          <Submit question={question}submitAnswers={props.submitAnswers} isDisabled = {props.isDisabled}/>
+          <Next history={props.history} nextQuestion={props.nextQuestion}/>
         </section>
       </div>
     </section> );
