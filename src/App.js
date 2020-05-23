@@ -4,20 +4,34 @@ import { Route } from 'react-router-dom';
 
 
 class App extends React.Component {
-  state = {questionNum:1 }
+  state = {questionNum:1, disabled: true }
   constructor(props){
     super(props)
   }
-  handleOnChange = e => {
-     this.setState({[e.target.name]:e.target.value})
+  handleOnChange = (e, blanks) => {
+        
+       let userValue = e.target.value
+       console.log(userValue);
+
+        this.setState({[e.target.name]:userValue},() => {
+          let showSubmit = blanks.every((blank) => {
+                 return this.state[blank] && this.state[blank].trim().length !== 0;
+               })
+         if(showSubmit){
+           this.setState({disabled: false})
+         }
+         else{
+           this.setState({disabled: true})
+         }
+        })
+       
+      
+     
   }
   handleSubmit = (question)=> {
       let userAnswer = ""
 
-
       question.blanks.forEach((blank) => {
-        // var text = "   ";
-        // text.trim().length == 0;
          userAnswer += this.state[blank].trim().toLowerCase()
       })
       console.log(userAnswer);
@@ -31,7 +45,7 @@ class App extends React.Component {
   }
   handleNextQuestion = (history)=>{
     
-    this.setState({questionNum:this.state.questionNum + 1},()=>{
+    this.setState({questionNum:this.state.questionNum + 1, disabled: true},()=>{
       history.push(`/question/${this.state.questionNum}` );
     });
   }
@@ -43,7 +57,7 @@ class App extends React.Component {
             render={({ 
               match,history 
           }) => (
-              <ResponseText submitAnswers={(question)=>{this.handleSubmit(question)}} change={this.handleOnChange} match={match} history={history} nextQuestion={this.handleNextQuestion} />
+              <ResponseText isDisabled={this.state.disabled} submitAnswers={(question)=>{this.handleSubmit(question)}} change={this.handleOnChange} match={match} history={history} nextQuestion={this.handleNextQuestion} />
           )} 
           />
     </div>

@@ -30,7 +30,9 @@ export default function ResponseText(props) {
                 replace: domNode => {
                   if (domNode.name === 'input') {
                     return (
-                      <input {...domNode.attribs} onChange={props.change}/>
+                      <input {...domNode.attribs} onChange={(event)=>{
+                        props.change(event,question.blanks)
+                      }}/>
                     );
                   }   
                 }   
@@ -43,7 +45,7 @@ export default function ResponseText(props) {
           <div className="correct-answer"></div>
           <button onClick={() => {
             props.submitAnswers(question)          
-          }} id="submit-answer" className="myButton">Submit answer</button>
+          }} disabled={props.isDisabled} id="submit-answer" className="myButton">Submit answer</button>
           <button id="next" className="myButton" onClick={()=>{props.nextQuestion(props.history)}}>Next</button>
         </section>
       </div>
