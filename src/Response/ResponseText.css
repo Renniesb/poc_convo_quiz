@@ -8,6 +8,9 @@
   margin: 100px 50px auto;
 }
 
+.question-info span{
+  background: #f0f8ff9e;
+}
 .feedback .correct-answer {
   margin-top: 10px;
   text-align: center;

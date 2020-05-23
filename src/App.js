@@ -4,7 +4,14 @@ import { Route } from 'react-router-dom';
 
 
 class App extends React.Component {
-  state = {questionNum:1, submitDisabled: true, submitted: false, nextDisabled: true, isIncorrect: "" }
+  state = {
+     questionNum:1,
+     submitDisabled: true, 
+     submitted: false,
+     nextDisabled: true,
+     isIncorrect: "",
+     correct: 0,
+     incorrect:0 }
   constructor(props){
     super(props)
   }
@@ -37,10 +44,11 @@ class App extends React.Component {
       console.log(userAnswer);
 
       if(userAnswer===question.answers){
-        this.setState({isIncorrect: false})
+        this.setState({isIncorrect: false, correct: this.state.correct + 1})
+
       }
       else{
-        this.setState({isIncorrect: true})
+        this.setState({isIncorrect: true, incorrect: this.state.incorrect + 1})
       }
       this.setState({submitted: true, nextDisabled:false});
   }
@@ -58,7 +66,7 @@ class App extends React.Component {
             render={({ 
               match,history 
           }) => (
-              <ResponseText submitted={this.state.submitted} isSubmitDisabled={this.state.submitDisabled} isNextDisabled={this.state.nextDisabled} submitAnswers={(question)=>{this.handleSubmit(question)}} change={this.handleOnChange} match={match} history={history} nextQuestion={this.handleNextQuestion} isIncorrect={this.state.isIncorrect} />
+              <ResponseText submitted={this.state.submitted} isSubmitDisabled={this.state.submitDisabled} isNextDisabled={this.state.nextDisabled} submitAnswers={(question)=>{this.handleSubmit(question)}} change={this.handleOnChange} match={match} history={history} nextQuestion={this.handleNextQuestion} isIncorrect={this.state.isIncorrect} correct={this.state.correct} incorrect={this.state.incorrect}/>
           )} 
           />
     </div>

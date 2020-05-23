@@ -7,7 +7,7 @@ import Next from './../Next/Next'
 
 
 
-export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,submitAnswers,change,match,history,nextQuestion,isIncorrect}) {
+export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,submitAnswers,change,match,history,nextQuestion,isIncorrect,correct, incorrect}) {
 
     const question = questions.find(q =>
       q.id === match.params.questionId
@@ -18,11 +18,9 @@ export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,
       <div className="background-img" style={{gridArea: 'header', border: '1px solid #ddd', padding: '30px'}}>
         <h3 className="poc-convo-title">POC Conversational Quiz</h3>
         <header className="question-info">
-          <h3>Question 1 of 5</h3>
-          <h5 className="score">0 correct, 0 incorrect</h5>
+          <h3><span>Question {question.id} of {questions.length}</span></h3>
+          <h5 className="score"><span>{correct} correct, {incorrect} incorrect</span></h5>
           <hr/>
-          
-          
         </header>
           
         <section className="response-area">
