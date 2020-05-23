@@ -1,8 +1,8 @@
 import React from 'react';
 
-function Next({history,nextQuestion}) {
+function Next({history,nextQuestion,isNextDisabled}) {
     return <div className="next">
-                <button id="next" className="myButton" onClick={()=>{nextQuestion(history)}}>Next</button>
+                <button disabled={isNextDisabled} id="next" className="myButton" onClick={()=>{nextQuestion(history)}}>Next</button>
            </div>
 }
 

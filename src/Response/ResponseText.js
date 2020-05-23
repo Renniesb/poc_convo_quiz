@@ -7,10 +7,10 @@ import Next from './../Next/Next'
 
 
 
-export default function ResponseText(props) {
+export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,submitAnswers,change,match,history,nextQuestion}) {
 
     const question = questions.find(q =>
-      q.id === props.match.params.questionId
+      q.id === match.params.questionId
     )
     return (
     
@@ -33,7 +33,7 @@ export default function ResponseText(props) {
                   if (domNode.name === 'input') {
                     return (
                       <input {...domNode.attribs} onChange={(event)=>{
-                        props.change(event,question.blanks)
+                        change(event,question.blanks)
                       }}/>
                     );
                   }   
@@ -45,8 +45,8 @@ export default function ResponseText(props) {
           className="feedback"></div>
 
           <div className="correct-answer"></div>
-          <Submit question={question}submitAnswers={props.submitAnswers} isDisabled = {props.isDisabled}/>
-          <Next history={props.history} nextQuestion={props.nextQuestion}/>
+          {!submitted && <Submit question={question}submitAnswers={submitAnswers} isSubmitDisabled = {isSubmitDisabled}/>}
+          <Next history={history} nextQuestion={nextQuestion} isNextDisabled = {isNextDisabled}/>
         </section>
       </div>
     </section> );

@@ -1,10 +1,10 @@
 import React from 'react';
 
-function Submit({isDisabled,submitAnswers,question}){
+function Submit({isSubmitDisabled,submitAnswers,question}){
  return   <div className="submit">
             <button onClick={() => {
               submitAnswers(question)          
-            }} disabled={isDisabled} id="submit-answer" className="myButton">Submit answer</button>
+            }} disabled={isSubmitDisabled} id="submit-answer" className="myButton">Submit answer</button>
     </div>
 }
 

@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 
 
 class App extends React.Component {
-  state = {questionNum:1, disabled: true }
+  state = {questionNum:1, submitDisabled: true, submitted: false, nextDisabled: true }
   constructor(props){
     super(props)
   }
@@ -18,10 +18,10 @@ class App extends React.Component {
                  return this.state[blank] && this.state[blank].trim().length !== 0;
                })
          if(showSubmit){
-           this.setState({disabled: false})
+           this.setState({submitDisabled: false})
          }
          else{
-           this.setState({disabled: true})
+           this.setState({submitDisabled: true})
          }
         })
        
@@ -42,10 +42,11 @@ class App extends React.Component {
       else{
         console.log("incorrect")
       }
+      this.setState({submitted: true, nextDisabled:false});
   }
   handleNextQuestion = (history)=>{
     
-    this.setState({questionNum:this.state.questionNum + 1, disabled: true},()=>{
+    this.setState({questionNum:this.state.questionNum + 1, submitDisabled: true, nextDisabled:true,submitted:false},()=>{
       history.push(`/question/${this.state.questionNum}` );
     });
   }
@@ -57,7 +58,7 @@ class App extends React.Component {
             render={({ 
               match,history 
           }) => (
-              <ResponseText isDisabled={this.state.disabled} submitAnswers={(question)=>{this.handleSubmit(question)}} change={this.handleOnChange} match={match} history={history} nextQuestion={this.handleNextQuestion} />
+              <ResponseText submitted={this.state.submitted} isSubmitDisabled={this.state.submitDisabled} isNextDisabled={this.state.nextDisabled} submitAnswers={(question)=>{this.handleSubmit(question)}} change={this.handleOnChange} match={match} history={history} nextQuestion={this.handleNextQuestion} />
           )} 
           />
     </div>
