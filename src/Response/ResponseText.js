@@ -7,7 +7,7 @@ import Next from './../Next/Next'
 
 
 
-export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,submitAnswers,change,match,history,nextQuestion}) {
+export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,submitAnswers,change,match,history,nextQuestion,isIncorrect}) {
 
     const question = questions.find(q =>
       q.id === match.params.questionId
@@ -46,10 +46,17 @@ export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,
             }
           </p>
           <div style={{marginTop: "10px"}}
-          className="feedback"></div>
+          className="feedback">
+            {
+              isIncorrect=== true && parse(question.incorrectText)
+            }
+            {
+              isIncorrect=== false && <span className="correct">Correct</span>
+            }
+          </div>
 
           <div className="correct-answer"></div>
-          {!submitted && <Submit question={question}submitAnswers={submitAnswers} isSubmitDisabled = {isSubmitDisabled}/>}
+          {!submitted && <Submit question={question} submitAnswers={submitAnswers} isSubmitDisabled = {isSubmitDisabled}/>}
           <Next history={history} nextQuestion={nextQuestion} isNextDisabled = {isNextDisabled}/>
         </section>
       </div>

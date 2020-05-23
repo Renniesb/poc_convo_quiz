@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 
 
 class App extends React.Component {
-  state = {questionNum:1, submitDisabled: true, submitted: false, nextDisabled: true }
+  state = {questionNum:1, submitDisabled: true, submitted: false, nextDisabled: true, isIncorrect: "" }
   constructor(props){
     super(props)
   }
@@ -37,16 +37,16 @@ class App extends React.Component {
       console.log(userAnswer);
 
       if(userAnswer===question.answers){
-        console.log("correct");
+        this.setState({isIncorrect: false})
       }
       else{
-        console.log("incorrect")
+        this.setState({isIncorrect: true})
       }
       this.setState({submitted: true, nextDisabled:false});
   }
   handleNextQuestion = (history)=>{
     
-    this.setState({questionNum:this.state.questionNum + 1, submitDisabled: true, nextDisabled:true,submitted:false},()=>{
+    this.setState({questionNum:this.state.questionNum + 1, submitDisabled: true, nextDisabled:true,submitted:false,isIncorrect: null},()=>{
       history.push(`/question/${this.state.questionNum}` );
     });
   }
@@ -58,7 +58,7 @@ class App extends React.Component {
             render={({ 
               match,history 
           }) => (
-              <ResponseText submitted={this.state.submitted} isSubmitDisabled={this.state.submitDisabled} isNextDisabled={this.state.nextDisabled} submitAnswers={(question)=>{this.handleSubmit(question)}} change={this.handleOnChange} match={match} history={history} nextQuestion={this.handleNextQuestion} />
+              <ResponseText submitted={this.state.submitted} isSubmitDisabled={this.state.submitDisabled} isNextDisabled={this.state.nextDisabled} submitAnswers={(question)=>{this.handleSubmit(question)}} change={this.handleOnChange} match={match} history={history} nextQuestion={this.handleNextQuestion} isIncorrect={this.state.isIncorrect} />
           )} 
           />
     </div>
