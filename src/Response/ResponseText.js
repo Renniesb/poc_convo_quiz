@@ -55,7 +55,7 @@ export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,
 
           <div className="correct-answer"></div>
           {!submitted && <Submit question={question} submitAnswers={submitAnswers} isSubmitDisabled = {isSubmitDisabled}/>}
-          <Next history={history} nextQuestion={nextQuestion} isNextDisabled = {isNextDisabled}/>
+          <Next history={history} nextQuestion={nextQuestion} isNextDisabled = {isNextDisabled} totalQuestions={questions.length}/>
         </section>
       </div>
     </section> );

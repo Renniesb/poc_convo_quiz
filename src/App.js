@@ -1,6 +1,8 @@
 import React from 'react';
 import ResponseText from './Response/ResponseText';
-import { Route } from 'react-router-dom';
+import StartQuiz from './StartQuiz/StartQuiz'
+import EndQuiz from './EndQuiz/EndQuiz'
+import { Route,Switch } from 'react-router-dom';
 
 
 class App extends React.Component {
@@ -52,16 +54,22 @@ class App extends React.Component {
       }
       this.setState({submitted: true, nextDisabled:false});
   }
-  handleNextQuestion = (history)=>{
-    
-    this.setState({questionNum:this.state.questionNum + 1, submitDisabled: true, nextDisabled:true,submitted:false,isIncorrect: null},()=>{
-      history.push(`/question/${this.state.questionNum}` );
-    });
+  handleNextQuestion = (history, totalQuestions)=>{
+    if(this.state.questionNum == totalQuestions){
+      history.push(`/EndQuiz` );
+    }
+    else {
+      this.setState({questionNum:this.state.questionNum + 1, submitDisabled: true, nextDisabled:true,submitted:false,isIncorrect: null},()=>{
+        history.push(`/question/${this.state.questionNum}` );
+      });
+    }  
   }
   render() { 
     return ( 
     <div className="App">
-      <Route
+      <Switch>
+          
+          <Route
             path='/question/:questionId'
             render={({ 
               match,history 
@@ -69,6 +77,13 @@ class App extends React.Component {
               <ResponseText submitted={this.state.submitted} isSubmitDisabled={this.state.submitDisabled} isNextDisabled={this.state.nextDisabled} submitAnswers={(question)=>{this.handleSubmit(question)}} change={this.handleOnChange} match={match} history={history} nextQuestion={this.handleNextQuestion} isIncorrect={this.state.isIncorrect} correct={this.state.correct} incorrect={this.state.incorrect}/>
           )} 
           />
+          <Route path="/EndQuiz">
+            <EndQuiz />
+          </Route>
+          <Route path="/">
+            <StartQuiz />
+          </Route>
+        </Switch>
     </div>
    );
   }
