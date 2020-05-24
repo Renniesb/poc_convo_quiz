@@ -1,6 +1,10 @@
 * {
   font-family: 'Poppins', sans-serif;
 }
+
+.audio-player{
+  text-align: center;
+}
 #start-quiz, #start-new-quiz {
   display: flex;
   justify-content: center;
@@ -8,6 +12,10 @@
   margin: 100px 50px auto;
 }
 
+.response-box {
+  margin-top: 25px;
+  line-height: 40px;
+}
 .question-info span{
   background: #f0f8ff9e;
 }

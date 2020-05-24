@@ -8,6 +8,10 @@
   margin: 100px 50px auto;
 }
 
+.start-title {
+  text-align: center;
+}
+
 .question-info span{
   background: #f0f8ff9e;
 }

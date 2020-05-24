@@ -1,17 +1,21 @@
-import React from 'react';
-import questions from '../questions.js';
+import ReactAudioPlayer from 'react-audio-player';
+import React, { useRef } from 'react';
 import parse from 'html-react-parser';
 import './ResponseText.css';
 import Submit from './../Submit/Submit';
-import Next from './../Next/Next'
+import Next from './../Next/Next';
 
 
 
-export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,submitAnswers,change,match,history,nextQuestion,isIncorrect,correct, incorrect}) {
+
+
+
+export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,submitAnswers,change,match,history,nextQuestion,isIncorrect,correct, incorrect,questions}) {
 
     const question = questions.find(q =>
       q.id === match.params.questionId
     )
+        
     return (
     
     <section className="question-screen">  
@@ -22,16 +26,23 @@ export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,
           <h5 className="score"><span>{correct} correct, {incorrect} incorrect</span></h5>
           <hr/>
         </header>
-          
         <section className="response-area">
 
           <div className="question-text"> 
             <h3>{question.questionText}</h3>
           </div>
-          <p>
+          <div className="audio-player">
+            <ReactAudioPlayer
+            src={question.audioLink}
+            autoPlay
+            controls
+            />
+          </div>            
+           
+          <div className="response-box">
           {
-              parse(question.responseText, {
-                replace: domNode => {
+            parse(question.responseText, {
+              replace: domNode => {
                   if (domNode.name === 'input') {
                     return (
                       <input {...domNode.attribs} onChange={(event)=>{
@@ -42,7 +53,7 @@ export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,
                 }   
               })
             }
-          </p>
+          </div>
           <div style={{marginTop: "10px"}}
           className="feedback">
             {
