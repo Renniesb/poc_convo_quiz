@@ -52,7 +52,7 @@ class App extends React.Component {
       this.setState({submitted: true, nextDisabled:false});
   }
   handleNextQuestion = (history, totalQuestions)=>{
-    if(this.state.questionNum == totalQuestions){
+    if(this.state.questionNum === totalQuestions){
       history.push(`/EndQuiz` );
     }
     else {
