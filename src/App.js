@@ -39,6 +39,7 @@ class App extends React.Component {
 
       question.blanks.forEach((blank) => {
          userAnswer += this.state[blank].trim().toLowerCase()
+         this.setState({[blank]:""})
       })
       console.log(userAnswer);
 

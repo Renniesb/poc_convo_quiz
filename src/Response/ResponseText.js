@@ -1,5 +1,5 @@
 import ReactAudioPlayer from 'react-audio-player';
-import React, { useRef } from 'react';
+import React from 'react';
 import parse from 'html-react-parser';
 import './ResponseText.css';
 import Submit from './../Submit/Submit';
