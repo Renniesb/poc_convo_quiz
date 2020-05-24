@@ -9,7 +9,7 @@ function EndQuiz({correct,questionTotal,history,OnNewQuiz}){
                 <div>Thanks for playing.</div></header>
                 <div className="center-button"><button id="start-new-quiz" className="myButton" onClick={() => {
                     OnNewQuiz(history)
-                }}>Start a new Quiz</button></div>
+                }}>Take the quiz again</button></div>
                 </div>
             </section>
 }
