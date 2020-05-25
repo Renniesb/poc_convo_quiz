@@ -20,7 +20,7 @@ export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,
     
     <section className="question-screen">  
       <div className="background-img" style={{gridArea: 'header', border: '1px solid #ddd', padding: '30px'}}>
-        <h3 className="poc-convo-title">POC Conversational Quiz</h3>
+        <h3 className="poc-convo-title">POC Conversation Quiz</h3>
         <header className="question-info">
           <h3><span>Question {question.id} of {questions.length}</span></h3>
           <h5 className="score"><span>{correct} correct, {incorrect} incorrect</span></h5>
