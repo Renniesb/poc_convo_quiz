@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/poc_convo_quiz/precache-manifest.e1abce29b3377ab0857693d8ebeb10d2.js"
+  "/poc_convo_quiz/precache-manifest.8d03ba987fa8e5fd7c38374306333d16.js"
 );
 
 self.addEventListener('message', (event) => {
