@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {createRef} from 'react';
 import ResponseText from './Response/ResponseText';
 import StartQuiz from './StartQuiz/StartQuiz'
 import EndQuiz from './EndQuiz/EndQuiz'
@@ -7,6 +7,10 @@ import questions from './questions.js';
 
 
 class App extends React.Component {
+  constructor(props){
+    super(props)
+    this.formRef = createRef();
+  }
   state = {
      questionNum:1,
      submitDisabled: true, 
@@ -19,9 +23,9 @@ class App extends React.Component {
   handleOnChange = (e, blanks) => {
         
        let userValue = e.target.value
-       console.log(userValue);
+       
 
-        this.setState({[e.target.name]:userValue},() => {
+        this.setState({[e.target.id]:userValue},() => {
           let showSubmit = blanks.every((blank) => {
                  return this.state[blank] && this.state[blank].trim().length !== 0;
                })
@@ -35,13 +39,14 @@ class App extends React.Component {
             
   }
   handleSubmit = (question)=> {
+      
       let userAnswer = ""
-
       question.blanks.forEach((blank) => {
          userAnswer += this.state[blank].trim().toLowerCase()
          this.setState({[blank]:""})
+         
       })
-      console.log(userAnswer);
+      
 
       if(userAnswer===question.answers){
         this.setState({isIncorrect: false, correct: this.state.correct + 1})
@@ -52,7 +57,12 @@ class App extends React.Component {
       }
       this.setState({submitted: true, nextDisabled:false});
   }
-  handleNextQuestion = (history, totalQuestions)=>{
+  handleNextQuestion = (history, question, totalQuestions)=>{
+
+    for ( let i = 0; i < question.blanks.length; i++) {
+      this.formRef.current[i].value = "";
+    }
+    
     if(this.state.questionNum === totalQuestions){
       history.push(`/EndQuiz` );
     }
@@ -61,6 +71,7 @@ class App extends React.Component {
         history.push(`/question/${this.state.questionNum}` );
       });
     }  
+    
   }
   handleNewQuiz = (history) => {
     this.setState({
@@ -84,7 +95,7 @@ class App extends React.Component {
             render={({ 
               match,history 
           }) => (
-              <ResponseText submitted={this.state.submitted} isSubmitDisabled={this.state.submitDisabled} isNextDisabled={this.state.nextDisabled} submitAnswers={(question)=>{this.handleSubmit(question)}} change={this.handleOnChange} match={match} history={history} nextQuestion={this.handleNextQuestion} isIncorrect={this.state.isIncorrect} correct={this.state.correct} incorrect={this.state.incorrect} questions={questions}/>
+              <ResponseText submitted={this.state.submitted} isSubmitDisabled={this.state.submitDisabled} isNextDisabled={this.state.nextDisabled} submitAnswers={(question)=>{this.handleSubmit(question)}} change={this.handleOnChange} match={match} history={history} nextQuestion={this.handleNextQuestion} isIncorrect={this.state.isIncorrect} correct={this.state.correct} incorrect={this.state.incorrect} questions={questions} formRef={this.formRef}/>
           )} 
           />
           <Route path="/EndQuiz" render={({history}) => (

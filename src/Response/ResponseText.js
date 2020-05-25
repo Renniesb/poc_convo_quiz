@@ -10,7 +10,7 @@ import Next from './../Next/Next';
 
 
 
-export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,submitAnswers,change,match,history,nextQuestion,isIncorrect,correct, incorrect,questions}) {
+export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,submitAnswers,change,match,history,nextQuestion,isIncorrect,correct, incorrect,questions,formRef}) {
 
     const question = questions.find(q =>
       q.id === match.params.questionId
@@ -39,21 +39,15 @@ export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,
             />
           </div>            
            
-          <div className="response-box">
+          <div className="response-box"  onChange={(event)=>{change(event,question.blanks)}}>
+            <form ref={formRef} autoComplete="off">
           {
-            parse(question.responseText, {
-              replace: domNode => {
-                  if (domNode.name === 'input') {
-                    return (
-                      <input {...domNode.attribs} onChange={(event)=>{
-                        change(event,question.blanks)
-                      }}/>
-                    );
-                  }   
-                }   
-              })
+            parse(question.responseText)
             }
+            </form>
           </div>
+            
+          
           <div style={{marginTop: "10px"}}
           className="feedback">
             {
@@ -64,9 +58,11 @@ export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,
             }
           </div>
 
-          <div className="correct-answer"></div>
+          
           {!submitted && <Submit question={question} submitAnswers={submitAnswers} isSubmitDisabled = {isSubmitDisabled}/>}
-          <Next history={history} nextQuestion={nextQuestion} isNextDisabled = {isNextDisabled} totalQuestions={questions.length}/>
+          <Next history={history} nextQuestion={nextQuestion} isNextDisabled = {isNextDisabled} totalQuestions={questions.length} question={question}/>
+          
+          
         </section>
       </div>
     </section> );

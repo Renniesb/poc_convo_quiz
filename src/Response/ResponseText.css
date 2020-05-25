@@ -5,6 +5,9 @@
 .audio-player{
   text-align: center;
 }
+.correct-answer {
+  background: #fff0f3;
+}
 #start-quiz, #start-new-quiz {
   display: flex;
   justify-content: center;
