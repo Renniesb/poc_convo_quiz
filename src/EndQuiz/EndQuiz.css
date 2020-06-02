@@ -1,7 +1,7 @@
 * {
   font-family: 'Poppins', sans-serif;
 }
-#start-quiz, #start-new-quiz {
+#start-new-quiz {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -54,7 +54,7 @@
   background-repeat: no-repeat;
   background-size: contain;
 }
-.salsa-dance-quiz h2 {
+.poc h2 {
 background: rgba(0, 0, 0, 0.75);
 margin-top: 0px;
 margin-bottom: 0px;
@@ -165,9 +165,6 @@ text-align: center;
   
   }
 
-  #start-quiz {
-    margin: 150px 50px auto;
-  }
   .question-screen img{
     /* height: 10vh; */
     width: 19vw;
