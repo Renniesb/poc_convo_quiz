@@ -7,18 +7,19 @@ import Next from './../Next/Next';
 
 
 
-
-
-
-export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,submitAnswers,change,match,history,nextQuestion,isIncorrect,correct, incorrect,questions,formRef}) {
-
-    const question = questions.find(q =>
-      q.id === match.params.questionId
-    )
-        
-    return (
+class ResponseText extends React.Component {
+  componentDidMount(){
+    this.props.getBlanks()
+  }
+  render(){
+    const {submitted,isSubmitDisabled,isNextDisabled,submitAnswers,change,match,history,nextQuestion,isIncorrect,correct, incorrect,questions,formRef} = this.props;
     
-    <section className="question-screen">  
+    const question = questions.find(q =>
+      q.id == match.params.questionId
+      
+    );
+    return (
+      <section className="question-screen">  
       <div className="background-img" style={{gridArea: 'header', border: '1px solid #ddd', padding: '30px'}}>
         <h3 className="poc-convo-title">POC Conversational Quiz</h3>
         <header className="question-info">
@@ -33,7 +34,7 @@ export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,
           </div>
           <div className="audio-player">
             <ReactAudioPlayer
-            src={question.audioLink}
+            src="https://www.bluecircle.foundation/s3/uploads/fad8beb5-3374-4e7b-8efb-4c4157771e7c_family1.mp3"
             autoPlay
             controls
             />
@@ -42,7 +43,7 @@ export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,
           <div className="response-box"  onChange={(event)=>{change(event,question.blanks)}}>
             <form ref={formRef} autoComplete="off">
           {
-            parse(question.responseText)
+            parse(question.responsetext)
             }
             </form>
           </div>
@@ -51,7 +52,7 @@ export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,
           <div style={{marginTop: "10px"}}
           className="feedback">
             {
-              isIncorrect=== true && parse(question.incorrectText)
+              isIncorrect=== true && parse(question.correcttext)
             }
             {
               isIncorrect=== false && <span className="correct">Correct</span>
@@ -65,5 +66,11 @@ export default function ResponseText({submitted,isSubmitDisabled,isNextDisabled,
           
         </section>
       </div>
-    </section> );
+    </section>
+    )
+    
+  }
 }
+
+export default ResponseText;
+

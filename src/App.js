@@ -3,16 +3,17 @@ import ResponseText from './Response/ResponseText';
 import StartQuiz from './StartQuiz/StartQuiz'
 import EndQuiz from './EndQuiz/EndQuiz'
 import { Route,Switch } from 'react-router-dom';
-import questions from './questions.js';
 
 
 class App extends React.Component {
   constructor(props){
     super(props)
     this.formRef = createRef();
-  }
-  state = {
+  
+    this.state = {
+     questions: [],
      questionNum:1,
+     currentBlanks: [],
      submitDisabled: true, 
      submitted: false,
      nextDisabled: true,
@@ -20,13 +21,22 @@ class App extends React.Component {
      correct: 0,
      incorrect:0
      }
-  handleOnChange = (e, blanks) => {
+    }
+  getBlanks = () => {
+    let inputs = Array.from(this.formRef.current.children);
+    let blanks = []
+    for(let i=1;i<=inputs.length;i++){
+      blanks.push("blank"+i);
+    }
+    this.setState({currentBlanks: blanks});
+  }
+  handleOnChange = (e) => {
         
        let userValue = e.target.value
-       
+       console.log(e.target.id);
 
         this.setState({[e.target.id]:userValue},() => {
-          let showSubmit = blanks.every((blank) => {
+          let showSubmit = this.state.currentBlanks.every((blank) => {
                  return this.state[blank] && this.state[blank].trim().length !== 0;
                })
          if(showSubmit){
@@ -41,7 +51,7 @@ class App extends React.Component {
   handleSubmit = (question)=> {
       
       let userAnswer = ""
-      question.blanks.forEach((blank) => {
+      this.state.currentBlanks.forEach((blank) => {
          userAnswer += this.state[blank].trim().toLowerCase()
          this.setState({[blank]:""})
          
@@ -57,12 +67,12 @@ class App extends React.Component {
       }
       this.setState({submitted: true, nextDisabled:false});
   }
-  handleNextQuestion = (history, question, totalQuestions)=>{
-
-    for ( let i = 0; i < question.blanks.length; i++) {
+  handleNextQuestion = (history, totalQuestions)=>{
+    let inputs = Array.from(this.formRef.current.children);
+    for ( let i = 0; i < inputs.length; i++) {
       this.formRef.current[i].value = "";
     }
-    
+    console.log("total questions",totalQuestions);
     if(this.state.questionNum === totalQuestions){
       history.push(`/EndQuiz` );
     }
@@ -85,7 +95,15 @@ class App extends React.Component {
       
     history.push('/');
   }
-
+  componentDidMount(){
+    fetch(`http://localhost:8000/api/questions`)
+      .then(response => response.json())
+      .then(data =>{ 
+        for(let i =0; i<data.length;i++){
+          data[i].id = i+1;
+        }
+        this.setState({ questions: data })});
+  }
   render() { 
     return ( 
     <div className="App">
@@ -95,11 +113,11 @@ class App extends React.Component {
             render={({ 
               match,history 
           }) => (
-              <ResponseText submitted={this.state.submitted} isSubmitDisabled={this.state.submitDisabled} isNextDisabled={this.state.nextDisabled} submitAnswers={(question)=>{this.handleSubmit(question)}} change={this.handleOnChange} match={match} history={history} nextQuestion={this.handleNextQuestion} isIncorrect={this.state.isIncorrect} correct={this.state.correct} incorrect={this.state.incorrect} questions={questions} formRef={this.formRef}/>
+              <ResponseText getBlanks={this.getBlanks} submitted={this.state.submitted} isSubmitDisabled={this.state.submitDisabled} isNextDisabled={this.state.nextDisabled} submitAnswers={(question)=>{this.handleSubmit(question)}} change={this.handleOnChange} match={match} history={history} nextQuestion={this.handleNextQuestion} isIncorrect={this.state.isIncorrect} correct={this.state.correct} incorrect={this.state.incorrect} questions={this.state.questions} formRef={this.formRef}/>
           )} 
           />
           <Route path="/EndQuiz" render={({history}) => (
-            <EndQuiz correct={this.state.correct} incorrect={this.state.incorrect} questionTotal={questions.length} history={history} OnNewQuiz={this.handleNewQuiz}/>
+            <EndQuiz correct={this.state.correct} incorrect={this.state.incorrect} questionTotal={this.state.questions.length} history={history} OnNewQuiz={this.handleNewQuiz}/>
           )} />
             
           <Route path="/">
