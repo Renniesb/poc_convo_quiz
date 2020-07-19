@@ -4,14 +4,9 @@ import React, { Component } from 'react';
 
 class StartQuiz extends Component {
     componentDidMount(){
-        this.props.setQuizInfo(this.props.location.state.quiz)
-        fetch(`http://localhost:8000/api/quiz/${this.props.location.state.quiz.id}/questions`)
-            .then(response => response.json())
-            .then(data =>{ 
-                for(let i =0; i<data.length;i++){
-                data[i].id = i+1;
-                }
-                this.props.setQuestions(data)});
+        let quiz = this.props.location.state.quiz
+        this.props.setQuizInfo(quiz)
+        this.props.setQuestions(quiz.id);
     }
     render() {
         return (

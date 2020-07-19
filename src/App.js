@@ -5,6 +5,13 @@ import EndQuiz from './EndQuiz/EndQuiz'
 import { Route,Switch } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import AllQuizzes from './AllQuizzes/AllQuizzes';
+import EditQuizzes from './Edit/EditQuizzes/EditQuizzes';
+import AddQuiz from './Edit/AddQuiz/AddQuiz';
+import EditQuiz from './Edit/EditQuiz/EditQuiz';
+import AddQuestion from './Edit/AddQuestion/AddQuestion';
+import EditQuestion from './Edit/EditQuestion/EditQuestion';
+
+
 
 class App extends React.Component {
   constructor(props){
@@ -24,11 +31,26 @@ class App extends React.Component {
      incorrect:0
      }
     }
+  setQuizzes = () => {
+    fetch(`http://localhost:8000/api/quiz`)
+      .then(response => response.json())
+      .then(data =>{ 
+        this.setState({ quizzes: data })}
+      )
+  }
   setQuizInfo = (quiz) => {
     this.setState({quizInfo: quiz})
   }
-  setQuestions = (questions) => {
-    this.setState({questions: questions})
+  setQuestions = (quizNum) => {
+    fetch(`http://localhost:8000/api/quiz/${quizNum}/questions`)
+            .then(response => response.json())
+            .then(data =>{ 
+                for(let i =0; i<data.length;i++){
+                data[i].id = i+1;
+                }
+                this.setState({questions: data})
+            });
+                
   }
   setBlanks = () => {
     let inputs = Array.from(this.formRef.current.children);
@@ -104,16 +126,15 @@ class App extends React.Component {
       incorrect:0})
   }
   componentDidMount(){
-    fetch(`http://localhost:8000/api/quiz`)
-      .then(response => response.json())
-      .then(data =>{ 
-        this.setState({ quizzes: data })}
-      )
+    this.setQuizzes()
   }
   render() { 
     return ( 
     <div className="App">
+      <div style={{display: "flex", justifyContent: "space-between"}}>
       <Link className="myButton" to="/">See all Quizzes</Link>
+      <Link className="myButton"  to="/EditQuizzes">Edit Quizzes</Link>
+      </div>
         <Switch>
           <Route
             path='/question/:questionId'
@@ -127,8 +148,22 @@ class App extends React.Component {
             <EndQuiz quizInfo={this.state.quizInfo} correct={this.state.correct} incorrect={this.state.incorrect} questionTotal={this.state.questions.length} location={location} history={history} OnNewQuiz={this.handleNewQuiz}/>
           )} />
           <Route path="/StartQuiz" render={routeProps=><StartQuiz {...routeProps} setQuizInfo={this.setQuizInfo} quizInfo={this.state.quizInfo} setQuestions={this.setQuestions} />} />
-         
+          
+          <Route path="/EditQuizzes">
+            <EditQuizzes setQuizzes={this.setQuizzes} quizzes={this.state.quizzes}/>
+          </Route>
+          <Route path="/AddQuiz">
+            <AddQuiz />
+          </Route>
 
+          <Route path="/EditQuiz" render={routeProps=><EditQuiz {...routeProps} setQuizInfo={this.setQuizInfo} quizInfo={this.state.quizInfo} setQuestions={this.setQuestions} questions={this.state.questions} />} />
+
+          <Route path="/AddQuestion">
+            <AddQuestion />
+          </Route>  
+          <Route path="/EditQuestion">
+            <EditQuestion />
+          </Route>
           <Route path="/">
             <AllQuizzes onNewQuiz={this.handleNewQuiz} quizzes={this.state.quizzes} />
           </Route>
