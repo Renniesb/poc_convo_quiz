@@ -8,20 +8,20 @@ import Next from './../Next/Next';
 
 
 class ResponseText extends React.Component {
-  componentDidMount(){
-    this.props.getBlanks()
-  }
+
   render(){
-    const {submitted,isSubmitDisabled,isNextDisabled,submitAnswers,change,match,history,nextQuestion,isIncorrect,correct, incorrect,questions,formRef} = this.props;
+    const {submitted,isSubmitDisabled,isNextDisabled,submitAnswers,change,match,history,nextQuestion,isIncorrect,correct, incorrect,questions,formRef, quizInfo} = this.props;
     
     const question = questions.find(q =>
       q.id == match.params.questionId
       
     );
+    
+
     return (
       <section className="question-screen">  
       <div className="background-img" style={{gridArea: 'header', border: '1px solid #ddd', padding: '30px'}}>
-        <h3 className="poc-convo-title">POC Conversational Quiz</h3>
+          <h3 className="poc-convo-title">{quizInfo.quizname}</h3>
         <header className="question-info">
           <h3><span>Question {question.id} of {questions.length}</span></h3>
           <h5 className="score"><span>{correct} correct, {incorrect} incorrect</span></h5>
@@ -30,7 +30,7 @@ class ResponseText extends React.Component {
         <section className="response-area">
 
           <div className="question-text"> 
-            <h3>{question.questionText}</h3>
+            <h3>{question.questiontext}</h3>
           </div>
           <div className="audio-player">
             <ReactAudioPlayer

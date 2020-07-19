@@ -3,7 +3,8 @@ import ResponseText from './Response/ResponseText';
 import StartQuiz from './StartQuiz/StartQuiz'
 import EndQuiz from './EndQuiz/EndQuiz'
 import { Route,Switch } from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
+import AllQuizzes from './AllQuizzes/AllQuizzes';
 
 class App extends React.Component {
   constructor(props){
@@ -12,7 +13,8 @@ class App extends React.Component {
   
     this.state = {
      questions: [],
-     questionNum:1,
+     quizInfo: [],
+     quizzes: [],
      currentBlanks: [],
      submitDisabled: true, 
      submitted: false,
@@ -22,7 +24,13 @@ class App extends React.Component {
      incorrect:0
      }
     }
-  getBlanks = () => {
+  setQuizInfo = (quiz) => {
+    this.setState({quizInfo: quiz})
+  }
+  setQuestions = (questions) => {
+    this.setState({questions: questions})
+  }
+  setBlanks = () => {
     let inputs = Array.from(this.formRef.current.children);
     let blanks = []
     for(let i=1;i<=inputs.length;i++){
@@ -34,6 +42,8 @@ class App extends React.Component {
         
        let userValue = e.target.value
        console.log(e.target.id);
+
+       this.setBlanks();
 
         this.setState({[e.target.id]:userValue},() => {
           let showSubmit = this.state.currentBlanks.every((blank) => {
@@ -57,7 +67,8 @@ class App extends React.Component {
          
       })
       
-
+      console.log("user answer", userAnswer)
+      console.log("answer",question.answers)
       if(userAnswer===question.answers){
         this.setState({isIncorrect: false, correct: this.state.correct + 1})
 
@@ -67,61 +78,59 @@ class App extends React.Component {
       }
       this.setState({submitted: true, nextDisabled:false});
   }
-  handleNextQuestion = (history, totalQuestions)=>{
+  handleNextQuestion = (history, question, totalQuestions)=>{
     let inputs = Array.from(this.formRef.current.children);
     for ( let i = 0; i < inputs.length; i++) {
       this.formRef.current[i].value = "";
     }
     console.log("total questions",totalQuestions);
-    if(this.state.questionNum === totalQuestions){
+    if(question.id === totalQuestions){
       history.push(`/EndQuiz` );
     }
     else {
-      this.setState({questionNum:this.state.questionNum + 1, submitDisabled: true, nextDisabled:true,submitted:false,isIncorrect: null},()=>{
-        history.push(`/question/${this.state.questionNum}` );
+      this.setState({submitDisabled: true, nextDisabled:true,submitted:false,isIncorrect: null},()=>{
+        history.push(`/question/${question.id +1}` );
       });
     }  
     
   }
-  handleNewQuiz = (history) => {
+  handleNewQuiz = () => {
     this.setState({
-      questionNum:1,
       submitDisabled: true, 
       submitted: false,
       nextDisabled: true,
       isIncorrect: "",
       correct: 0,
       incorrect:0})
-      
-    history.push('/');
   }
   componentDidMount(){
-    fetch(`http://localhost:8000/api/questions`)
+    fetch(`http://localhost:8000/api/quiz`)
       .then(response => response.json())
       .then(data =>{ 
-        for(let i =0; i<data.length;i++){
-          data[i].id = i+1;
-        }
-        this.setState({ questions: data })});
+        this.setState({ quizzes: data })}
+      )
   }
   render() { 
     return ( 
     <div className="App">
+      <Link className="myButton" to="/">See all Quizzes</Link>
         <Switch>
           <Route
             path='/question/:questionId'
             render={({ 
-              match,history 
+              match,history,location 
           }) => (
-              <ResponseText getBlanks={this.getBlanks} submitted={this.state.submitted} isSubmitDisabled={this.state.submitDisabled} isNextDisabled={this.state.nextDisabled} submitAnswers={(question)=>{this.handleSubmit(question)}} change={this.handleOnChange} match={match} history={history} nextQuestion={this.handleNextQuestion} isIncorrect={this.state.isIncorrect} correct={this.state.correct} incorrect={this.state.incorrect} questions={this.state.questions} formRef={this.formRef}/>
+              <ResponseText quizInfo={this.state.quizInfo} setBlanks={this.setBlanks} submitted={this.state.submitted} isSubmitDisabled={this.state.submitDisabled} isNextDisabled={this.state.nextDisabled} submitAnswers={(question)=>{this.handleSubmit(question)}} change={this.handleOnChange} location={location} match={match} history={history} nextQuestion={this.handleNextQuestion} isIncorrect={this.state.isIncorrect} correct={this.state.correct} incorrect={this.state.incorrect} questions={this.state.questions} formRef={this.formRef}/>
           )} 
           />
-          <Route path="/EndQuiz" render={({history}) => (
-            <EndQuiz correct={this.state.correct} incorrect={this.state.incorrect} questionTotal={this.state.questions.length} history={history} OnNewQuiz={this.handleNewQuiz}/>
+          <Route path="/EndQuiz" render={({history,location}) => (
+            <EndQuiz quizInfo={this.state.quizInfo} correct={this.state.correct} incorrect={this.state.incorrect} questionTotal={this.state.questions.length} location={location} history={history} OnNewQuiz={this.handleNewQuiz}/>
           )} />
-            
+          <Route path="/StartQuiz" render={routeProps=><StartQuiz {...routeProps} setQuizInfo={this.setQuizInfo} quizInfo={this.state.quizInfo} setQuestions={this.setQuestions} />} />
+         
+
           <Route path="/">
-            <StartQuiz />
+            <AllQuizzes onNewQuiz={this.handleNewQuiz} quizzes={this.state.quizzes} />
           </Route>
         </Switch>
     </div>
