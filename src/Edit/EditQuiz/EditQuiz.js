@@ -23,14 +23,14 @@ class EditQuiz extends Component {
                     <label htmlFor="description">Quiz Description</label>
                     <textarea name="quizDescription" value={this.props.quizInfo.quizdescription} />
                 </div> 
-                {this.props.questions.map((question, num ) => {
-                    return <div>
+                {this.props.questions.map((question, i ) => {
+                    return <div key={`key${i}`}>
                                 <Link to={{
                                     pathname:'/EditQuestion',
                                     state:{ 
                                         question: question
                                     } 
-                                    }}>question {num + 1}
+                                    }}>question {i + 1}
                                 </Link>                        
                             </div>
                        

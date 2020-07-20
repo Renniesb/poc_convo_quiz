@@ -10,8 +10,8 @@ class AllQuizzes extends Component {
     render() {
         return (
             <div>
-                {this.props.quizzes.map((quiz) => {
-                   return <Quiz quiz={quiz}/>
+                {this.props.quizzes.map((quiz,i) => {
+                   return <Quiz key={`key${i}`} quiz={quiz}/>
                 })}
             </div>
         );

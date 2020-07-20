@@ -10,9 +10,9 @@ class EditQuizzes extends Component {
             <div>
                 <h1>Edit Quizzes</h1>
                 <div>
-                    {this.props.quizzes.map((quiz) => {
+                    {this.props.quizzes.map((quiz,i) => {
                     return (
-                        <div>
+                        <div key={`key${i}`}>
                             
                             <Link to={{
                                 pathname:'/EditQuiz',

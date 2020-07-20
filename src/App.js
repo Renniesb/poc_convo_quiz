@@ -36,7 +36,43 @@ class App extends React.Component {
     }
   
   handleInfoSubmit = (event) => {
-    console.log("infoSubmitted");
+    let responseText = this.state.responsetext;
+    
+    let words = responseText.split(' ');
+    let counter = 0;
+    let answers=""
+
+    let correcttext = words.map((word)=>{
+      if(word[0] == "_"){
+    
+        return `<u>${word.replace(/_/g, '')}</u>`
+        
+      }
+      return word
+    }).join(' ')
+
+    
+    
+    let correcthtml = `<span class="incorrect">Incorrect</span><div class="correct-answer">Correct Answer: ${correcttext}</div>`
+    
+    for(let i=0; i<words.length;i++){
+      
+      if(words[i][0] == "_"){
+        answers = answers + words[i].replace(/_/g, '').toLowerCase()
+        
+        counter++
+        words[i] = `<input id="blank${counter}">`; 
+      }
+      
+    }
+    
+    let responseHtml = words.join(' ')
+    console.log(this.state.topictext);
+    console.log(responseHtml);
+    console.log(this.state.linktext);    
+    console.log(answers);
+    console.log(correcthtml);
+    console.log(this.state.quizInfo.id);
     this.setState({submitDisabled: true});
     this.setState({topictext: "", responsetext: "", linktext: ""})
     
