@@ -6,7 +6,6 @@ class AddQuestion extends Component {
     render() {
         return (
             <div>
-                {/* <Link className="myButton" to="/">Edit Quiz</Link> */}
                 <h1>Add Question</h1>
                 <div>
                     <label htmlFor="topictext">Type the question topic text</label>
@@ -19,7 +18,7 @@ class AddQuestion extends Component {
                 <div>
                     <label htmlFor="linktext">
                     Type in the link to your
-                    <select name="linktype" id="linktype">
+                    <select value={this.props.linktype} onChange={e => {this.props.onNewQuestionText(e)}}name="linktype" id="linktype">
                         <option value="audio">audio</option>
                         <option value="video">video</option>
                     </select>

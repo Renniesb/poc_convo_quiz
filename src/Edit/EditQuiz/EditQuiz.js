@@ -14,10 +14,11 @@ class EditQuiz extends Component {
         return (
             <div>
                 {/* <Link className="myButton" to="/">Edit Quiz</Link> */}
-                <h1>Edit _______  Quiz</h1>
+                <h3>Edit Quiz</h3>
                 <div>
                     <label htmlFor="label">Quiz Name</label>
                     <input name="quiz name" value={this.props.quizInfo.quizname} />
+                    <button className="myButton" onClick={this.props.onEditQuiz}></button>
                 </div>
                 <div>
                     <label htmlFor="description">Quiz Description</label>

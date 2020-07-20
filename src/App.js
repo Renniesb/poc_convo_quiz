@@ -21,6 +21,7 @@ class App extends React.Component {
     this.state = {
      topictext: "",
      responsetext: "",
+     linktype: "audio",
      linktext: "",
      questions: [],
      quizInfo: [],
@@ -34,7 +35,39 @@ class App extends React.Component {
      incorrect:0
      }
     }
-  
+  handleEditQuiz = () => {
+
+  }
+  postInfo = ( questiontext, responsetext,correcttext,link, answers,quiznum) => {
+    const data = { 
+      questiontext: questiontext,
+      responsetext: responsetext,
+      correcttext: correcttext,
+      answers: answers,
+      quiznum: quiznum
+    };
+
+    if(this.state.linktype == "audio"){
+      data.audio = link;
+    } else {
+      data.video = link;
+    }
+
+    fetch(`http://localhost:8000/api/questions`, {
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }
   handleInfoSubmit = (event) => {
     let responseText = this.state.responsetext;
     
@@ -67,20 +100,23 @@ class App extends React.Component {
     }
     
     let responseHtml = words.join(' ')
-    console.log(this.state.topictext);
-    console.log(responseHtml);
-    console.log(this.state.linktext);    
-    console.log(answers);
-    console.log(correcthtml);
-    console.log(this.state.quizInfo.id);
+    
+    this.postInfo( 
+      this.state.topictext, 
+      responseHtml,
+      correcthtml,
+      this.state.linktext,
+      answers,
+      this.state.quizInfo.id)
     this.setState({submitDisabled: true});
     this.setState({topictext: "", responsetext: "", linktext: ""})
     
   }
   handleNewQuestionText = event => {
-    console.log("here")
+    this.setState({submitDisabled: false})
+    console.log(event.target.value);
     const allFields = ["topictext","responsetext","linktext"]
-    this.setState({ [event.target.name]: event.target.value },() => {
+    this.setState({ [event.target.id]: event.target.value },() => {
       let showSubmit = allFields.every((field) => {
              return this.state[field].trim().length !== 0;
            })
@@ -218,9 +254,9 @@ class App extends React.Component {
             <AddQuiz />
           </Route>
 
-          <Route path="/EditQuiz" render={routeProps=><EditQuiz {...routeProps} setQuizInfo={this.setQuizInfo} quizInfo={this.state.quizInfo} setQuestions={this.setQuestions} questions={this.state.questions} />} />
+          <Route path="/EditQuiz" render={routeProps=><EditQuiz {...routeProps} setQuizInfo={this.setQuizInfo} quizInfo={this.state.quizInfo} setQuestions={this.setQuestions} questions={this.state.questions} onEditQuiz={this.handleEditQuiz} />} />
           
-          <Route path="/AddQuestion" render={routeProps=><AddQuestion {...routeProps} onInfoSubmit={this.handleInfoSubmit} submitDisabled={this.state.submitDisabled} quizInfo={this.state.quizInfo} onNewQuestionText={this.handleNewQuestionText}/>}  />
+          <Route path="/AddQuestion" render={routeProps=><AddQuestion {...routeProps} onInfoSubmit={this.handleInfoSubmit} submitDisabled={this.state.submitDisabled} quizInfo={this.state.quizInfo} onNewQuestionText={this.handleNewQuestionText} linktype={this.state.linktype}/>}  />
           <Route path="/EditQuestion">
             <EditQuestion />
           </Route>
