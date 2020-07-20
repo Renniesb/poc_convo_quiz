@@ -19,6 +19,9 @@ class App extends React.Component {
     this.formRef = createRef();
   
     this.state = {
+     topictext: "",
+     responsetext: "",
+     linktext: "",
      questions: [],
      quizInfo: [],
      quizzes: [],
@@ -31,6 +34,29 @@ class App extends React.Component {
      incorrect:0
      }
     }
+  
+  handleInfoSubmit = (event) => {
+    console.log("infoSubmitted");
+    this.setState({submitDisabled: true});
+    this.setState({topictext: "", responsetext: "", linktext: ""})
+    
+  }
+  handleNewQuestionText = event => {
+    console.log("here")
+    const allFields = ["topictext","responsetext","linktext"]
+    this.setState({ [event.target.name]: event.target.value },() => {
+      let showSubmit = allFields.every((field) => {
+             return this.state[field].trim().length !== 0;
+           })
+          if(showSubmit){
+            this.setState({submitDisabled: false})
+          }
+          else{
+            this.setState({submitDisabled: true})
+          }
+    })    
+
+  }
   setQuizzes = () => {
     fetch(`http://localhost:8000/api/quiz`)
       .then(response => response.json())
@@ -157,10 +183,8 @@ class App extends React.Component {
           </Route>
 
           <Route path="/EditQuiz" render={routeProps=><EditQuiz {...routeProps} setQuizInfo={this.setQuizInfo} quizInfo={this.state.quizInfo} setQuestions={this.setQuestions} questions={this.state.questions} />} />
-
-          <Route path="/AddQuestion">
-            <AddQuestion />
-          </Route>  
+          
+          <Route path="/AddQuestion" render={routeProps=><AddQuestion {...routeProps} onInfoSubmit={this.handleInfoSubmit} submitDisabled={this.state.submitDisabled} quizInfo={this.state.quizInfo} onNewQuestionText={this.handleNewQuestionText}/>}  />
           <Route path="/EditQuestion">
             <EditQuestion />
           </Route>

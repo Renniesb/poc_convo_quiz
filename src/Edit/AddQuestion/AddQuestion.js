@@ -8,6 +8,39 @@ class AddQuestion extends Component {
             <div>
                 {/* <Link className="myButton" to="/">Edit Quiz</Link> */}
                 <h1>Add Question</h1>
+                <div>
+                    <label htmlFor="topictext">Type the question topic text</label>
+                    <input id="topictext" onChange={e => {this.props.onNewQuestionText(e)}} name="topictext" />
+                </div>
+                <div>
+                    <label htmlFor="responsetext">Type in the response text with an underscore before and after each word that the user must fill in as a blank</label>
+                    <textarea id="responsetext" onChange={e => {this.props.onNewQuestionText(e)}} name="responsetext" />
+                </div>
+                <div>
+                    <label htmlFor="linktext">
+                    Type in the link to your
+                    <select name="linktype" id="linktype">
+                        <option value="audio">audio</option>
+                        <option value="video">video</option>
+                    </select>
+                    file
+                    </label>
+                    <input onChange={e => {this.props.onNewQuestionText(e)}} id="linktext" name="linktext"/>
+                </div>
+                { !this.props.submitDisabled ? <Link id="submitQuestion" onClick={(e) => {
+                        this.props.onInfoSubmit(e)                    
+                    }}  className="myButton" to={{
+                                    pathname:'/EditQuiz',
+                                    state:{
+                                        quiz: this.props.quizInfo
+                                    } 
+                                }}>
+                                    Submit
+                    </Link> : <button className="myButton" disabled={this.props.submitDisabled}>Submit</button>
+                    
+                }
+                
+                
             </div>
         );
     }

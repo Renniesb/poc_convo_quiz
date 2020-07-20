@@ -13,6 +13,7 @@ class EditQuizzes extends Component {
                     {this.props.quizzes.map((quiz) => {
                     return (
                         <div>
+                            
                             <Link to={{
                                 pathname:'/EditQuiz',
                                 state:{ 
