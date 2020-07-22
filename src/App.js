@@ -23,8 +23,13 @@ class App extends React.Component {
      responsetext: "",
      linktype: "audio",
      linktext: "",
+     correcthtml: "",
+     answers: "",
      questions: [],
+     questionId: 0, 
      quizInfo: [],
+     quizName: "",
+     quizDescription: "",
      quizzes: [],
      currentBlanks: [],
      submitDisabled: true, 
@@ -36,21 +41,44 @@ class App extends React.Component {
      }
     }
   handleEditQuiz = () => {
-
+    const data = {
+      quizname: this.state.quizName,
+      quizdescription:this.state.quizDescription,
+    }
+    fetch(`http://localhost:8000/api/quiz/${this.state.quizInfo.id}`, {
+      method: 'PATCH', 
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+      body: JSON.stringify(data),
+    })
+    .then((response) => response.json())
+    .then((json) => {
+      console.log(json);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   }
-  postInfo = ( questiontext, responsetext,correcttext,link, answers,quiznum) => {
+  
+  handleEditQuestion = (id) => {
+    this.answerText(id)
+    
+  }
+  postInfo = () => {
     const data = { 
-      questiontext: questiontext,
-      responsetext: responsetext,
-      correcttext: correcttext,
-      answers: answers,
-      quiznum: quiznum
+      questiontext: this.state.topictext,
+      responsetext: this.state.responsetext,
+      correcttext: this.state.correcthtml,
+      answers: this.state.answers,
+      quiznum: this.state.quizInfo.id
     };
 
+    const linktext = this.state.linktext;
     if(this.state.linktype == "audio"){
-      data.audio = link;
+      data.audio = linktext;
     } else {
-      data.video = link;
+      data.video = linktext;
     }
 
     fetch(`http://localhost:8000/api/questions`, {
@@ -68,11 +96,38 @@ class App extends React.Component {
       console.error('Error:', error);
     });
   }
-  handleInfoSubmit = (event) => {
+  patchInfo = (id) => {
+    const data = { 
+      questiontext: this.state.topictext,
+      responsetext: this.state.responsetext,
+      correcttext: this.state.correcthtml,
+      answers: this.state.answers,
+    }
+
+    if(this.state.linktype === "audio"){
+      data.audio = this.state.linktext
+    }else {
+      data.video = this.state.linktext
+    }
+    console.log('edit question', data)
+    fetch(`http://localhost:8000/api/questions/${id}`, {
+      method: 'PATCH', 
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+      body: JSON.stringify(data),
+    })
+    .then((response) => response.json())
+    .then((json) => {
+      console.log(json);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }
+  answerText = (id) => {
     let responseText = this.state.responsetext;
-    
     let words = responseText.split(' ');
-    let counter = 0;
     let answers=""
 
     let correcttext = words.map((word)=>{
@@ -87,48 +142,47 @@ class App extends React.Component {
     
     
     let correcthtml = `<span class="incorrect">Incorrect</span><div class="correct-answer">Correct Answer: ${correcttext}</div>`
-    
+
     for(let i=0; i<words.length;i++){
       
       if(words[i][0] == "_"){
         answers = answers + words[i].replace(/_/g, '').toLowerCase()
         
-        counter++
-        words[i] = `<input id="blank${counter}">`; 
       }
       
     }
+    this.setState({correcthtml: correcthtml, answers: answers},() => {
+      this.patchInfo(id)
+    })
+  }
+  handleInfoSubmit = (event) => {
+    this.answerText()   
     
-    let responseHtml = words.join(' ')
-    
-    this.postInfo( 
-      this.state.topictext, 
-      responseHtml,
-      correcthtml,
-      this.state.linktext,
-      answers,
-      this.state.quizInfo.id)
     this.setState({submitDisabled: true});
     this.setState({topictext: "", responsetext: "", linktext: ""})
     
   }
   handleNewQuestionText = event => {
-    this.setState({submitDisabled: false})
-    console.log(event.target.value);
-    const allFields = ["topictext","responsetext","linktext"]
-    this.setState({ [event.target.id]: event.target.value },() => {
-      let showSubmit = allFields.every((field) => {
-             return this.state[field].trim().length !== 0;
-           })
-          if(showSubmit){
-            this.setState({submitDisabled: false})
-          }
-          else{
-            this.setState({submitDisabled: true})
-          }
-    })    
+    
+    this.setState({[event.target.id]: event.target.value})
+    
+    if(event.target.id == "topictext" || event.target.id == "responsetext" || event.target.id == "linktext" ){
+      this.setState({ [event.target.id]: event.target.value },() => {
+        const allFields = ["topictext","responsetext","linktext"]
+        let showSubmit = allFields.every((field) => {
+               return this.state[field].trim().length !== 0;
+             })
+            if(showSubmit){
+              this.setState({submitDisabled: false})
+            }
+            else{
+              this.setState({submitDisabled: true})
+            }
+      })    
+    }
+    
 
-  }
+  } 
   setQuizzes = () => {
     fetch(`http://localhost:8000/api/quiz`)
       .then(response => response.json())
@@ -137,17 +191,43 @@ class App extends React.Component {
       )
   }
   setQuizInfo = (quiz) => {
-    this.setState({quizInfo: quiz})
+    this.setState({quizInfo: quiz, quizDescription: quiz.quizdescription, quizName: quiz.quizname})
   }
-  setQuestions = (quizNum) => {
-    fetch(`http://localhost:8000/api/quiz/${quizNum}/questions`)
-            .then(response => response.json())
-            .then(data =>{ 
-                for(let i =0; i<data.length;i++){
-                data[i].id = i+1;
-                }
-                this.setState({questions: data})
-            });
+  setQuestionInfo = (question) => {
+
+    let linktype = ""
+    let link = ""
+    if(question.audio===null){
+      linktype = "video"
+    } else {
+      linktype = "audio"
+    }
+    if(linktype === "audio"){
+      link = question.audio
+    }else{
+      link = question.video
+    }
+    this.setState({topictext: question.questiontext, responsetext: question.responsetext, linktype: linktype, linktext: link, questionId: question.id })
+  }
+  setQuestions = (quizNum, editingMode = false) => {
+
+    if(editingMode){
+      fetch(`http://localhost:8000/api/quiz/${quizNum}/questions`)
+      .then(response => response.json())
+      .then(data =>{ 
+          this.setState({questions: data})
+      });
+    } else {
+      fetch(`http://localhost:8000/api/quiz/${quizNum}/questions`)
+      .then(response => response.json())
+      .then(data =>{ 
+          for(let i =0; i<data.length;i++){
+          data[i].id = i+1;
+          }
+          this.setState({questions: data})
+      });
+    }
+    
                 
   }
   setBlanks = () => {
@@ -177,6 +257,40 @@ class App extends React.Component {
          }
         })
             
+  }
+  delete = (event,id,quizid) => {
+  
+    if(event.target.id == "deleteQuiz"){
+      fetch(`http://localhost:8000/api/quiz/${id}`, {
+        method: 'DELETE', 
+      })
+      this.setQuizzes()
+    }else if(event.target.id == "deleteQuestion") {
+      fetch(`http://localhost:8000/api/questions/${id}`, {
+        method: 'DELETE', 
+      })
+      this.setQuestions(quizid, true)
+    }
+  }
+  addNewQuiz = () => {
+    const data = {
+      quizname: this.state.quizName,
+      quizdescription: this.state.quizDescription
+    }
+    fetch(`http://localhost:8000/api/quiz`, {
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then((response) => response.text())
+    .then((data) => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   }
   handleSubmit = (question)=> {
       
@@ -214,6 +328,21 @@ class App extends React.Component {
     }  
     
   }
+  handleAddNewQuiz = () => {
+    this.setState({
+      quizName: "",
+      quizDescription: ""
+    })
+  }
+  handleNewQuestion = () => {
+    this.setState({
+      submitDisabled: true,
+      topictext: "",
+      responsetext: "",
+      linktext: ""
+
+    })
+  }
   handleNewQuiz = () => {
     this.setState({
       submitDisabled: true, 
@@ -248,17 +377,18 @@ class App extends React.Component {
           <Route path="/StartQuiz" render={routeProps=><StartQuiz {...routeProps} setQuizInfo={this.setQuizInfo} quizInfo={this.state.quizInfo} setQuestions={this.setQuestions} />} />
           
           <Route path="/EditQuizzes">
-            <EditQuizzes setQuizzes={this.setQuizzes} quizzes={this.state.quizzes}/>
+            <EditQuizzes setQuizzes={this.setQuizzes} quizzes={this.state.quizzes} onDelete={this.delete}/>
           </Route>
           <Route path="/AddQuiz">
-            <AddQuiz />
+            <AddQuiz quizDescription={this.state.quizDescription} quizName = {this.state.quizName} onNewQuestionText={this.handleNewQuestionText} handleAddNewQuiz={this.handleAddNewQuiz} addNewQuiz={this.addNewQuiz}  />
           </Route>
 
-          <Route path="/EditQuiz" render={routeProps=><EditQuiz {...routeProps} setQuizInfo={this.setQuizInfo} quizInfo={this.state.quizInfo} setQuestions={this.setQuestions} questions={this.state.questions} onEditQuiz={this.handleEditQuiz} />} />
+          <Route path="/EditQuiz" render={routeProps=><EditQuiz {...routeProps} setQuizInfo={this.setQuizInfo} quizDescription={this.state.quizDescription} quizName = {this.state.quizName} quizInfo={this.state.quizInfo} setQuestions={this.setQuestions} questions={this.state.questions} onNewQuestionText={this.handleNewQuestionText} onEditQuiz={this.handleEditQuiz} onDelete={this.delete} />} />
           
-          <Route path="/AddQuestion" render={routeProps=><AddQuestion {...routeProps} onInfoSubmit={this.handleInfoSubmit} submitDisabled={this.state.submitDisabled} quizInfo={this.state.quizInfo} onNewQuestionText={this.handleNewQuestionText} linktype={this.state.linktype}/>}  />
-          <Route path="/EditQuestion">
-            <EditQuestion />
+          <Route path="/AddQuestion" render={routeProps=><AddQuestion {...routeProps} onNewQuestion={this.handleNewQuestion} onInfoSubmit={this.handleInfoSubmit} submitDisabled={this.state.submitDisabled} quizInfo={this.state.quizInfo} onNewQuestionText={this.handleNewQuestionText} linktype={this.state.linktype} responsetext={this.state.responsetext}topictext={this.state.topictext} linktext={this.state.linktext} />}  />
+          <Route path="/EditQuestion" render={routeProps=> <EditQuestion {...routeProps} topictext={this.state.topictext} quizInfo={this.state.quizInfo}
+     responsetext={this.state.responsetext} linktype={this.state.linktype} linktext={this.state.linktext} onNewQuestionText={this.handleNewQuestionText} setQuestionInfo={this.setQuestionInfo} questionId={this.state.questionId} onEditQuestion={this.handleEditQuestion} />}>
+            
           </Route>
           <Route path="/">
             <AllQuizzes onNewQuiz={this.handleNewQuiz} quizzes={this.state.quizzes} />

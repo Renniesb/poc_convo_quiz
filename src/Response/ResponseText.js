@@ -9,6 +9,25 @@ import Next from './../Next/Next';
 
 class ResponseText extends React.Component {
 
+  makeResponseHtml = (responseString) => {
+    let responseText = responseString
+    
+    let words = responseText.split(' ');
+    let counter = 0;
+
+    for(let i=0; i<words.length;i++){
+      
+      if(words[i][0] == "_"){
+
+        counter++
+        words[i] = `<input id="blank${counter}">`; 
+      }
+      
+    }
+    
+    let responsehtml = words.join(' ')
+    return responsehtml
+  }  
   render(){
     const {submitted,isSubmitDisabled,isNextDisabled,submitAnswers,change,match,history,nextQuestion,isIncorrect,correct, incorrect,questions,formRef, quizInfo} = this.props;
     
@@ -43,7 +62,7 @@ class ResponseText extends React.Component {
           <div className="response-box"  onChange={(event)=>{change(event,question.blanks)}}>
             <form ref={formRef} autoComplete="off">
           {
-            parse(question.responsetext)
+            parse(this.makeResponseHtml(question.responsetext))
             }
             </form>
           </div>

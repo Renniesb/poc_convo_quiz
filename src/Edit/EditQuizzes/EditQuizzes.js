@@ -22,6 +22,7 @@ class EditQuizzes extends Component {
                             }}>
                                 {quiz.quizname}
                             </Link>
+                            <button onClick={e => {this.props.onDelete(e, quiz.id)}} id="deleteQuiz" name="deleteQuiz">Delete</button>
                         </div>
                     )
                     })}
