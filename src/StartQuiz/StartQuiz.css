@@ -2,6 +2,15 @@
   font-family: 'Poppins', sans-serif;
 }
 
+.quizbackground {
+  
+  background-image: url(../img/learn-english-at-marbella.jpg);
+  background-position: center;
+  background-repeat: repeat;
+  margin: 0px;
+  height: 100vh;
+  
+}
 #start-quiz {
   margin-top: 50vh;
   font-size: x-large;

@@ -1,0 +1,46 @@
+/* Add your styles here */
+
+.whitetext {
+  color: white;
+  text-shadow: 5px 5px 5px maroon;
+}
+
+.gamebackground {
+    background-image: url('../img/learn-english.jpg');
+    background-position: center;
+    background-repeat: repeat;
+    margin: 0px;
+    padding-bottom: 120px;
+    
+}
+    
+   
+    .hero img{
+      max-width:100%; 
+      height:auto;
+    }
+    
+    .hero {
+    
+      width:auto; 
+      text-align:center;
+        
+    }
+    .panel {
+      margin-top: 20px;
+      margin-left: 20px;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+      align-items: center;
+      /* margin-bottom: 15px; */
+      flex-direction: column;
+      width: 50vw;
+      border-top: 15px solid #e6d2ba;
+      display: flex;
+      background-color: #273740;
+      color: #cdd1d8;
+      padding: 25px;
+      padding-top: 5px;
+    
+    }

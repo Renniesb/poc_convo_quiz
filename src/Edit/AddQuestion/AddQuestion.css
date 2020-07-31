@@ -1,0 +1,66 @@
+.addquestionbackground{
+    display: flex;
+    justify-content: center;
+    background-image: url('../../img/learn-english-at-marbella.jpg');
+    background-position: center;
+    background-repeat: repeat;
+    padding-top: 20px;
+    height: 100vh;
+}
+
+
+.panel {
+    margin-left: 20px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 35vw;
+    border-top: 15px solid #0134a8;
+    display: flex;
+    background-color: #041d2f;
+    color: #cdd1d8;
+    padding: 25px;
+    padding-top: 5px;
+    position: absolute;
+}
+
+#topictext {
+    display: block;
+    width: 60%;
+    padding: 5px;
+    margin: 10px 0px;
+    border: 0;
+    box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+    border-radius:2px;
+}
+
+#linktext {
+    display: block;
+    width: 60%;
+    padding: 5px;
+    margin: 10px 0px;
+    border: 0;
+    box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+    border-radius:2px;
+}
+
+#linktype {
+  width: 70px;
+  margin: 5px;
+  padding:5px;
+  border-radius:10px;
+}
+
+#responsetext {
+    padding: 10px;
+    margin: 10px 0;
+    width:90%;
+    resize: vertical;
+    padding:15px;
+    border-radius:5px;
+    border:0;
+    box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+    height:35px;
+}

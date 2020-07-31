@@ -1,0 +1,10 @@
+
+.addquizbackground{
+    display: flex;
+    justify-content: center;
+    background-image: url('../../img/learn-english-at-marbella.jpg');
+    background-position: center;
+    background-repeat: repeat;
+    padding-top: 20px;
+    height: 100vh;
+}
