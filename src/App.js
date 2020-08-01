@@ -95,10 +95,19 @@ class App extends React.Component {
 
     for(let i=0; i<words.length;i++){
     
-        if(words[i][0] == "_"){
-            answers = answers + words[i].replace(/_/g, '').toLowerCase()
+      const startIndex = words[i].indexOf("_")
+          console.log('start index', startIndex)
+          let endIndex = 0
+          let answer = ""
+
             
-        }
+          
+            if(startIndex > -1){
+              endIndex = words[i].lastIndexOf("_")
+              answer = words[i].substring(startIndex+1, endIndex)
+                answers = answers + answer.toLowerCase()
+                
+            }
     
     }
     const data = { 
@@ -166,9 +175,17 @@ class App extends React.Component {
         let correcthtml = `<span class="incorrect">Incorrect</span><div class="correct-answer">Correct Answer: ${correcttext}</div>`
 
         for(let i=0; i<words.length;i++){
-        
-            if(words[i][0] == "_"){
-                answers = answers + words[i].replace(/_/g, '').toLowerCase()
+
+          const startIndex = words[i].indexOf("_")
+          let endIndex = 0
+          let answer = ""
+
+            
+          
+            if(startIndex > -1){
+              endIndex = words[i].lastIndexOf("_")
+              answer = words[i].substring(startIndex+1, endIndex)
+                answers = answers + answer.toLowerCase()
                 
             }
         
