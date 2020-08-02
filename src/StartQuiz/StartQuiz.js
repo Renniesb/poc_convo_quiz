@@ -19,7 +19,8 @@ class StartQuiz extends Component {
                         <h2>{this.props.quizInfo.quizname}</h2>
                     </div>
                     <header className="start-end-info"></header>
-                    <div className="center-button"><Link id="start-quiz" className="myButton" to="/question/1">Start Quiz</Link></div>
+                    <div className="center-button"><Link onClick={() => {
+                    this.props.OnNewQuiz() }} id="start-quiz" className="myButton" to="/question/1">Start Quiz</Link></div>
                     </div>
                 </section>
             </div>

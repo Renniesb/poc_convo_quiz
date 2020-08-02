@@ -17,11 +17,27 @@ class ResponseText extends React.Component {
     let counter = 0;
 
     for(let i=0; i<words.length;i++){
+      const startIndex = words[i].indexOf("_")
+      let endIndex = 0
+      let beforeBlank = ''
+      let endOfStringIndex = words[i].length - 1
+      let afterBlank = ''
       
-      if(words[i][0] == "_"){
+      
+      if(startIndex > -1){
+        endIndex = words[i].lastIndexOf("_")
+        if(startIndex != 0){
+          beforeBlank = words[i].substring(0,startIndex);
+        }
+        if(words[i][endOfStringIndex] != "_"){
+          afterBlank = words[i].substring(endIndex+1, endOfStringIndex+1)
+        }
+
+        console.log('before blank', beforeBlank)
+        console.log('after blank', afterBlank)
 
         counter++
-        words[i] = `<input id="blank${counter}">`; 
+        words[i] = `${beforeBlank}<input id="blank${counter}">${afterBlank}`; 
       }
       
     }

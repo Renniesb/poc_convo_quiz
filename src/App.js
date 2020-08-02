@@ -83,9 +83,12 @@ class App extends React.Component {
     let answers=""
 
     let correcttext = words.map((word)=>{
-    if(word[0] == "_"){
-    
-        return `<u>${word.replace(/_/g, '')}</u>`
+      const startIndex = word.indexOf("_")    
+      const endIndex = word.lastIndexOf("_")
+    if(startIndex > -1 && startIndex != endIndex){
+        word[startIndex].replace(/_/g, '')
+        word[endIndex].replace(/_/g, '')
+        return `<u>${word.replace(/_/g, ' ')}</u>`
         
     }
     return word
@@ -95,19 +98,16 @@ class App extends React.Component {
 
     for(let i=0; i<words.length;i++){
     
-      const startIndex = words[i].indexOf("_")
-          console.log('start index', startIndex)
-          let endIndex = 0
+          const startIndex = words[i].indexOf("_")    
+          const endIndex = words[i].lastIndexOf("_")
           let answer = ""
 
-            
-          
-            if(startIndex > -1){
-              endIndex = words[i].lastIndexOf("_")
-              answer = words[i].substring(startIndex+1, endIndex)
-                answers = answers + answer.toLowerCase()
-                
-            }
+
+          if(startIndex > -1 && startIndex != endIndex){
+            answer = words[i].substring(startIndex+1, endIndex)
+              answers = answers + answer.replace(/_/g, ' ').toLowerCase()
+              
+          }
     
     }
     const data = { 
@@ -177,13 +177,14 @@ class App extends React.Component {
         for(let i=0; i<words.length;i++){
 
           const startIndex = words[i].indexOf("_")
-          let endIndex = 0
           let answer = ""
+          const endIndex = words[i].lastIndexOf("_")
 
-            
-          
-            if(startIndex > -1){
-              endIndex = words[i].lastIndexOf("_")
+                      
+          console.log("end index",endIndex)
+          console.log("start index",startIndex)
+
+            if(startIndex > -1 && startIndex != endIndex){              
               answer = words[i].substring(startIndex+1, endIndex)
                 answers = answers + answer.toLowerCase()
                 
@@ -222,9 +223,9 @@ class App extends React.Component {
   }
   
   handleInfoSubmit = () => {
-    // this.answerText()  
+     
     this.setState({submitDisabled: true});
-    // this.setState({topictext: "", responsetext: "", linktext: ""})
+    console.log('submit disabled')
     
   }
   handleNewQuestionText = event => {
@@ -440,13 +441,19 @@ class App extends React.Component {
     })
   }
   handleNewQuiz = () => {
+    console.log('current blanks',this.state.currentBlanks);
+    
     this.setState({
       submitDisabled: true, 
       submitted: false,
       nextDisabled: true,
       isIncorrect: "",
       correct: 0,
-      incorrect:0})
+      incorrect:0},()=>{
+        this.state.currentBlanks.forEach((blank)=>{
+          this.setState({[blank]: ""});
+        })
+      })
   }
   componentDidMount(){
     this.setQuizzes()
@@ -468,7 +475,7 @@ class App extends React.Component {
           <Route path="/EndQuiz" render={({history,location}) => (
             <EndQuiz quizInfo={this.state.quizInfo} correct={this.state.correct} incorrect={this.state.incorrect} questionTotal={this.state.questions.length} location={location} history={history} OnNewQuiz={this.handleNewQuiz}/>
           )} />
-          <Route path="/StartQuiz" render={routeProps=><StartQuiz {...routeProps} setQuizInfo={this.setQuizInfo} quizInfo={this.state.quizInfo} setQuestions={this.setQuestions} />} />
+          <Route path="/StartQuiz" render={routeProps=><StartQuiz {...routeProps} setQuizInfo={this.setQuizInfo} quizInfo={this.state.quizInfo} setQuestions={this.setQuestions} OnNewQuiz={this.handleNewQuiz} />} />
           
           <Route path="/EditQuizzes">
             <EditQuizzes setQuizzes={this.setQuizzes} quizzes={this.state.quizzes} onDelete={this.delete}/>
@@ -486,7 +493,7 @@ class App extends React.Component {
             
           </Route>
           <Route path="/">
-            <AllQuizzes onNewQuiz={this.handleNewQuiz} quizzes={this.state.quizzes} />
+            <AllQuizzes quizzes={this.state.quizzes} />
           </Route>
         </Switch>
     </div>

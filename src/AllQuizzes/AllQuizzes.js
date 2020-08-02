@@ -4,10 +4,7 @@ import styles from './AllQuizzes.module.css';
 import { Link } from 'react-router-dom';
 
 class AllQuizzes extends Component {
-    componentDidMount(){
-        this.props.onNewQuiz()
-        
-    }
+
     render() {
         return (
             <div className={styles.gamebackground}>
