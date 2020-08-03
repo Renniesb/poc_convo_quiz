@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 class EditQuestion extends Component {
     componentDidMount(){
-        console.log(this.props.location.state.question)
         this.props.setQuestionInfo(this.props.location.state.question.id)
     }
     render() {

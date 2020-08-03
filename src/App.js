@@ -132,7 +132,7 @@ class App extends React.Component {
         body: JSON.stringify(data),
       })
       .then(response => {
-        if(response.status == 204){
+        if(response.status === 204){
           const questions = this.state.questions
           const newQuestions = questions.map((question) => {
             if(question.id === id){
@@ -158,7 +158,7 @@ class App extends React.Component {
   
   addNewQuestion = () => {
 
-    console.log("component did unmount")
+    
         let responseText = this.state.responsetext;
         let words = responseText.split(' ');
         let answers=""
@@ -226,14 +226,13 @@ class App extends React.Component {
   handleInfoSubmit = () => {
      
     this.setState({submitDisabled: true});
-    console.log('submit disabled')
     
   }
   handleNewQuestionText = event => {
     
     this.setState({[event.target.id]: event.target.value})
     
-    if(event.target.id == "linktype" || event.target.id == "topictext" || event.target.id == "responsetext" || event.target.id == "linktext" ){
+    if(event.target.id === "linktype" || event.target.id === "topictext" || event.target.id === "responsetext" || event.target.id === "linktext" ){
       this.setState({ [event.target.id]: event.target.value },() => {
         const allFields = ["topictext","responsetext","linktext"]
         let showSubmit = allFields.every((field) => {
@@ -267,18 +266,7 @@ class App extends React.Component {
     fetch(`http://localhost:8000/api/questions/${id}`)
       .then(response => response.json())
       .then(data =>{ 
-        // let linktype = ""
-        // let link = ""
-        // if(data.audio==null){
-        //   linktype = "video"
-        // } else {
-        //   linktype = "audio"
-        // }
-        // if(linktype === "audio"){
-        //   link = data.audio
-        // }else{
-        //   link = data.video
-        // }
+       
         this.setState({topictext: data.questiontext, responsetext: data.responsetext, linktype: data.linktype, linktext: data.link, questionId: data.id })
       });
     
@@ -306,7 +294,6 @@ class App extends React.Component {
   }
   setBlanks = () => {
     let inputs = Array.from(this.formRef.current.children);
-    console.log('inputs', typeof inputs[1])
 
     const blanks = inputs.filter((input)=>{
       return input.id
@@ -320,7 +307,6 @@ class App extends React.Component {
   handleOnChange = (e) => {
         
        let userValue = e.target.value
-       console.log(e.target.id);
 
        this.setBlanks();
 
@@ -339,7 +325,7 @@ class App extends React.Component {
   }
   delete = (event,id) => {
   
-    if(event.target.id == "deleteQuiz"){
+    if(event.target.id === "deleteQuiz"){
       fetch(`http://localhost:8000/api/quiz/${id}`, {
         method: 'DELETE', 
       })
@@ -349,14 +335,13 @@ class App extends React.Component {
           const filteredquizzes = quizzes.filter(quiz => {
             return quiz.id != id
           })
-          console.log(id, filteredquizzes)
           this.setState({quizzes: filteredquizzes})
         }
 
       } )
       
       this.setQuizzes()
-    }else if(event.target.id == "deleteQuestion") {
+    }else if(event.target.id === "deleteQuestion") {
       fetch(`http://localhost:8000/api/questions/${id}`, {
         method: 'DELETE', 
       })
@@ -366,7 +351,6 @@ class App extends React.Component {
           const filteredquestions = questions.filter(question => {
             return question.id != id
           })
-          console.log(id, filteredquestions)
           this.setState({questions: filteredquestions}) 
         }
       })
@@ -386,7 +370,6 @@ class App extends React.Component {
     })
     .then((response) => response.json())
     .then((data) => {
-      console.log("successful", data.id)
       this.setState({quizInfo: data, quizDescription: data.quizdescription, quizName: data.quizname, newQuizName: "", newQuizDescription: ""},()=>{
         this.setQuestions(this.state.quizInfo.id, true)
       })
@@ -404,8 +387,6 @@ class App extends React.Component {
          
       })
       
-      console.log("user answer", userAnswer)
-      console.log("answer",question.answers)
       if(userAnswer===question.answers){
         this.setState({isIncorrect: false, correct: this.state.correct + 1})
 
@@ -421,7 +402,6 @@ class App extends React.Component {
     inputs.map((input)=>{
       input.value = "";
     })
-    console.log("total questions",totalQuestions);
     if(question.id === totalQuestions){
       history.push(`/EndQuiz` );
     }
@@ -448,7 +428,6 @@ class App extends React.Component {
     })
   }
   handleNewQuiz = () => {
-    console.log('current blanks',this.state.currentBlanks);
     
     this.setState({
       submitDisabled: true, 
@@ -466,7 +445,6 @@ class App extends React.Component {
     this.setQuizzes()
   }
   render() {
-    console.log(this.state.quizzes) 
     return ( 
     <div className="App">
       

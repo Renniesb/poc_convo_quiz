@@ -5,13 +5,13 @@ import './EditQuiz.css';
 
 class EditQuiz extends Component {
     componentDidMount(){
-        if(this.props.location.state.isNewQuiz){
-            console.log("new quiz")
-        }else{
+        if(!this.props.location.state.isNewQuiz){
             let quiz = this.props.location.state.quiz;
             this.props.setQuizInfo(quiz);
             this.props.setQuestions(quiz.id, true);
         }
+                    
+        
     }
     
     render() {
@@ -38,7 +38,6 @@ class EditQuiz extends Component {
                     <button className="myButton" onClick={this.props.onEditQuiz}>Submit Changes</button>
                     <h3>Questions</h3>
                     {this.props.questions.map((question, i ) => {
-                        console.log("responsetext", question.responsetext)
                         return <div key={`key${i}`}>
                                     <Link className="questionlink" to={{
                                         pathname:'/EditQuestion',

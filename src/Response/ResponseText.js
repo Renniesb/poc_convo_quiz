@@ -33,8 +33,7 @@ class ResponseText extends React.Component {
           afterBlank = words[i].substring(endIndex+1, endOfStringIndex+1)
         }
 
-        console.log('before blank', beforeBlank)
-        console.log('after blank', afterBlank)
+   
 
         counter++
         words[i] = `${beforeBlank}<input id="blank${counter}">${afterBlank}`; 

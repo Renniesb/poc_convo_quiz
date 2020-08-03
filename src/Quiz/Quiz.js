@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import styles from '../AllQuizzes/AllQuizzes.module.css';
 
 const Quiz = ({quiz}) => {
-    console.log(quiz)
     return ( 
     <div>
         <div className={styles.panel}>
