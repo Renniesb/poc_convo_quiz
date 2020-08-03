@@ -71,15 +71,15 @@ class ResponseText extends React.Component {
                   <h3>{question.questiontext}</h3>
                 </div>
                 {
-                  question.video === null ?
+                  question.linktype === 'audio' ?
                       <div className="audio-player">
                       <ReactAudioPlayer
-                      src={question.audio}
+                      src={question.link}
                       autoPlay
                       controls
                       />
                     </div> : <iframe width="420" height="315"
-                src={'https://www.youtube.com/embed/'+ question.video} controls>
+                src={'https://www.youtube.com/embed/'+ question.link} controls>
                 </iframe>
                 }
                 

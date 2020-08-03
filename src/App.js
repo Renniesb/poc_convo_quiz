@@ -86,9 +86,14 @@ class App extends React.Component {
       const startIndex = word.indexOf("_")    
       const endIndex = word.lastIndexOf("_")
     if(startIndex > -1 && startIndex != endIndex){
-        word[startIndex].replace(/_/g, '')
-        word[endIndex].replace(/_/g, '')
-        return `<u>${word.replace(/_/g, ' ')}</u>`
+        let wordstr = [...word];
+
+        wordstr[startIndex] = '<u>'
+        wordstr[endIndex] = '</u>'
+        
+
+        return wordstr.join('').replace(/_/g, ' ');
+        
         
     }
     return word
@@ -115,15 +120,10 @@ class App extends React.Component {
         responsetext: this.state.responsetext,
         correcttext: correcthtml,
         answers: answers,
+        link: this.state.linktext,
+        linktype: this.state.linktype
       }
   
-      if(this.state.linktype === "audio"){
-        data.audio = this.state.linktext
-        data.video= null
-      }else {
-        data.video = this.state.linktext
-        data.audio = null
-      }
       fetch(`http://localhost:8000/api/questions/${this.state.questionId}`, {
         method: 'PATCH', 
         headers: {
@@ -139,8 +139,8 @@ class App extends React.Component {
               question.questiontext = data.questiontext
               question.responsetext = data.responsetext
               question.correcttext = data.correcttext
-              question.audio = data.audio
-              question.video= data.video
+              question.link = data.link
+              question.linktype = data.linktype
               question.answers = data.answers
 
             }
@@ -164,9 +164,17 @@ class App extends React.Component {
         let answers=""
 
         let correcttext = words.map((word)=>{
-        if(word[0] == "_"){
-        
-            return `<u>${word.replace(/_/g, '')}</u>`
+          const startIndex = word.indexOf("_")    
+          const endIndex = word.lastIndexOf("_")
+        if(startIndex > -1 && startIndex != endIndex){
+            let wordstr = [...word];
+    
+            wordstr[startIndex] = '<u>'
+            wordstr[endIndex] = '</u>'
+            
+    
+            return wordstr.join('').replace(/_/g, ' ');
+            
             
         }
         return word
@@ -180,13 +188,10 @@ class App extends React.Component {
           let answer = ""
           const endIndex = words[i].lastIndexOf("_")
 
-                      
-          console.log("end index",endIndex)
-          console.log("start index",startIndex)
 
             if(startIndex > -1 && startIndex != endIndex){              
               answer = words[i].substring(startIndex+1, endIndex)
-                answers = answers + answer.toLowerCase()
+                answers = answers + answer.replace(/_/g, ' ').toLowerCase()
                 
             }
         
@@ -196,15 +201,11 @@ class App extends React.Component {
             responsetext: this.state.responsetext,
             correcttext: correcthtml,
             answers: answers,
-            quiznum: this.state.quizInfo.id
-          };
+            quiznum: this.state.quizInfo.id,
+            link: this.state.linktext,
+            linktype: this.state.linktype
+        };
       
-          const linktext = this.state.linktext;
-          if(this.state.linktype == "audio"){
-            data.audio = linktext;
-          } else {
-            data.video = linktext;
-          }
 
       fetch(`http://localhost:8000/api/questions`, {
             method: 'POST', 
@@ -266,19 +267,19 @@ class App extends React.Component {
     fetch(`http://localhost:8000/api/questions/${id}`)
       .then(response => response.json())
       .then(data =>{ 
-        let linktype = ""
-        let link = ""
-        if(data.audio==null){
-          linktype = "video"
-        } else {
-          linktype = "audio"
-        }
-        if(linktype === "audio"){
-          link = data.audio
-        }else{
-          link = data.video
-        }
-        this.setState({topictext: data.questiontext, responsetext: data.responsetext, linktype: linktype, linktext: link, questionId: data.id })
+        // let linktype = ""
+        // let link = ""
+        // if(data.audio==null){
+        //   linktype = "video"
+        // } else {
+        //   linktype = "audio"
+        // }
+        // if(linktype === "audio"){
+        //   link = data.audio
+        // }else{
+        //   link = data.video
+        // }
+        this.setState({topictext: data.questiontext, responsetext: data.responsetext, linktype: data.linktype, linktext: data.link, questionId: data.id })
       });
     
   }
@@ -305,10 +306,15 @@ class App extends React.Component {
   }
   setBlanks = () => {
     let inputs = Array.from(this.formRef.current.children);
-    let blanks = []
-    for(let i=1;i<=inputs.length;i++){
-      blanks.push("blank"+i);
-    }
+    console.log('inputs', typeof inputs[1])
+
+    const blanks = inputs.filter((input)=>{
+      return input.id
+    }).map((blank)=>{
+      return blank.id
+    })
+
+    
     this.setState({currentBlanks: blanks});
   }
   handleOnChange = (e) => {
@@ -411,9 +417,10 @@ class App extends React.Component {
   }
   handleNextQuestion = (history, question, totalQuestions)=>{
     let inputs = Array.from(this.formRef.current.children);
-    for ( let i = 0; i < inputs.length; i++) {
-      this.formRef.current[i].value = "";
-    }
+
+    inputs.map((input)=>{
+      input.value = "";
+    })
     console.log("total questions",totalQuestions);
     if(question.id === totalQuestions){
       history.push(`/EndQuiz` );

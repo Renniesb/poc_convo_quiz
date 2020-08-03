@@ -39,7 +39,7 @@ class AddQuestion extends Component {
                             <option value="audio">audio</option>
                             <option value="video">video</option>
                         </select>
-                        file
+                        file (for video type in the youtube video id, for audio only direct links allowed)
                         </label>
                         <input onChange={e => {this.props.onNewQuestionText(e)}} id="linktext" name="linktext" value={this.props.linktext}/>
                     </div>

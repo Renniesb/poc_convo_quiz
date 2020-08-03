@@ -14,6 +14,9 @@
   margin-top: 25px;
   line-height: 40px;
   text-align: left;
+  color: rgb(40, 18, 100);
+  font-size: 20px;
+  text-shadow: 5px 5px 5px white;
 }
 .question-info span{
   background: #f0f8ff9e;
