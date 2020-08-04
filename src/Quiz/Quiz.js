@@ -7,7 +7,7 @@ const Quiz = ({quiz}) => {
     return ( 
     <div>
         <div className={styles.panel}>
-            <img src="https://i.imgur.com/3Lijaw0.png"/>
+            <img alt="poc-icon"  src="https://i.imgur.com/3Lijaw0.png"/>
             <h2>{quiz.quizname}</h2>
             <p>{quiz.quizdescription}</p>
             <Link className="myButton" to={{

@@ -9,7 +9,7 @@ class AllQuizzes extends Component {
         return (
             <div className={styles.gamebackground}>
                 <div className={styles.hero}>
-                    <img src="https://user-images.githubusercontent.com/7147957/88594242-de027f00-d02e-11ea-9e89-625a083b38e8.jpg"/>
+                    <img alt="statue-of-liberty-hero-img" src="https://user-images.githubusercontent.com/7147957/88594242-de027f00-d02e-11ea-9e89-625a083b38e8.jpg"/>
                 </div>
                 <div style={{display: "flex", justifyContent: "flex-end"}}>
                     <Link style={{marginRight: "5px"}} className="myButton"  to="/EditQuizzes">Admin</Link>

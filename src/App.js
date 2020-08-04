@@ -3,7 +3,6 @@ import ResponseText from './Response/ResponseText';
 import StartQuiz from './StartQuiz/StartQuiz'
 import EndQuiz from './EndQuiz/EndQuiz'
 import { Route,Switch } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import AllQuizzes from './AllQuizzes/AllQuizzes';
 import EditQuizzes from './Edit/EditQuizzes/EditQuizzes';
 import AddQuiz from './Edit/AddQuiz/AddQuiz';
@@ -87,7 +86,7 @@ class App extends React.Component {
     let correcttext = words.map((word)=>{
       const startIndex = word.indexOf("_")    
       const endIndex = word.lastIndexOf("_")
-    if(startIndex > -1 && startIndex != endIndex){
+    if(startIndex > -1 && startIndex !== endIndex){
         let wordstr = [...word];
 
         wordstr[startIndex] = '<u>'
@@ -110,7 +109,7 @@ class App extends React.Component {
           let answer = ""
 
 
-          if(startIndex > -1 && startIndex != endIndex){
+          if(startIndex > -1 && startIndex !== endIndex){
             answer = words[i].substring(startIndex+1, endIndex)
               answers = answers + answer.replace(/_/g, ' ').toLowerCase()
               
@@ -168,7 +167,7 @@ class App extends React.Component {
         let correcttext = words.map((word)=>{
           const startIndex = word.indexOf("_")    
           const endIndex = word.lastIndexOf("_")
-        if(startIndex > -1 && startIndex != endIndex){
+        if(startIndex > -1 && startIndex !== endIndex){
             let wordstr = [...word];
     
             wordstr[startIndex] = '<u>'
@@ -191,7 +190,7 @@ class App extends React.Component {
           const endIndex = words[i].lastIndexOf("_")
 
 
-            if(startIndex > -1 && startIndex != endIndex){              
+            if(startIndex > -1 && startIndex !== endIndex){              
               answer = words[i].substring(startIndex+1, endIndex)
                 answers = answers + answer.replace(/_/g, ' ').toLowerCase()
                 
@@ -238,9 +237,9 @@ class App extends React.Component {
       this.setState({ [event.target.id]: event.target.value },() => {
         const allFields = ["topictext","responsetext","linktext"]
         let showSubmit = allFields.every((field) => {
-              if(this.state[field] != null){
-                return this.state[field].trim().length !== 0;
-              }
+              // if(this.state[field] !== null){
+              // }
+              return this.state[field].trim().length !== 0;
              })
             if(showSubmit){
               this.setState({submitDisabled: false})
@@ -254,7 +253,7 @@ class App extends React.Component {
 
   } 
   setQuizzes = () => {
-    fetch(`${env.ENDPOINT}api/quiz`)
+    fetch(`${env.ENDPOINT}/quiz`)
       .then(response => response.json())
       .then(data =>{ 
         this.setState({ quizzes: data })}
@@ -335,7 +334,7 @@ class App extends React.Component {
         if(response.status===204){
           const quizzes = this.state.quizzes
           const filteredquizzes = quizzes.filter(quiz => {
-            return quiz.id != id
+            return quiz.id !== id
           })
           this.setState({quizzes: filteredquizzes})
         }
@@ -344,14 +343,14 @@ class App extends React.Component {
       
       this.setQuizzes()
     }else if(event.target.id === "deleteQuestion") {
-      fetch(`${env.ENDPOINT}api/questions/${id}`, {
+      fetch(`${env.ENDPOINT}questions/${id}`, {
         method: 'DELETE', 
       })
       .then(response => {
         if(response.status===204){
           const questions = this.state.questions
           const filteredquestions = questions.filter(question => {
-            return question.id != id
+            return question.id !== id
           })
           this.setState({questions: filteredquestions}) 
         }
@@ -402,7 +401,7 @@ class App extends React.Component {
     let inputs = Array.from(this.formRef.current.children);
 
     inputs.map((input)=>{
-      input.value = "";
+      return input.value = "";
     })
     if(question.id === totalQuestions){
       history.push(`/EndQuiz` );

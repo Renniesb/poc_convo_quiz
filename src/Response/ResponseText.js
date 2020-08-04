@@ -26,10 +26,10 @@ class ResponseText extends React.Component {
       
       if(startIndex > -1){
         endIndex = words[i].lastIndexOf("_")
-        if(startIndex != 0){
+        if(startIndex !== 0){
           beforeBlank = words[i].substring(0,startIndex);
         }
-        if(words[i][endOfStringIndex] != "_"){
+        if(words[i][endOfStringIndex] !== "_"){
           afterBlank = words[i].substring(endIndex+1, endOfStringIndex+1)
         }
 
@@ -77,7 +77,7 @@ class ResponseText extends React.Component {
                       autoPlay
                       controls
                       />
-                    </div> : <iframe width="420" height="315"
+                    </div> : <iframe title="myvideo" width="420" height="315"
                 src={'https://www.youtube.com/embed/'+ question.link} controls>
                 </iframe>
                 }

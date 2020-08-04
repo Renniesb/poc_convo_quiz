@@ -31,7 +31,7 @@ class EditQuestion extends Component {
                     <div>
                         <label htmlFor="linktext">
                         Type in the link to your
-                        <select value={this.props.linktype} onChange={e => {this.props.onNewQuestionText(e)}}name="linktype" id="linktype" value={this.props.linktype}>
+                        <select onChange={e => {this.props.onNewQuestionText(e)}}name="linktype" id="linktype" value={this.props.linktype}>
                             <option value="audio">audio</option>
                             <option value="video">video</option>
                         </select>
