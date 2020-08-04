@@ -10,7 +10,7 @@ import AddQuiz from './Edit/AddQuiz/AddQuiz';
 import EditQuiz from './Edit/EditQuiz/EditQuiz';
 import AddQuestion from './Edit/AddQuestion/AddQuestion';
 import EditQuestion from './Edit/EditQuestion/EditQuestion';
-import ENDPOINT from './config.js'
+import env from './config.js'
 
 
 
@@ -49,7 +49,7 @@ class App extends React.Component {
       quizname: this.state.quizName,
       quizdescription:this.state.quizDescription,
     }
-    fetch(`${ENDPOINT}quiz/${this.state.quizInfo.id}`, {
+    fetch(`${env.ENDPOINT}quiz/${this.state.quizInfo.id}`, {
       method: 'PATCH', 
       headers: {
         'Content-type': 'application/json; charset=UTF-8'
@@ -126,7 +126,7 @@ class App extends React.Component {
         linktype: this.state.linktype
       }
   
-      fetch(`${ENDPOINT}questions/${this.state.questionId}`, {
+      fetch(`${env.ENDPOINT}questions/${this.state.questionId}`, {
         method: 'PATCH', 
         headers: {
           'Content-type': 'application/json; charset=UTF-8'
@@ -209,7 +209,7 @@ class App extends React.Component {
         };
       
 
-      fetch(`${ENDPOINT}questions`, {
+      fetch(`${env.ENDPOINT}questions`, {
             method: 'POST', 
             headers: {
               'Content-Type': 'application/json',
@@ -254,7 +254,7 @@ class App extends React.Component {
 
   } 
   setQuizzes = () => {
-    fetch(`${ENDPOINT}api/quiz`)
+    fetch(`${env.ENDPOINT}api/quiz`)
       .then(response => response.json())
       .then(data =>{ 
         this.setState({ quizzes: data })}
@@ -265,7 +265,7 @@ class App extends React.Component {
   }
   setQuestionInfo = (id) => {
     
-    fetch(`${ENDPOINT}questions/${id}`)
+    fetch(`${env.ENDPOINT}questions/${id}`)
       .then(response => response.json())
       .then(data =>{ 
        
@@ -276,13 +276,13 @@ class App extends React.Component {
   setQuestions = (quizNum, editingMode = false) => {
 
     if(editingMode){
-      fetch(`${ENDPOINT}quiz/${quizNum}/questions`)
+      fetch(`${env.ENDPOINT}quiz/${quizNum}/questions`)
       .then(response => response.json())
       .then(data =>{ 
           this.setState({questions: data})
       });
     } else {
-      fetch(`${ENDPOINT}quiz/${quizNum}/questions`)
+      fetch(`${env.ENDPOINT}quiz/${quizNum}/questions`)
       .then(response => response.json())
       .then(data =>{ 
           for(let i =0; i<data.length;i++){
@@ -328,7 +328,7 @@ class App extends React.Component {
   delete = (event,id) => {
   
     if(event.target.id === "deleteQuiz"){
-      fetch(`${ENDPOINT}quiz/${id}`, {
+      fetch(`${env.ENDPOINT}quiz/${id}`, {
         method: 'DELETE', 
       })
       .then(response => {
@@ -344,7 +344,7 @@ class App extends React.Component {
       
       this.setQuizzes()
     }else if(event.target.id === "deleteQuestion") {
-      fetch(`${ENDPOINT}api/questions/${id}`, {
+      fetch(`${env.ENDPOINT}api/questions/${id}`, {
         method: 'DELETE', 
       })
       .then(response => {
@@ -363,7 +363,7 @@ class App extends React.Component {
       quizname: this.state.newQuizName,
       quizdescription: this.state.newQuizDescription
     }
-    fetch(`${ENDPOINT}quiz`, {
+    fetch(`${env.ENDPOINT}quiz`, {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json',
