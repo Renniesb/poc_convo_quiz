@@ -1,4 +1,4 @@
-# Application name: POC conversational Quiz APP
+# POC conversational Quiz APP
 
 Link to the live app: https://poc-convo-quiz.vercel.app/
 # Screenshots
