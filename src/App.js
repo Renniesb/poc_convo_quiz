@@ -2,7 +2,7 @@ import React, {createRef} from 'react';
 import ResponseText from './Response/ResponseText';
 import StartQuiz from './StartQuiz/StartQuiz'
 import EndQuiz from './EndQuiz/EndQuiz'
-import { Route,Switch } from 'react-router-dom';
+import { BrowserRouter, Route,Switch } from 'react-router-dom';
 import AllQuizzes from './AllQuizzes/AllQuizzes';
 import EditQuizzes from './Edit/EditQuizzes/EditQuizzes';
 import AddQuiz from './Edit/AddQuiz/AddQuiz';
@@ -41,8 +41,8 @@ class App extends React.Component {
      isIncorrect: "",
      correct: 0,
      incorrect:0
-     }
     }
+  }
   handleEditQuiz = () => {
     const data = {
       quizname: this.state.quizName,
@@ -448,7 +448,6 @@ class App extends React.Component {
   render() {
     return ( 
     <div className="App">
-      
         <Switch>
           <Route
             path='/question/:questionId'
