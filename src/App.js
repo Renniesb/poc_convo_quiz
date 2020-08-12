@@ -2,7 +2,7 @@ import React, {createRef} from 'react';
 import ResponseText from './Response/ResponseText';
 import StartQuiz from './StartQuiz/StartQuiz'
 import EndQuiz from './EndQuiz/EndQuiz'
-import { BrowserRouter, Route,Switch } from 'react-router-dom';
+import { Route,Switch } from 'react-router-dom';
 import AllQuizzes from './AllQuizzes/AllQuizzes';
 import EditQuizzes from './Edit/EditQuizzes/EditQuizzes';
 import AddQuiz from './Edit/AddQuiz/AddQuiz';
@@ -237,8 +237,7 @@ class App extends React.Component {
       this.setState({ [event.target.id]: event.target.value },() => {
         const allFields = ["topictext","responsetext","linktext"]
         let showSubmit = allFields.every((field) => {
-              // if(this.state[field] !== null){
-              // }
+              
               return this.state[field].trim().length !== 0;
              })
             if(showSubmit){

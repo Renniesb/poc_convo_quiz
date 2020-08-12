@@ -10,7 +10,7 @@
 
 
 .panel {
-    margin-left: 20px;
+    
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
@@ -64,3 +64,10 @@
     box-shadow:4px 4px 10px rgba(0,0,0,0.06);
     height:35px;
 }
+
+@media only screen and (max-width: 900px) {
+    .panel {
+      width: 80vw;
+    }
+    
+  }
