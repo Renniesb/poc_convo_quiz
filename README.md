@@ -2,7 +2,8 @@
 
 Link to the live app: https://poc-convo-quiz.vercel.app/
 # Screenshots
--first
+
+![image](https://user-images.githubusercontent.com/7147957/89962362-79404a80-dc12-11ea-905f-1fe53fd6c403.png)
 -second
 
 # Walkthroughs
