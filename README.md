@@ -4,17 +4,10 @@ Link to the live app: https://poc-convo-quiz.vercel.app/
 # Screenshots
 
 ![image](https://user-images.githubusercontent.com/7147957/89962362-79404a80-dc12-11ea-905f-1fe53fd6c403.png)
--second
-
-# Walkthroughs
-
-### Click on a quiz from the list
-
-
-### Create a new quiz
-
-
-
+![image](https://user-images.githubusercontent.com/7147957/89962898-0cc64b00-dc14-11ea-8911-d6278f226cd0.png)
+![image](https://user-images.githubusercontent.com/7147957/89966463-38016800-dc1d-11ea-8243-a2061d9d598b.png)
+![image](https://user-images.githubusercontent.com/7147957/89966668-b52cdd00-dc1d-11ea-843d-568709659b55.png)
+![image](https://user-images.githubusercontent.com/7147957/89966779-e6a5a880-dc1d-11ea-9b2f-4bffbf80b70b.png)
 
 # Summary
 
