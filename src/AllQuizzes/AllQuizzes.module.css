@@ -1,18 +1,28 @@
 /* Add your styles here */
 
 .whitetext {
-  color: white;
-  text-shadow: 5px 5px 5px maroon;
+  color: rgb(64, 51, 110);
+  margin-top: 60px;
+  margin-bottom: 60px;
+  /* text-shadow: 5px 5px 5px maroon; */
 }
 
 .gamebackground {
-    background-image: url('../img/learn-english.jpg');
+    /* background-image: url('../img/learn-english.jpg');
     background-position: center;
     background-repeat: repeat;
     margin: 0px;
-    padding-bottom: 120px;
-    
-}
+    padding-bottom: 120px; */
+
+  
+    background: linear-gradient(135deg, #e1e1e1 25%, transparent 25%) -50px 0,
+      linear-gradient(225deg, #e1e1e1 25%, transparent 25%) -50px 0,
+      linear-gradient(315deg, #e1e1e1 25%, transparent 25%),
+      linear-gradient(45deg, #e1e1e1 25%, transparent 25%);
+    background-size: 100px 100px;
+    background-color: #cfd8dc;
+  
+    }
     
    
     .hero img{
@@ -27,7 +37,7 @@
         
     }
     .panel {
-      margin-top: 50px;
+      margin-bottom: 50px;
       /* margin-left: 20px; */
       -webkit-border-radius: 10px;
       -moz-border-radius: 10px;
@@ -60,15 +70,20 @@
       -webkit-border-radius: 10px;
       -moz-border-radius: 10px;
       border-radius: 10px;
+      box-shadow: 10px 10px 8px 10px #888888;
       align-items: center;
       flex-direction: column;
       width: 50vw;
-      border-top: 15px solid #0134a8;
+      border-top: 15px solid #c3cbb3;
       display: flex;
-      background-color: #9ebace85; 
+      /* background-color: #9ebace85;  */
+      background-color:  rgb(225 225 225); 
+
       color: #07101f;
-      padding-right: 20px;
-      padding-top: 0px;
+      /* padding-right: 20px; */
+      padding-top: 30px;
+      padding-bottom: 30px;
+
 
   }
 

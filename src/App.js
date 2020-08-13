@@ -79,6 +79,7 @@ class App extends React.Component {
   }
   
   handleEditQuestion = (id) => {
+    //create response text that accounts for punctuation at the end
     let responseText = this.state.responsetext;
     let words = responseText.split(' ');
     let answers=""
@@ -159,7 +160,7 @@ class App extends React.Component {
   
   addNewQuestion = () => {
 
-    
+        //make sure blank logic accounts for punctuation, create response text
         let responseText = this.state.responsetext;
         let words = responseText.split(' ');
         let answers=""
@@ -272,7 +273,7 @@ class App extends React.Component {
     
   }
   setQuestions = (quizNum, editingMode = false) => {
-
+    //get questions from a specific quiz
     if(editingMode){
       fetch(`${env.ENDPOINT}quiz/${quizNum}/questions`)
       .then(response => response.json())
@@ -398,7 +399,7 @@ class App extends React.Component {
   }
   handleNextQuestion = (history, question, totalQuestions)=>{
     let inputs = Array.from(this.formRef.current.children);
-
+    //code to remove data from the blanks and detect if we should move to the end screen
     inputs.map((input)=>{
       return input.value = "";
     })

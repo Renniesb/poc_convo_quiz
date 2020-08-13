@@ -85,6 +85,7 @@ class ResponseText extends React.Component {
                 <div className="response-box"  onChange={(event)=>{change(event,question.blanks)}}>
                   <form ref={formRef} autoComplete="off">
                 {
+                  //translate the sentence into fill in the blank html
                   parse(this.makeResponseHtml(question.responsetext))
                   }
                   </form>
