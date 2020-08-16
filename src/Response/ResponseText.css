@@ -11,6 +11,7 @@
 
 
 .response-box {
+  background-color: #ffffffb0;
   margin-top: 25px;
   line-height: 40px;
   text-align: left;
@@ -97,6 +98,7 @@ text-align: center;
   background: #f5f5dc7d;
 }
 .poc-convo-title {
+    background-color: #ffffffb0;
     color: indianred;
     margin: 0px;
     margin-bottom: 15px;
