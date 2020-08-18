@@ -22,7 +22,7 @@ class AllQuizzes extends Component {
                 <Slide className={styles.slideshow}>                   
 
                     {slideImages.map((image,ind) => {
-                       return( <div className="each-slide">
+                       return( <div key={`slide${ind}`} className="each-slide">
                         <div>
                             <img alt={`slide ${ind}`} className={styles.slideshow} src={image}></img>
                         </div>
