@@ -77,9 +77,7 @@ class ResponseText extends React.Component {
                       autoPlay
                       controls
                       />
-                    </div> : <iframe title="myvideo" width="420" height="315"
-                src={'https://www.youtube.com/embed/'+ question.link} controls>
-                </iframe>
+                    </div> : <div><iframe width="640" height="480" src={'https://youtube-cutter.org/embed/'+ question.link} frameborder="0" allowfullscreen></iframe><a href="https://youtube-cutter.org/" target="_blank">via YouTube Cutter</a></div>
                 }
                 
                 <div className="response-box"  onChange={(event)=>{change(event,question.blanks)}}>
