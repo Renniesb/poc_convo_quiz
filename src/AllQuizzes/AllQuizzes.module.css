@@ -89,6 +89,7 @@
   .slideshow {
     height:500px;
     width: 80vw;
+    max-width: 923px;
   }
 
   @media only screen and (max-width: 900px) {
