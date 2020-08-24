@@ -22,6 +22,7 @@ class App extends React.Component {
     this.state = {
      topictext: "",
      responsetext: "",
+     level:"All Levels",
      linktype: "audio",
      linktext: "",
      correcthtml: "",
@@ -324,6 +325,9 @@ class App extends React.Component {
         })
             
   }
+  changeLevel = (e) => {
+    this.setState({level: e.target.value})
+  }
   delete = (event,id) => {
   
     if(event.target.id === "deleteQuiz"){
@@ -478,7 +482,7 @@ class App extends React.Component {
             
           </Route>
           <Route path="/">
-            <AllQuizzes quizzes={this.state.quizzes} />
+            <AllQuizzes quizzes={this.state.quizzes} changeLevel={this.changeLevel} level={this.state.level}/>
           </Route>
         </Switch>
     </div>

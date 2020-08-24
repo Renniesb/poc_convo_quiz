@@ -12,6 +12,12 @@ import slideImages from './../slideImages';
 class AllQuizzes extends Component {
 
     render() {
+        const filteredQuizzes =  this.props.quizzes.filter((quiz)=>{
+            if(this.props.level === "All Levels"){
+                return quiz
+            }
+            return quiz.level === this.props.level
+        })
         return (
             <div className={styles.gamebackground}>
                 <div className={styles.hero}>
@@ -50,10 +56,19 @@ class AllQuizzes extends Component {
                                 <li className={styles.infoItem}>At the end of each quiz you will recieve a score</li>
                             </ol>
                     </div>
-                    
+                    <form>
+                        <label for="cars">Choose your language level:</label>
+                        <select name="cars" id="cars" onChange={e => {this.props.changeLevel(e)}} value={this.props.level}>
+                            <option value="All Levels">All Levels</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                        </select>
+                    </form>
                     
                     <h1 className={styles.whitetext}>Choose a Quiz Below</h1>
-                    {this.props.quizzes.map((quiz,i) => {
+                    {                    
+                    filteredQuizzes.map((quiz,i) => {
                     return <Quiz key={`key${i}`} quiz={quiz}/>
                     })}
                 </div>
