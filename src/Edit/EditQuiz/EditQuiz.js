@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './EditQuiz.css';
-
+import ToggleSwitch from '../../ToggleSwitch/ToggleSwitch'
 
 class EditQuiz extends Component {
     componentDidMount(){
@@ -34,7 +34,18 @@ class EditQuiz extends Component {
                     </div>
                     <div>
                         <textarea onChange={e => {this.props.onNewQuestionText(e)}} value={this.props.quizDescription} id="quizDescription" name="quizDescription" />
-                    </div> 
+                    </div>
+                    <label htmlFor="toggleSwitch">Locked:</label> 
+                    <ToggleSwitch id="toggleSwitch" addedLevel={this.props.addedLevel} locked={this.props.locked} onChange={this.props.onChange} Name="editlocked"/>
+                    <label style={{marginTop: "10px", marginBottom: "20px"}} htmlFor="addedLevel">
+                        Edit the quiz level 
+                        <select onChange={e => {this.props.onNewQuestionText(e)}} name="addedLevel"      id="addedLevel" value={this.props.addedLevel}>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+
+                        </select>
+                    </label>
                     <button className="myButton" onClick={this.props.onEditQuiz}>Submit Changes</button>
                     <h3>Questions</h3>
                     {this.props.questions.map((question, i ) => {

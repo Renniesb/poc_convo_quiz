@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './AddQuiz.module.css';
+import ToggleSwitch from '../../ToggleSwitch/ToggleSwitch'
+
 
 class AddQuiz extends Component {
     render() {
@@ -17,6 +19,17 @@ class AddQuiz extends Component {
                         <label htmlFor="quizDescription">Quiz Description</label>
                         <textarea onChange={e => {this.props.onNewQuestionText(e)}} value={this.props.newQuizDescription} id="newQuizDescription" name="newQuizDescription" />
                     </div>
+                    <label htmlFor="toggleSwitch">Locked: </label> 
+                    <ToggleSwitch id="toggleSwitch" addedLevel={this.props.addedLevel} locked={this.props.locked} onChange={this.props.onChange} Name="locked"/>
+                    <label style={{marginTop: "10px", marginBottom: "20px"}} htmlFor="addedLevel">
+                        Choose your quiz level 
+                        <select onChange={e => {this.props.onNewQuestionText(e)}} name="addedLevel"      id="addedLevel" value={this.props.addedLevel}>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+
+                        </select>
+                    </label>
                     <Link id="submitQuiz"  onClick={() => {this.props.addNewQuiz()}} className="myButton" to={{
                                         pathname:'/EditQuiz',
                                         state:{
