@@ -57,8 +57,8 @@ class AllQuizzes extends Component {
                             </ol>
                     </div>
                     <form>
-                        <label for="cars">Choose your language level:</label>
-                        <select name="cars" id="cars" onChange={e => {this.props.changeLevel(e)}} value={this.props.level}>
+                        <label htmlFor="level">Choose your language level:</label>
+                        <select name="level" id="level" onChange={e => {this.props.changeLevel(e)}} value={this.props.level}>
                             <option value="All Levels">All Levels</option>
                             <option value="Beginner">Beginner</option>
                             <option value="Intermediate">Intermediate</option>
