@@ -41,7 +41,8 @@ class App extends React.Component {
      nextDisabled: true,
      isIncorrect: "",
      correct: 0,
-     incorrect:0
+     incorrect:0,
+     checked: false
     }
   }
   handleEditQuiz = () => {
@@ -157,6 +158,9 @@ class App extends React.Component {
         console.error('Error:', error);
       });
   
+  }
+  onToggle = newValue => {
+    this.setState({ checked: newValue });
   }
   
   addNewQuestion = () => {
@@ -470,7 +474,7 @@ class App extends React.Component {
             <EditQuizzes setQuizzes={this.setQuizzes} quizzes={this.state.quizzes} onDelete={this.delete}/>
           </Route>
           <Route path="/AddQuiz" render={({history,location}) => (
-            <AddQuiz historyquizDescription={this.state.quizDescription} quizName = {this.state.quizName} history={history} location={location} onNewQuestionText={this.handleNewQuestionText} handleAddNewQuiz={this.handleAddNewQuizInfo} addNewQuiz={this.addNewQuiz} newQuiz={this.state.newQuiz}  submitDisabled={this.state.submitDisabled}/>
+            <AddQuiz onChange={this.onToggle} historyquizDescription={this.state.quizDescription} quizName = {this.state.quizName} history={history} location={location} onNewQuestionText={this.handleNewQuestionText} handleAddNewQuiz={this.handleAddNewQuizInfo} addNewQuiz={this.addNewQuiz} newQuiz={this.state.newQuiz}  submitDisabled={this.state.submitDisabled}/>
           )}/>
             
 
