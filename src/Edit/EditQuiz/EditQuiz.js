@@ -34,10 +34,11 @@ class EditQuiz extends Component {
                     </div>
                     <div>
                         <textarea onChange={e => {this.props.onNewQuestionText(e)}} value={this.props.quizDescription} id="quizDescription" name="quizDescription" />
-                    </div> 
+                    </div>
+                    <label htmlFor="toggleSwitch">Locked:</label> 
                     <ToggleSwitch id="toggleSwitch" addedLevel={this.props.addedLevel} locked={this.props.locked} onChange={this.props.onChange} Name="editlocked"/>
-                    <label style={{marginTop: "10px"}} htmlFor="addedLevel">
-                        Choose your quiz level 
+                    <label style={{marginTop: "10px", marginBottom: "20px"}} htmlFor="addedLevel">
+                        Edit the quiz level 
                         <select onChange={e => {this.props.onNewQuestionText(e)}} name="addedLevel"      id="addedLevel" value={this.props.addedLevel}>
                             <option value="Beginner">Beginner</option>
                             <option value="Intermediate">Intermediate</option>
