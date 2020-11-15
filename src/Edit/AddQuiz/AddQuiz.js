@@ -19,10 +19,6 @@ class AddQuiz extends Component {
                         <label htmlFor="quizDescription">Quiz Description</label>
                         <textarea onChange={e => {this.props.onNewQuestionText(e)}} value={this.props.newQuizDescription} id="newQuizDescription" name="newQuizDescription" />
                     </div>
-                    <div>
-                        <label htmlFor="quizDescription">Quiz Description</label>
-                        <textarea onChange={e => {this.props.onNewQuestionText(e)}} value={this.props.newQuizDescription} id="newQuizDescription" name="newQuizDescription" />
-                    </div>
                     <ToggleSwitch id="toggleSwitch" addedLevel={this.props.addedLevel} locked={this.props.locked} onChange={this.props.onChange} Name="locked"/>
                     <label style={{marginTop: "10px"}} htmlFor="addedLevel">
                         Choose your quiz level 

@@ -50,6 +50,8 @@ class App extends React.Component {
     const data = {
       quizname: this.state.quizName,
       quizdescription:this.state.quizDescription,
+      locked:this.state.locked,
+      level: this.state.addedLevel
     }
     fetch(`${env.ENDPOINT}quiz/${this.state.quizInfo.id}`, {
       method: 'PATCH', 
@@ -65,7 +67,9 @@ class App extends React.Component {
        const newQuizzes = quizzes.map((quiz) => {
           if(quiz.id === this.state.quizInfo.id){
                  quiz.quizname = data.quizname 
-                 quiz.quizdescription = data.quizdescription      
+                 quiz.quizdescription = data.quizdescription
+                 quiz.locked = data.locked
+                 quiz.level = data.level      
           }
           return quiz
        })
@@ -75,7 +79,7 @@ class App extends React.Component {
      }
     }
     )
-    .then(data=> console.log(data))  
+    .then(data=> console.log('data', data))  
     .catch((error) => {
       console.error('Error:', error);
     });
@@ -265,7 +269,7 @@ class App extends React.Component {
       )
   }
   setQuizInfo = (quiz) => {
-    this.setState({quizInfo: quiz, quizDescription: quiz.quizdescription, quizName: quiz.quizname})
+    this.setState({quizInfo: quiz, quizDescription: quiz.quizdescription, quizName: quiz.quizname, locked:  quiz.locked, addedLevel: quiz.level})
   }
   setQuestionInfo = (id) => {
     
@@ -481,7 +485,8 @@ class App extends React.Component {
           )}/>
             
 
-          <Route path="/EditQuiz" render={routeProps=><EditQuiz {...routeProps} setQuizInfo={this.setQuizInfo} quizDescription={this.state.quizDescription} quizName = {this.state.quizName} quizInfo={this.state.quizInfo} setQuestions={this.setQuestions} questions={this.state.questions} onNewQuestionText={this.handleNewQuestionText} onEditQuiz={this.handleEditQuiz} newQuiz={this.state.newQuiz} onDelete={this.delete} />} />
+          <Route path="/EditQuiz" render={routeProps=><EditQuiz {...routeProps} setQuizInfo={this.setQuizInfo} quizDescription={this.state.quizDescription} quizName = {this.state.quizName}
+          addedLevel={this.state.addedLevel} locked={this.state.locked} quizInfo={this.state.quizInfo} onChange={this.onToggle} setQuestions={this.setQuestions} questions={this.state.questions} onNewQuestionText={this.handleNewQuestionText} onEditQuiz={this.handleEditQuiz} newQuiz={this.state.newQuiz} onDelete={this.delete} />} />
           
           <Route path="/AddQuestion" render={routeProps=><AddQuestion {...routeProps} addNewQuestion={this.addNewQuestion} onNewQuestion={this.handleNewQuestion} onInfoSubmit={this.handleInfoSubmit} submitDisabled={this.state.submitDisabled} quizInfo={this.state.quizInfo} onNewQuestionText={this.handleNewQuestionText} linktype={this.state.linktype} responsetext={this.state.responsetext}topictext={this.state.topictext} linktext={this.state.linktext} />}  />
           <Route path="/EditQuestion" render={routeProps=> <EditQuestion {...routeProps} topictext={this.state.topictext} quizInfo={this.state.quizInfo}
