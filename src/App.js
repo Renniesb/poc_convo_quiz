@@ -42,7 +42,8 @@ class App extends React.Component {
      isIncorrect: "",
      correct: 0,
      incorrect:0,
-     checked: false
+     locked: false,
+     addedLevel: "Intermediate"
     }
   }
   handleEditQuiz = () => {
@@ -160,7 +161,7 @@ class App extends React.Component {
   
   }
   onToggle = newValue => {
-    this.setState({ checked: newValue });
+    this.setState({ locked: newValue });
   }
   
   addNewQuestion = () => {
@@ -236,7 +237,7 @@ class App extends React.Component {
     
   }
   handleNewQuestionText = event => {
-    
+    console.log(event.target.id);
     this.setState({[event.target.id]: event.target.value})
     
     if(event.target.id === "linktype" || event.target.id === "topictext" || event.target.id === "responsetext" || event.target.id === "linktext" ){
@@ -253,8 +254,7 @@ class App extends React.Component {
               this.setState({submitDisabled: true})
             }
       })    
-    }
-    
+    }    
 
   } 
   setQuizzes = () => {
@@ -368,7 +368,10 @@ class App extends React.Component {
   addNewQuiz = () => {
     const data = {
       quizname: this.state.newQuizName,
-      quizdescription: this.state.newQuizDescription
+      quizdescription: this.state.newQuizDescription,
+      locked: this.state.locked,
+      level: this.state.addedLevel
+
     }
     fetch(`${env.ENDPOINT}quiz`, {
       method: 'POST', 
@@ -474,7 +477,7 @@ class App extends React.Component {
             <EditQuizzes setQuizzes={this.setQuizzes} quizzes={this.state.quizzes} onDelete={this.delete}/>
           </Route>
           <Route path="/AddQuiz" render={({history,location}) => (
-            <AddQuiz onChange={this.onToggle} historyquizDescription={this.state.quizDescription} quizName = {this.state.quizName} history={history} location={location} onNewQuestionText={this.handleNewQuestionText} handleAddNewQuiz={this.handleAddNewQuizInfo} addNewQuiz={this.addNewQuiz} newQuiz={this.state.newQuiz}  submitDisabled={this.state.submitDisabled}/>
+            <AddQuiz addedLevel={this.state.addedLevel} locked={this.state.locked} onChange={this.onToggle} historyquizDescription={this.state.quizDescription} quizName = {this.state.quizName} history={history} location={location} onNewQuestionText={this.handleNewQuestionText} handleAddNewQuiz={this.handleAddNewQuizInfo} addNewQuiz={this.addNewQuiz} newQuiz={this.state.newQuiz}  submitDisabled={this.state.submitDisabled}/>
           )}/>
             
 

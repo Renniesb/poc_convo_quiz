@@ -8,7 +8,7 @@ class ToggleSwitch extends Component {
         <input
           type="checkbox"
           className="toggle-switch-checkbox"
-          checked={this.props.checked}
+          checked={this.props.locked}
           onChange={e => this.props.onChange(e.target.checked)}
           name={this.props.Name}
           id={this.props.Name}
