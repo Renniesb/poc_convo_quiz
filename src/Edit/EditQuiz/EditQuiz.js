@@ -61,7 +61,7 @@ class EditQuiz extends Component {
                                 </div>
                         
                         })}
-                    <Link className="myButton" to="/AddQuestion"> + Add Question</Link>
+                    <Link className="myButton" to="/SelectQuestionType"> + Add Question</Link>
                 </div>    
                    
             </div>

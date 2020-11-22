@@ -8,7 +8,9 @@ import EditQuizzes from './Edit/EditQuizzes/EditQuizzes';
 import AddQuiz from './Edit/AddQuiz/AddQuiz';
 import EditQuiz from './Edit/EditQuiz/EditQuiz';
 import AddQuestion from './Edit/AddQuestion/AddQuestion';
+import AddMultipleChoiceQuestion from './Edit/AddMultipleChoiceQuestion/AddMultipleChoiceQuestion';
 import EditQuestion from './Edit/EditQuestion/EditQuestion';
+import SelectQuestionType from './Edit/SelectQuestionType/SelectQuestionType';
 import env from './config.js'
 
 
@@ -489,6 +491,9 @@ class App extends React.Component {
           addedLevel={this.state.addedLevel} locked={this.state.locked} quizInfo={this.state.quizInfo} onChange={this.onToggle} setQuestions={this.setQuestions} questions={this.state.questions} onNewQuestionText={this.handleNewQuestionText} onEditQuiz={this.handleEditQuiz} newQuiz={this.state.newQuiz} onDelete={this.delete} />} />
           
           <Route path="/AddQuestion" render={routeProps=><AddQuestion {...routeProps} addNewQuestion={this.addNewQuestion} onNewQuestion={this.handleNewQuestion} onInfoSubmit={this.handleInfoSubmit} submitDisabled={this.state.submitDisabled} quizInfo={this.state.quizInfo} onNewQuestionText={this.handleNewQuestionText} linktype={this.state.linktype} responsetext={this.state.responsetext}topictext={this.state.topictext} linktext={this.state.linktext} />}  />
+          <Route path="/AddMultipleChoiceQuestion" render={routeProps=><AddMultipleChoiceQuestion {...routeProps} addMultipleChoiceQuestion={this.addMultipleChoiceQuestion} onNewQuestion={this.handleNewQuestion} onInfoSubmit={this.handleInfoSubmit} submitDisabled={this.state.submitDisabled} quizInfo={this.state.quizInfo} onNewQuestionText={this.handleNewQuestionText} linktype={this.state.linktype} responsetext={this.state.responsetext} topictext={this.state.topictext} linktext={this.state.linktext} />     }  />
+
+          <Route path="/SelectQuestionType" render={routeProps=><SelectQuestionType {...routeProps} />}  />
           <Route path="/EditQuestion" render={routeProps=> <EditQuestion {...routeProps} topictext={this.state.topictext} quizInfo={this.state.quizInfo}
      responsetext={this.state.responsetext} linktype={this.state.linktype} linktext={this.state.linktext} onNewQuestionText={this.handleNewQuestionText} setQuestionInfo={this.setQuestionInfo} questionId={this.state.questionId} onEditQuestion={this.handleEditQuestion} submitDisabled={this.state.submitDisabled} />}>
             
