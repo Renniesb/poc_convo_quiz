@@ -23,7 +23,7 @@ class AddQuestion extends Component {
                                     }}>
                                         Back
                     </Link> 
-                    <h1>Add Question</h1>
+                    <h1>Add Fill in the blank Question</h1>
                     <div>
                         <label htmlFor="topictext">Type the question topic text</label>
                         <input value={this.props.topictext} id="topictext" onChange={e => {this.props.onNewQuestionText(e)}} name="topictext" />
