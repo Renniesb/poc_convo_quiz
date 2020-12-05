@@ -44,6 +44,7 @@ class AddQuestion extends Component {
                         <input onChange={e => {this.props.onNewQuestionText(e)}} id="linktext" name="linktext" value={this.props.linktext}/>
                     </div>
                     { !this.props.submitDisabled ? <Link id="submitQuestion" onClick={() => {
+                        console.log(this.props.quizInfo)
                             this.props.addNewQuestion()                    
                         }}  className="myButton" to={{
                                         pathname:'/EditQuiz',

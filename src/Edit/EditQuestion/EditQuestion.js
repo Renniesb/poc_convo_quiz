@@ -20,12 +20,21 @@ class EditQuestion extends Component {
                                         Back
                     </Link> 
                     <h1>Edit Question</h1>
+                   <div>
+                   <select onChange={e => {this.props.onNewQuestionText(e)}} name="questiontype" id="questiontype" value={this.props.questiontype}>
+                    <option value="fill in the blank">Fill in the blank</option>
+                    <option value="multiple choice">Multiple choice</option>
+                   </select>
+
+                   </div>                 
+
                     <div>
                         <label htmlFor="topictext">Type the question topic text</label>
                         <input id="topictext" onChange={e => {this.props.onNewQuestionText(e)}} name="topictext" value={this.props.topictext} />
                     </div>
                     <div>
-                        <label htmlFor="responsetext">Type in the response text with an underscore before and after each word that the user must fill in as a blank</label>
+                        {this.props.location.state.question.questiontype === "fill in the blank" ? <label htmlFor="responsetext">Type in the response text with an underscore before and after each word that the user must fill in as a blank</label> : <label htmlFor="responsetext">Type in the choices as a comma separated list with a dash in front of the correct option</label>}
+                        
                         <textarea id="responsetext" onChange={e => {this.props.onNewQuestionText(e)}} name="responsetext" value={this.props.responsetext} />
                     </div>
                     <div>
@@ -41,7 +50,7 @@ class EditQuestion extends Component {
                     </div>
                 
                     { !this.props.submitDisabled ? <Link id="editQuestion" onClick={() => {
-                            this.props.onEditQuestion(this.props.location.state.question.id)                    
+                            this.props.onEditQuestion(this.props.location.state.question.id, this.props.location.state.question.questiontype)                    
                         }}  className="myButton" to={{
                                         pathname:'/EditQuiz',
                                         state:{

@@ -45,7 +45,7 @@ class AddMultipleChoiceQuestion extends Component {
                     </div>
                    
                     { !this.props.submitDisabled ? <Link id="submitQuestion" onClick={() => {
-                            this.props.addNewQuestion()                    
+                            this.props.addMultipleChoiceQuestion()                    
                         }}  className="myButton" to={{
                                         pathname:'/EditQuiz',
                                         state:{

@@ -10,7 +10,7 @@ const Quiz = ({quiz}) => {
         return (
         <div>
             <div className="lockedquiz">
-                <div class="overlay">Subscribe to Access this Quiz</div>
+                <div className="overlay">Subscribe to Access this Quiz</div>
                 <img style={{ width: "250px", marginTop: "50px"}}alt="poc-icon"  src="https://i.imgur.com/riiO7TJ.png"/>           
                 
                 <h2>{quiz.quizname}</h2>                

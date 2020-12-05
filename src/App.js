@@ -31,10 +31,11 @@ class App extends React.Component {
      answers: "",
      questions: [],
      questionId: 0, 
-     quizInfo: [],
+     quizInfo: [], 
      newQuizName: "",
      newQuizDescription: "",
      quizName: "",
+     questiontype:"",
      quizDescription: "",
      quizzes: [],
      currentBlanks: [],
@@ -87,52 +88,68 @@ class App extends React.Component {
     });
   }
   
-  handleEditQuestion = (id) => {
+  handleEditQuestion = (id,questiontype) => {
     //create response text that accounts for punctuation at the end
-    let responseText = this.state.responsetext;
-    let words = responseText.split(' ');
     let answers=""
+    let words =""
+    let correcttext =""
+    let correcthtml = ""
+    let responseText = this.state.responsetext;
+    if(questiontype === "fill in the blank"){
+      words = responseText.split(' ');
+      correcttext = words.map((word)=>{
+        const startIndex = word.indexOf("_")    
+        const endIndex = word.lastIndexOf("_")
+      if(startIndex > -1 && startIndex !== endIndex){
+          let wordstr = [...word];
 
-    let correcttext = words.map((word)=>{
-      const startIndex = word.indexOf("_")    
-      const endIndex = word.lastIndexOf("_")
-    if(startIndex > -1 && startIndex !== endIndex){
-        let wordstr = [...word];
+          wordstr[startIndex] = '<u>'
+          wordstr[endIndex] = '</u>'
+          
 
-        wordstr[startIndex] = '<u>'
-        wordstr[endIndex] = '</u>'
+          return wordstr.join('').replace(/_/g, ' ');
+          
+          
+      }
+      return word
+      }).join(' ')
+
+       correcthtml = `<span class="incorrect">Incorrect</span><div class="correct-answer">Correct Answer: ${correcttext}</div>`
+
+      for(let i=0; i<words.length;i++){
+      
+            const startIndex = words[i].indexOf("_")    
+            const endIndex = words[i].lastIndexOf("_")
+            let answer = ""
+
+
+            if(startIndex > -1 && startIndex !== endIndex){
+              answer = words[i].substring(startIndex+1, endIndex)
+                answers = answers + answer.replace(/_/g, ' ').toLowerCase()
+                
+            }
+      
+      }
+    }else {
+      words = responseText.split(',');
+      correcttext = words.map((word)=>{
+       if(word.trim()[0]==="-"){
+         return word.trim().substring(1) 
         
+       } 
+      })
+      answers = correcttext
+      correcthtml = `<span class="incorrect">Incorrect</span><div class="correct-answer">Correct Answer: ${correcttext}</div>`
 
-        return wordstr.join('').replace(/_/g, ' ');
-        
-        
-    }
-    return word
-    }).join(' ')
-
-    let correcthtml = `<span class="incorrect">Incorrect</span><div class="correct-answer">Correct Answer: ${correcttext}</div>`
-
-    for(let i=0; i<words.length;i++){
-    
-          const startIndex = words[i].indexOf("_")    
-          const endIndex = words[i].lastIndexOf("_")
-          let answer = ""
-
-
-          if(startIndex > -1 && startIndex !== endIndex){
-            answer = words[i].substring(startIndex+1, endIndex)
-              answers = answers + answer.replace(/_/g, ' ').toLowerCase()
-              
-          }
-    
-    }
+    }  
     const data = { 
         questiontext: this.state.topictext,
         responsetext: this.state.responsetext,
         correcttext: correcthtml,
         answers: answers,
         link: this.state.linktext,
-        linktype: this.state.linktype
+        linktype: this.state.linktype,
+        questiontype: this.state.questiontype
       }
   
       fetch(`${env.ENDPOINT}questions/${this.state.questionId}`, {
@@ -147,6 +164,7 @@ class App extends React.Component {
           const questions = this.state.questions
           const newQuestions = questions.map((question) => {
             if(question.id === id){
+              question.questiontype = data.questiontype
               question.questiontext = data.questiontext
               question.responsetext = data.responsetext
               question.correcttext = data.correcttext
@@ -217,7 +235,8 @@ class App extends React.Component {
             answers: answers,
             quiznum: this.state.quizInfo.id,
             link: this.state.linktext,
-            linktype: this.state.linktype
+            linktype: this.state.linktype,
+            questiontype: 'fill in the blank'
         };
       
 
@@ -236,6 +255,43 @@ class App extends React.Component {
             console.error('Error:', error);
           });
   }
+
+  addMultipleChoiceQuestion = () => {
+    let words, answer, correcthtml; 
+    let responseText = this.state.responsetext;
+    words = responseText.split(',');
+      answer = words.filter((word)=>{
+       return word.trim()[0]==="-"         
+      }).join(' ');
+      answer = answer.trim().substring(1)
+      correcthtml = `<span class="incorrect">Incorrect</span><div class="correct-answer">Correct Answer: ${answer}</div>`
+      const data = { 
+        questiontext: this.state.topictext,
+        responsetext: this.state.responsetext,
+        correcttext: correcthtml,
+        answers: answer,
+        quiznum: this.state.quizInfo.id,
+        link: this.state.linktext,
+        linktype: this.state.linktype,
+        questiontype: 'multiple choice'
+      };
+  
+
+    fetch(`${env.ENDPOINT}questions`, {
+          method: 'POST', 
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+        .then((response) => response.json())
+        .then((data) => {            
+          this.setState({questions: [...this.state.questions, data ] , submitDisabled: true})
+        })
+        .catch((error) => { 
+          console.error('Error:', error);
+        });
+  }
   
   handleInfoSubmit = () => {
      
@@ -243,9 +299,18 @@ class App extends React.Component {
     
   }
   handleNewQuestionText = event => {
+
     console.log(event.target.id);
     this.setState({[event.target.id]: event.target.value})
-    
+    if(event.target.id === "questiontype"){
+      this.setState({
+        submitDisabled: true,
+        topictext: "",
+        responsetext: "",
+        linktext: "",
+        questiontext: ""  
+      })
+    }
     if(event.target.id === "linktype" || event.target.id === "topictext" || event.target.id === "responsetext" || event.target.id === "linktext" ){
       this.setState({ [event.target.id]: event.target.value },() => {
         const allFields = ["topictext","responsetext","linktext"]
@@ -279,7 +344,7 @@ class App extends React.Component {
       .then(response => response.json())
       .then(data =>{ 
        
-        this.setState({topictext: data.questiontext, responsetext: data.responsetext, linktype: data.linktype, linktext: data.link, questionId: data.id })
+        this.setState({topictext: data.questiontext, responsetext: data.responsetext, linktype: data.linktype, linktext: data.link, questionId: data.id, questiontype: data.questiontype })
       });
     
   }
@@ -441,7 +506,8 @@ class App extends React.Component {
       submitDisabled: true,
       topictext: "",
       responsetext: "",
-      linktext: ""
+      linktext: "",
+      questiontext: ""
 
     })
   }
@@ -495,7 +561,7 @@ class App extends React.Component {
 
           <Route path="/SelectQuestionType" render={routeProps=><SelectQuestionType {...routeProps} />}  />
           <Route path="/EditQuestion" render={routeProps=> <EditQuestion {...routeProps} topictext={this.state.topictext} quizInfo={this.state.quizInfo}
-     responsetext={this.state.responsetext} linktype={this.state.linktype} linktext={this.state.linktext} onNewQuestionText={this.handleNewQuestionText} setQuestionInfo={this.setQuestionInfo} questionId={this.state.questionId} onEditQuestion={this.handleEditQuestion} submitDisabled={this.state.submitDisabled} />}>
+     responsetext={this.state.responsetext} linktype={this.state.linktype} linktext={this.state.linktext} onNewQuestionText={this.handleNewQuestionText} setQuestionInfo={this.setQuestionInfo} questionId={this.state.questionId} onEditQuestion={this.handleEditQuestion} submitDisabled={this.state.submitDisabled} questiontype={this.state.questiontype} />}>
             
           </Route>
           <Route path="/">
