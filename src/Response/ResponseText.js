@@ -79,9 +79,8 @@ class ResponseText extends React.Component {
               </header>
               <section className="response-area" style={{textAlign: 'center'}}>
 
-                <div className="question-text"> 
-                  <h3>{question.questiontext}</h3>
-                </div>
+              {question.questiontype === "fill in the blank" ? <div className="question-text"><h3>{question.questiontext}</h3></div> : <></>} 
+                  
                 {
                   question.linktype === 'audio' ?
                       <div className="audio-player">
@@ -90,9 +89,10 @@ class ResponseText extends React.Component {
                       autoPlay
                       controls
                       />
-                    </div> : <div><iframe width="640" height="480" src={'https://youtube-cutter.org/embed/'+ question.link} frameborder="0" allowfullscreen></iframe><a href="https://youtube-cutter.org/" target="_blank">via YouTube Cutter</a></div>
+                    </div> : <div><iframe width="640" height="480" src={'https://youtube-cutter.org/embed/'+ question.link} frameborder="0" allowfullscreen></iframe><br/><a href="https://youtube-cutter.org/" target="_blank">via YouTube Cutter</a></div>
                 }
                 
+                {question.questiontype === "multiple choice" ? <div className="question-text"><h1 style={{fontSize: "2em", color: "brown"}}>{question.questiontext}</h1></div> : <></>} 
                 <div className="response-box"  onChange={(event)=>{change(event,question.questiontype)}}>
                   <form ref={formRef} autoComplete="off">
                 {

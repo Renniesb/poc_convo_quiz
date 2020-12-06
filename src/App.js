@@ -31,7 +31,8 @@ class App extends React.Component {
      answers: "",
      questions: [],
      questionId: 0, 
-     quizInfo: [], 
+     quizInfo: [],
+     userValue:"", 
      newQuizName: "",
      newQuizDescription: "",
      quizName: "",
@@ -400,7 +401,7 @@ class App extends React.Component {
        } else {
         this.setState({submitDisabled: false})
        }
-
+       this.setState({userValue: userValue})
         
             
   }
@@ -466,22 +467,36 @@ class App extends React.Component {
     });
   }
   handleSubmit = (question)=> {
-      
-      let userAnswer = ""
+    let userAnswer = ""
+    if(question.questiontype === "fill in the blank"){
       this.state.currentBlanks.forEach((blank) => {
-         userAnswer += this.state[blank].trim().toLowerCase()
-         this.setState({[blank]:""})
-         
-      })
-      
-      if(userAnswer===question.answers){
+        userAnswer += this.state[blank].trim().toLowerCase()
+        this.setState({[blank]:""})
+
+        console.log(userAnswer, question.answers);
+        console.log(question.answers)
+        if(userAnswer===question.answers){
+          this.setState({isIncorrect: false, correct: this.state.correct + 1})
+  
+        }
+        else{
+          this.setState({isIncorrect: true, incorrect: this.state.incorrect + 1})
+        }
+        
+        
+     })
+    }
+    else{
+      if(this.state.userValue===question.answers){
         this.setState({isIncorrect: false, correct: this.state.correct + 1})
 
       }
       else{
         this.setState({isIncorrect: true, incorrect: this.state.incorrect + 1})
       }
-      this.setState({submitted: true, nextDisabled:false});
+    }  
+    this.setState({submitted: true, nextDisabled:false}); 
+      
   }
   handleNextQuestion = (history, question, totalQuestions)=>{
     let inputs = Array.from(this.formRef.current.children);
