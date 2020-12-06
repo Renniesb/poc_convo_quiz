@@ -379,23 +379,29 @@ class App extends React.Component {
     
     this.setState({currentBlanks: blanks});
   }
-  handleOnChange = (e) => {
+  handleOnChange = (e, questiontype) => {
         
        let userValue = e.target.value
 
-       this.setBlanks();
+       if(questiontype === "fill in the blank"){
+          this.setBlanks();
+          
+          this.setState({[e.target.id]:userValue},() => {
+            let showSubmit = this.state.currentBlanks.every((blank) => {
+                  return this.state[blank] && this.state[blank].trim().length !== 0;
+                })
+          if(showSubmit){
+            this.setState({submitDisabled: false})
+          }
+          else{
+            this.setState({submitDisabled: true})
+          }
+          })
+       } else {
+        this.setState({submitDisabled: false})
+       }
 
-        this.setState({[e.target.id]:userValue},() => {
-          let showSubmit = this.state.currentBlanks.every((blank) => {
-                 return this.state[blank] && this.state[blank].trim().length !== 0;
-               })
-         if(showSubmit){
-           this.setState({submitDisabled: false})
-         }
-         else{
-           this.setState({submitDisabled: true})
-         }
-        })
+        
             
   }
   changeLevel = (e) => {

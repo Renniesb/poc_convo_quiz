@@ -43,7 +43,20 @@ class ResponseText extends React.Component {
     
     let responsehtml = words.join(' ')
     return responsehtml
-  }  
+  }
+  makeMultipleChoiceHtml = (question) => {
+    let responseArray = question.responsetext.split(',');
+
+    for(let i=0;i<responseArray.length;i++){
+      if(responseArray[i].trim()[0]==="-"){
+        responseArray[i] = responseArray[i].trim().substring(1).trim()
+      }else{
+        responseArray[i] = responseArray[i].trim()
+      }
+    }
+    return responseArray
+  }
+
   render(){
     const {submitted,isSubmitDisabled,isNextDisabled,submitAnswers,change,match,history,nextQuestion,isIncorrect,correct, incorrect,questions,formRef, quizInfo} = this.props;
     
@@ -80,12 +93,17 @@ class ResponseText extends React.Component {
                     </div> : <div><iframe width="640" height="480" src={'https://youtube-cutter.org/embed/'+ question.link} frameborder="0" allowfullscreen></iframe><a href="https://youtube-cutter.org/" target="_blank">via YouTube Cutter</a></div>
                 }
                 
-                <div className="response-box"  onChange={(event)=>{change(event,question.blanks)}}>
+                <div className="response-box"  onChange={(event)=>{change(event,question.questiontype)}}>
                   <form ref={formRef} autoComplete="off">
                 {
                   //translate the sentence into fill in the blank html
-                  parse(this.makeResponseHtml(question.responsetext))
-                  }
+                  question.questiontype === "fill in the blank" ? parse(this.makeResponseHtml(question.responsetext)) : this.makeMultipleChoiceHtml(question).map((option)=>{
+                      return <><label><input type="radio" name="answer" value={option} /> {option}</label><br/></>
+                      
+                  })
+
+                  
+                }
                   </form>
                 </div>
                   
