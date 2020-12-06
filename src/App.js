@@ -132,12 +132,10 @@ class App extends React.Component {
       }
     }else {
       words = responseText.split(',');
-      correcttext = words.map((word)=>{
-       if(word.trim()[0]==="-"){
-         return word.trim().substring(1) 
-        
-       } 
-      })
+      correcttext = words.filter((word)=>{
+        return word.trim()[0]==="-";  
+      }).join(' ')
+      correcttext = correcttext.trim().substring(1).trim()
       answers = correcttext
       correcthtml = `<span class="incorrect">Incorrect</span><div class="correct-answer">Correct Answer: ${correcttext}</div>`
 
@@ -263,7 +261,7 @@ class App extends React.Component {
       answer = words.filter((word)=>{
        return word.trim()[0]==="-"         
       }).join(' ');
-      answer = answer.trim().substring(1)
+      answer = answer.trim().substring(1).trim()
       correcthtml = `<span class="incorrect">Incorrect</span><div class="correct-answer">Correct Answer: ${answer}</div>`
       const data = { 
         questiontext: this.state.topictext,
