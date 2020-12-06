@@ -98,7 +98,7 @@ class ResponseText extends React.Component {
                 {
                   //translate the sentence into fill in the blank html
                   question.questiontype === "fill in the blank" ? parse(this.makeResponseHtml(question.responsetext)) : this.makeMultipleChoiceHtml(question).map((option)=>{
-                      return <><label><input type="radio" name="answer" value={option} /> {option}</label><br/></>
+                      return <label style={{display: "block", textAlign: "center"}}><input type="radio" name="answer" value={option} /> {option}</label>
                       
                   })
 
