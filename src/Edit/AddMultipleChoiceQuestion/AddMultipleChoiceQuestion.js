@@ -35,7 +35,7 @@ class AddMultipleChoiceQuestion extends Component {
                             <option value="audio">audio</option>
                             <option value="video">video</option>
                         </select>
-                        file (for video type in the youtubecutter video id, for audio only direct links allowed)
+                        file (for video type in the embed video link, for audio only direct links allowed)
                         </label>
                         <input onChange={e => {this.props.onNewQuestionText(e)}} id="linktext" name="linktext" value={this.props.linktext}/>
                     </div>

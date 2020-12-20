@@ -89,7 +89,7 @@ class ResponseText extends React.Component {
                       autoPlay
                       controls
                       />
-                    </div> : <div><iframe width="640" height="480" src={'https://youtube-cutter.org/embed/'+ question.link} frameborder="0" allowfullscreen></iframe><br/><a href="https://youtube-cutter.org/" target="_blank">via YouTube Cutter</a></div>
+                    </div> : <div><iframe width="640" height="480" src={question.link} frameborder="0" allowfullscreen></iframe><br/>{question.link.slice(0, 22) === 'https://youtube-cutter'  && <a href="https://youtube-cutter.org/" target="_blank">via YouTube Cutter</a>}</div>
                 }
                 
                 {question.questiontype === "multiple choice" ? <div className="question-text"><h1 style={{fontSize: "2em", color: "brown"}}>{question.questiontext}</h1></div> : <></>} 
