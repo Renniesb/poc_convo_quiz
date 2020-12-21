@@ -43,6 +43,7 @@ class EditQuestion extends Component {
                         <select onChange={e => {this.props.onNewQuestionText(e)}}name="linktype" id="linktype" value={this.props.linktype}>
                             <option value="audio">audio</option>
                             <option value="video">video</option>
+                            <option value="image">image/gif</option>
                         </select>
                         file
                         </label>

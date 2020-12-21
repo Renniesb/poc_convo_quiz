@@ -80,16 +80,15 @@ class ResponseText extends React.Component {
               <section className="response-area" style={{textAlign: 'center'}}>
 
               {question.questiontype === "fill in the blank" ? <div className="question-text"><h3>{question.questiontext}</h3></div> : <></>} 
-                  
+                  {
+                    question.linktype === 'audio' && <div className="audio-player"> <ReactAudioPlayer src={question.link} autoPlay controls/></div>
+                  } 
                 {
-                  question.linktype === 'audio' ?
-                      <div className="audio-player">
-                      <ReactAudioPlayer
-                      src={question.link}
-                      autoPlay
-                      controls
-                      />
-                    </div> : <div><iframe width="640" height="480" src={question.link} frameborder="0" allowfullscreen></iframe><br/>{question.link.slice(0, 22) === 'https://youtube-cutter'  && <a href="https://youtube-cutter.org/" target="_blank">via YouTube Cutter</a>}</div>
+                  question.linktype === 'video' &&
+                      <div><iframe width="640" height="480" src={question.link} frameborder="0" allowfullscreen></iframe><br/>{question.link.slice(0, 22) === 'https://youtube-cutter'  && <a href="https://youtube-cutter.org/" target="_blank">via YouTube Cutter</a>}</div>
+                }
+                {
+                  question.linktype === 'image' && <img src={question.link}></img>
                 }
                 
                 {question.questiontype === "multiple choice" ? <div className="question-text"><h1 style={{fontSize: "2em", color: "brown"}}>{question.questiontext}</h1></div> : <></>} 
