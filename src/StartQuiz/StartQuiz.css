@@ -29,13 +29,6 @@
   text-align: center;
 }
 
-.question-screen img{
-  /* height: 10vh; */
-  width: 9vw;
-  height:18vh;
-
-}
-
 .question-img{
   display: flex;
   justify-content: space-evenly;
@@ -177,14 +170,6 @@ text-align: center;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     grid-template-areas: "header";
-  
-  }
-
-  
-  .question-screen img{
-    /* height: 10vh; */
-    width: 19vw;
-    height:19vh;
   
   }
 }
