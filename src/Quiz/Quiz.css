@@ -41,3 +41,9 @@
     background-color: rgba(0, 0, 0, 0.931); /*dim the background*/
 }
 
+@media only screen and (max-width: 900px) {
+  .lockedquiz {
+    width: 80vw;
+  }
+  
+}
