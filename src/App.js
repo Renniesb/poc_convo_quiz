@@ -326,6 +326,11 @@ class App extends React.Component {
       })    
     }    
 
+  }
+  clearChoices = (inputs) => {
+    inputs.forEach((input)=>{
+      input.children[0].attributes[0].ownerElement.checked = false;
+    })
   } 
   setQuizzes = () => {
     fetch(`${env.ENDPOINT}/quiz`)
@@ -370,7 +375,6 @@ class App extends React.Component {
   }
   setBlanks = () => {
     let inputs = Array.from(this.formRef.current.children);
-
     const blanks = inputs.filter((input)=>{
       return input.id
     }).map((blank)=>{
@@ -500,6 +504,9 @@ class App extends React.Component {
   }
   handleNextQuestion = (history, question, totalQuestions)=>{
     let inputs = Array.from(this.formRef.current.children);
+    if(inputs[0].children[0]){
+      this.clearChoices(inputs)
+    }
     //code to remove data from the blanks and detect if we should move to the end screen
     inputs.map((input)=>{
       return input.value = "";
@@ -508,7 +515,7 @@ class App extends React.Component {
       history.push(`/EndQuiz` );
     }
     else {
-      this.setState({submitDisabled: true, nextDisabled:true,submitted:false,isIncorrect: null},()=>{
+      this.setState({userValue: "", submitDisabled: true, nextDisabled:true,submitted:false,isIncorrect: null},()=>{
         history.push(`/question/${question.id +1}` );
       });
     }  
