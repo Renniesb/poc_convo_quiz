@@ -1,9 +1,11 @@
 {
   "homepage": ".",
-  "name": "poc_convo_quiz",
+  "name": "poc_convo_quizzes",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@authpack/react": "^0.5.14",
+    "@authpack/sdk": "^0.8.18",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -21,7 +23,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "CI=false && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
