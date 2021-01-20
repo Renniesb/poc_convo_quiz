@@ -15,13 +15,13 @@ import env from './config.js'
 
 
 
-
 class App extends React.Component {
   constructor(props){
     super(props)
     this.formRef = createRef();
   
     this.state = {
+     user: false, 
      topictext: "",
      responsetext: "",
      level:"All Levels",
@@ -49,6 +49,9 @@ class App extends React.Component {
      locked: false,
      addedLevel: "Intermediate"
     }
+  }
+  changeUser = (newUser)=>{
+    this.setState({user: newUser })
   }
   handleEditQuiz = () => {
     const data = {
@@ -327,7 +330,7 @@ class App extends React.Component {
     }    
 
   }
-  clearChoices = (inputs) => {
+  clearChoices = (inputs) => { 
     inputs.forEach((input)=>{
       input.children[0].attributes[0].ownerElement.checked = false;
     })
@@ -555,6 +558,7 @@ class App extends React.Component {
     this.setQuizzes()
   }
   render() {
+    
     return ( 
     <div className="App">
         <Switch>
@@ -591,7 +595,7 @@ class App extends React.Component {
             
           </Route>
           <Route path="/">
-            <AllQuizzes quizzes={this.state.quizzes} changeLevel={this.changeLevel} level={this.state.level}/>
+            <AllQuizzes user={this.state.user} changeUser={this.changeUser} quizzes={this.state.quizzes} changeLevel={this.changeLevel} level={this.state.level}/>
           </Route>
         </Switch>
     </div>

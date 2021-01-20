@@ -2,6 +2,35 @@
   font-family: 'Poppins', sans-serif;
 }
 
+/* The navigation bar */
+nav {
+  z-index: 12;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #18344f;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+}
+
+/* Links inside the navbar */
+nav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change background on mouse-over */
+nav a:hover {
+  cursor: pointer;
+  background: #ddd;
+  color: black;
+}
+
 .quizbackground {
   
   background-image: url(../img/learn-english-at-marbella.jpg);

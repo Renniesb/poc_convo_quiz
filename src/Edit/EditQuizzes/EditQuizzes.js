@@ -1,10 +1,28 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './EditQuizzes.css'
+import { authpack } from '../../index.js'
 
 class EditQuizzes extends Component {
     componentDidMount(){
         this.props.setQuizzes()
+        this.unlisten = authpack.listen(state => {
+            
+            if (!state.user) {
+                authpack.open()
+            }
+            if(state.user){
+                if(state.user.email!="pocconversational@gmail.com"){
+                    authpack.exit()
+                }
+            }
+            
+            
+        })
+
+    }
+    componentWillUnmount(){
+        this.unlisten()
     }
     render() {
         return (

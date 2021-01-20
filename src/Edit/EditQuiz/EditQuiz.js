@@ -46,7 +46,7 @@ class EditQuiz extends Component {
 
                         </select>
                     </label>
-                    <button className="myButton" onClick={this.props.onEditQuiz}>Submit Changes</button>
+                    <button className="myButton" onClick={this.props.onEditQuiz}>Update Quiz Info</button>
                     <h3>Questions</h3>
                     {this.props.questions.map((question, i ) => {
                         return <div key={`key${i}`}>
