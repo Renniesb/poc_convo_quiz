@@ -597,6 +597,11 @@ class App extends React.Component {
           <Route path="/">
             <AllQuizzes user={this.state.user} changeUser={this.changeUser} quizzes={this.state.quizzes} changeLevel={this.changeLevel} level={this.state.level}/>
           </Route>
+          <Route path="/checkout">
+            <Checkout/>
+          </Route>
+
+
         </Switch>
     </div>
    );

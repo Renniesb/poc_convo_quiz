@@ -12,7 +12,7 @@ class EditQuizzes extends Component {
                 authpack.open()
             }
             if(state.user){
-                if(state.user.email!="pocconversational@gmail.com"){
+                if(state.user.email!="rsbevineau@gmail.com"){
                     authpack.exit()
                 }
             }
