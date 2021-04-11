@@ -1,6 +1,6 @@
 {
   "homepage": ".",
-  "name": "poc_convo_quiz",
+  "name": "poc_convo_quizzes",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
