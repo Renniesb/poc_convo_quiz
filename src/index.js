@@ -12,7 +12,7 @@ ReactDOM.render(
       <Auth0Provider
         domain="biapp.auth0.com"
         clientId="GPVTvi8AqrtUxeFrSs4aTwHguNyuLEf6"
-        edirectUri={window.location.origin}
+        redirectUri={window.location.origin}
       >
         <App />
       </Auth0Provider>
