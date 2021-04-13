@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import 'react-slideshow-image/dist/styles.css';
 import { Slide } from 'react-slideshow-image';
 import slideImages from './../slideImages';
-
+import LoginButton from './../LoginButton';
 
 
 
@@ -38,7 +38,8 @@ class AllQuizzes extends Component {
                 
                 </div>
                 <div style={{display: "flex", justifyContent: "flex-end"}}>
-                    <Link style={{marginRight: "5px"}} className="myButton"  to="/EditQuizzes">Admin</Link>
+                <LoginButton />
+                    {/* <Link style={{marginRight: "5px"}} className="myButton"  to="/EditQuizzes">Admin</Link> */}
                 </div>
                 
 
