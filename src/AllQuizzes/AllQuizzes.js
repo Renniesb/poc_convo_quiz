@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Quiz from './../Quiz/Quiz';
 import styles from './AllQuizzes.module.css';
-import { Link } from 'react-router-dom';
 import 'react-slideshow-image/dist/styles.css';
 import { Slide } from 'react-slideshow-image';
 import slideImages from './../slideImages';
@@ -10,14 +9,13 @@ import LogoutButton from './../LogoutButton';
 
 
 
-class AllQuizzes extends Component {
+const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
 
-    render() {
-        const filteredQuizzes =  this.props.quizzes.filter((quiz)=>{
-            if(this.props.level === "All Levels"){
+        const filteredQuizzes =  quizzes.filter((quiz)=>{
+            if(level === "All Levels"){
                 return quiz
             }
-            return quiz.level === this.props.level
+            return quiz.level === level
         })
         return (
             <div className={styles.gamebackground}>
@@ -61,7 +59,7 @@ class AllQuizzes extends Component {
                     </div>
                     <form>
                         <label htmlFor="level">Choose your language level:</label>
-                        <select name="level" id="level" onChange={e => {this.props.changeLevel(e)}} value={this.props.level}>
+                        <select name="level" id="level" onChange={e => {changeLevel(e)}} value={level}>
                             <option value="All Levels">All Levels</option>
                             <option value="Beginner">Beginner</option>
                             <option value="Intermediate">Intermediate</option>
@@ -78,7 +76,7 @@ class AllQuizzes extends Component {
             </div>
             
         );
-    }
+    
 }
 
 export default AllQuizzes;
