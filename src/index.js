@@ -9,7 +9,13 @@ import { BrowserRouter } from 'react-router-dom';
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <Auth0Provider
+        domain="biapp.auth0.com"
+        clientId="GPVTvi8AqrtUxeFrSs4aTwHguNyuLEf6"
+        edirectUri={window.location.origin}
+      >
+        <App />
+      </Auth0Provider>
     </BrowserRouter>      
   </React.StrictMode>,
   document.getElementById('root')
