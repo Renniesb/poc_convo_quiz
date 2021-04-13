@@ -6,6 +6,7 @@ import 'react-slideshow-image/dist/styles.css';
 import { Slide } from 'react-slideshow-image';
 import slideImages from './../slideImages';
 import LoginButton from './../LoginButton';
+import LogoutButton from './../LogoutButton';
 
 
 
@@ -39,6 +40,7 @@ class AllQuizzes extends Component {
                 </div>
                 <div style={{display: "flex", justifyContent: "flex-end"}}>
                 <LoginButton />
+                <LogoutButton />
                     {/* <Link style={{marginRight: "5px"}} className="myButton"  to="/EditQuizzes">Admin</Link> */}
                 </div>
                 
