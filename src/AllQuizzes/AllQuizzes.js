@@ -6,6 +6,7 @@ import { Slide } from 'react-slideshow-image';
 import slideImages from './../slideImages';
 import LoginButton from './../LoginButton';
 import LogoutButton from './../LogoutButton';
+import SignupButton from './../SignupButton';
 
 
 
@@ -39,6 +40,7 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
                 <div style={{display: "flex", justifyContent: "flex-end"}}>
                 <LoginButton />
                 <LogoutButton />
+                <SignupButton />
                     {/* <Link style={{marginRight: "5px"}} className="myButton"  to="/EditQuizzes">Admin</Link> */}
                 </div>
                 
