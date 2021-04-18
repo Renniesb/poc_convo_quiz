@@ -43,7 +43,7 @@ const Profile = () => {
         <p>{user.email}</p>
         <h3>User Metadata</h3>
         {userMetadata ? (
-          <pre>{JSON.stringify(userMetadata.addresses.home, null, 2)}</pre>
+          <pre>{JSON.stringify(userMetadata.paypal_id, null, 2)}</pre>
         ) : (
           "No user metadata defined"
         )}

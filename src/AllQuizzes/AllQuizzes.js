@@ -1,4 +1,4 @@
-import React , { useEffect} from 'react';
+import React , {useState, useEffect} from 'react';
 import Quiz from './../Quiz/Quiz';
 import styles from './AllQuizzes.module.css';
 import 'react-slideshow-image/dist/styles.css';
@@ -38,15 +38,41 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
 
         const {  user, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
-        useEffect(()=>{
-            if(isAuthenticated && user["https://poc-conversational-quizzes.vercel.app/is_new"]){
-                history.push("/signup")
-            }
-            else{
-                console.log(user)
-                console.log("no activate sign up")
-            }
-        },[user,isAuthenticated])
+        const [userMetadata, setUserMetadata] = useState(null);
+    
+    useEffect(() => {
+      
+    const getUserMetadata = async () => {
+      const domain = "biapp.auth0.com";
+  
+      try {
+        const accessToken = await getAccessTokenSilently({
+          audience: `https://${domain}/api/v2/`,
+          scope: "read:current_user",
+        });
+  
+        const userDetailsByIdUrl = `https://${domain}/api/v2/users/${user.sub}`;
+  
+        const metadataResponse = await fetch(userDetailsByIdUrl, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+  
+        const { user_metadata } = await metadataResponse.json();
+  
+        setUserMetadata(user_metadata);
+
+        if(!user_metadata){
+            history.push('/signup')
+        }
+      } catch (e) {
+        console.log(e.message);
+      }
+    };
+  
+    getUserMetadata();
+  }, [user]);
 
         const filteredQuizzes =  quizzes.filter((quiz)=>{
             if(level === "All Levels"){
