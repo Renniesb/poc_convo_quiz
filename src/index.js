@@ -11,8 +11,10 @@ ReactDOM.render(
     <BrowserRouter>
       <Auth0Provider
         domain="biapp.auth0.com"
-        clientId="GPVTvi8AqrtUxeFrSs4aTwHguNyuLEf6"
+        clientId="qkqEeCUCtEBmZkGtupS9mD5xBJTGmhSw"
         redirectUri={window.location.origin}
+        audience="https://biapp.auth0.com/api/v2/"
+        scope="read:current_user update:current_user_metadata"
       >
         <App />
       </Auth0Provider>

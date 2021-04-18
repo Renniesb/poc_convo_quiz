@@ -13,7 +13,9 @@
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-audio-player": "^0.13.0",
+    "react-axios": "^2.0.5",
     "react-dom": "^16.13.1",
+    "react-paypal-button-v2": "^2.6.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-slideshow-image": "^3.0.2"

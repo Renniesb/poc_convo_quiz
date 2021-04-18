@@ -1,5 +1,6 @@
 import React, {createRef} from 'react';
 import ResponseText from './Response/ResponseText';
+import SignUp from './SignUp';
 import StartQuiz from './StartQuiz/StartQuiz'
 import EndQuiz from './EndQuiz/EndQuiz'
 import { Route,Switch } from 'react-router-dom';
@@ -589,6 +590,9 @@ class App extends React.Component {
           <Route path="/EditQuestion" render={routeProps=> <EditQuestion {...routeProps} topictext={this.state.topictext} quizInfo={this.state.quizInfo}
      responsetext={this.state.responsetext} linktype={this.state.linktype} linktext={this.state.linktext} onNewQuestionText={this.handleNewQuestionText} setQuestionInfo={this.setQuestionInfo} questionId={this.state.questionId} onEditQuestion={this.handleEditQuestion} submitDisabled={this.state.submitDisabled} questiontype={this.state.questiontype} />}>
             
+          </Route>
+          <Route path="/signup">
+            <SignUp/>
           </Route>
           <Route path="/">
             <AllQuizzes quizzes={this.state.quizzes} changeLevel={this.changeLevel} level={this.state.level}/>
