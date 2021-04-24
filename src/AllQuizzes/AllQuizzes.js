@@ -7,38 +7,16 @@ import slideImages from './../slideImages';
 import LoginButton from './../LoginButton';
 import LogoutButton from './../LogoutButton';
 import SignupButton from './../SignupButton';
-import Profile from './../Profile';
-import axios from 'axios';
 import { useAuth0 } from "@auth0/auth0-react";
 import { useHistory } from 'react-router-dom';
 
-const changeMetaData = async (user,getAccessTokenSilently) =>{
-    const domain = "biapp.auth0.com";
-    const accessToken = await getAccessTokenSilently({
-        audience: `https://${domain}/api/v2/`,
-        scope: "read:current_user",
-    });
-    var options = {
-        method: 'PATCH',
-        
-        url: `https://${domain}/api/v2/users/${user.sub}`,
-        headers: {authorization: `Bearer ${accessToken}`, 'content-type': 'application/json'},
-        data: {user_metadata: {addresses: {home: '18 Langley'}}}
-    };
-    
-    axios.request(options).then(function (response) {
-        console.log(response.data);
-    }).catch(function (error) {
-        console.error(error);
-    });
-}
 const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
         let history = useHistory();
 
 
-        const {  user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+        const {  user, getAccessTokenSilently } = useAuth0();
 
-        const [userMetadata, setUserMetadata] = useState(null);
+        const [planInfo, setPlanInfo] = useState(null);
     
     useEffect(() => {
       
@@ -46,32 +24,78 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
       const domain = "biapp.auth0.com";
   
       try {
-        const accessToken = await getAccessTokenSilently({
-          audience: `https://${domain}/api/v2/`,
-          scope: "read:current_user",
-        });
-  
-        const userDetailsByIdUrl = `https://${domain}/api/v2/users/${user.sub}`;
-  
-        const metadataResponse = await fetch(userDetailsByIdUrl, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-  
-        const { user_metadata } = await metadataResponse.json();
-  
-        setUserMetadata(user_metadata);
 
-        if(!user_metadata){
-            history.push('/signup')
+        if(user.sub){
+            const accessToken = await getAccessTokenSilently({
+                audience: `https://${domain}/api/v2/`,
+                scope: "read:current_user",
+              });
+        
+              const userDetailsByIdUrl = `https://${domain}/api/v2/users/${user.sub}`;
+        
+              fetch(userDetailsByIdUrl, {
+                headers: {
+                  Authorization: `Bearer ${accessToken}`,
+                },
+              }).then(data=>data.json()).then(result=>{
+      
+                  if(!result.user_metadata.paypal_id){
+                      history.push('/signup')
+                  }
+                  getPaypalPlanId(result.user_metadata.paypal_id);
+              })
         }
+        
+  
+
+        
+
+        
       } catch (e) {
         console.log(e.message);
       }
     };
+    const getPaypalPlanId = async (paypal_id) => {
+        let myHeaders = new Headers();
+        myHeaders.append("Authorization", "Basic QVp0T25IWDJVc3pJTEJaUmJwM3haS1I4V3pTemh0aHMzODNSQXpmWU5MMHVuWFFyWmJYXzFDREpMeWZ0SXV3R29iR3lLZFI1R1RXSm9Kak86RUNjcGtEcnk5QXBDRFRpWWxhcndhSEtDNzd0Uk9zT0J4ME1JbHhRQ2pCUGp5Rl9xSURaeHY5b0lHMXhMVTVXOXdfQTNXaEIxdnEzaVpJMjI=");
+        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+ 
+        let urlencoded = new URLSearchParams();
+        urlencoded.append("grant_type", "client_credentials");
+ 
+        let requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: urlencoded,
+            redirect: 'follow'
+        };
+        let myPlanHeaders = new Headers();
+        
+            return fetch("https://api-m.sandbox.paypal.com/v1/oauth2/token", requestOptions)
+        .then(response => response.json())
+        .then((result)=>{
+            myPlanHeaders.append("Authorization", `Bearer ${result.access_token}`);
+            let planRequestOptions = {
+                method: 'GET',
+                headers: myPlanHeaders,
+                redirect: 'follow'
+            };
+            return fetch(`https://api-m.sandbox.paypal.com/v1/billing/subscriptions/${paypal_id}`, planRequestOptions)
+            .then(data => data.json())
+            .then(planData => {
+                const {plan_id, status} = planData
+                setPlanInfo({id:plan_id,status: status})
+            })
+            .catch(error => console.log('error', error));
+        })
+        
+        
+
+    }
   
     getUserMetadata();
+    
+    
   }, [user]);
 
         const filteredQuizzes =  quizzes.filter((quiz)=>{
@@ -84,8 +108,7 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
 
         return (
             <div className={styles.gamebackground}>
-                <Profile/>
-                <button onClick={()=>{changeMetaData(user,getAccessTokenSilently)}}>change metadata</button>
+                { planInfo?.id ? planInfo.id : "loading"}
                 <div className={styles.hero}>
                     <img alt="statue-of-liberty-hero-img" src="https://user-images.githubusercontent.com/7147957/88594242-de027f00-d02e-11ea-9e89-625a083b38e8.jpg"/>
                 </div>
