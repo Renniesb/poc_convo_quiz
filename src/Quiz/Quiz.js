@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import styles from '../AllQuizzes/AllQuizzes.module.css';
 import './Quiz.css';
 
-const Quiz = ({quiz}) => {
+const Quiz = ({quiz,planInfo}) => {
 
-    if(quiz.locked){
+    if(quiz.locked && !planInfo?.id && planInfo?.status !== "ACTIVE"){
         return (
         <div>
             <div className="lockedquiz">

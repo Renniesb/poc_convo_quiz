@@ -85,6 +85,10 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
             .then(planData => {
                 const {plan_id, status} = planData
                 setPlanInfo({id:plan_id,status: status})
+
+                if(plan_id==="P-3UG35541FL986113FMB5ZVRY"){
+                    changeLevel({target:{value:"Beginner"}})
+                }
             })
             .catch(error => console.log('error', error));
         })
@@ -98,6 +102,18 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
     
   }, [user]);
 
+        const filterBar = ()=>{
+            return (<form>
+                        <label htmlFor="level">Choose your language level:</label>
+                        <select name="level" id="level" onChange={e => {changeLevel(e)}} value={level}>
+                            <option value="All Levels">All Levels</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                        </select>
+                    </form>)
+        }
+
         const filteredQuizzes =  quizzes.filter((quiz)=>{
             if(level === "All Levels"){
 
@@ -108,7 +124,6 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
 
         return (
             <div className={styles.gamebackground}>
-                { planInfo?.id ? planInfo.id : "loading"}
                 <div className={styles.hero}>
                     <img alt="statue-of-liberty-hero-img" src="https://user-images.githubusercontent.com/7147957/88594242-de027f00-d02e-11ea-9e89-625a083b38e8.jpg"/>
                 </div>
@@ -148,20 +163,14 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
                                 <li className={styles.infoItem}>At the end of each quiz you will recieve a score</li>
                             </ol>
                     </div>
-                    <form>
-                        <label htmlFor="level">Choose your language level:</label>
-                        <select name="level" id="level" onChange={e => {changeLevel(e)}} value={level}>
-                            <option value="All Levels">All Levels</option>
-                            <option value="Beginner">Beginner</option>
-                            <option value="Intermediate">Intermediate</option>
-                            <option value="Advanced">Advanced</option>
-                        </select>
-                    </form>
+
+                    {planInfo?.id === "P-3UG35541FL986113FMB5ZVRY" ? <h2>Beginner Quizzes</h2>: <></> }
+                    {!planInfo?.id && filterBar()}
                     
                     <h1 className={styles.whitetext}>Choose a Quiz Below</h1>
                     {                    
                     filteredQuizzes.map((quiz,i) => {
-                    return <Quiz key={`key${i}`} quiz={quiz}/>
+                    return <Quiz planInfo={planInfo} key={`key${i}`} quiz={quiz}/>
                     })}
                 </div>
             </div>
