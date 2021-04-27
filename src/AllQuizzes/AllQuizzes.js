@@ -39,10 +39,10 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
                 },
               }).then(data=>data.json()).then(result=>{
       
-                  if(!result.user_metadata.paypal_id){
+                  if(!result.user_metadata?.paypal_id){
                       history.push('/signup')
                   }
-                  getPaypalPlanId(result.user_metadata.paypal_id);
+                  getPaypalPlanId(result.user_metadata?.paypal_id);
               })
         }
         
