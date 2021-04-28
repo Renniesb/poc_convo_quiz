@@ -1,10 +1,14 @@
 import React from "react";
-import NonStudentButtons   from './NonStudentButtons'
+import StudentButtons   from './StudentButtons';
+import StudentModal from "./StudentModal";
 
 const SignUp = () => {    
 
   return (
-    <NonStudentButtons/>
+    <>
+    <StudentModal/>
+    <StudentButtons/>
+    </>
   )
 };
 

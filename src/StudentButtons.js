@@ -5,9 +5,7 @@ import {useHistory} from 'react-router-dom'
 
 
 
-
-
-const NonStudentButtons = ()=>{
+const StudentButtons = ()=>{
     const [paypalSDKReady, setPaypalSDKReady] = useState(false);
     const { user , getAccessTokenSilently} = useAuth0();
 
@@ -20,23 +18,24 @@ const NonStudentButtons = ()=>{
           history.push("/")
   
       }
-      const center = {
-          display:"flex",
-          flexDirection: "column", 
-          alignItems: "center"
-      }
+    const center = {
+        display:"flex",
+        flexDirection: "column", 
+        alignItems: "stretch",
+        textAlign: "center"
+    }
   
     return (
         <>
-    <div style={center}>
-        <h1>Beginner Quizzes</h1>
+        <div style={center}>
+        <h1>Student Beginner Quizzes</h1>
       <PayPalButton
           intent="subscription"
-          amount="10.00"
+          amount="8.00"
           currency="USD"
           createSubscription={(data, actions) => {
               return actions.subscription.create({
-                  plan_id: 'P-3UG35541FL986113FMB5ZVRY'
+                  plan_id: 'P-2YC99808UJ9321133MCDY4EY'
               });
           }}
          onApprove={(data, actions)=> {
@@ -75,14 +74,14 @@ const NonStudentButtons = ()=>{
       />
       {paypalSDKReady ? (
     <>
-      <h1>Intermediate Quizzes</h1>
+      <h1>Student Intermediate Quizzes</h1>
       <PayPalButton
           intent="subscription"
-          amount="10.00"
+          amount="8.00"
           currency="USD"
           createSubscription={(data, actions) => {
               return actions.subscription.create({
-                  plan_id: 'P-0PV8622658083934GMCDYXEY'
+                  plan_id: 'P-6J031653GD3854721MCDY5KI'
               });
           }}
          onApprove={(data, actions)=> {
@@ -118,14 +117,14 @@ const NonStudentButtons = ()=>{
               vault: true
           }}
       />
-      <h1>Advanced Quizzes</h1>
+      <h1>Student Advanced Quizzes</h1>
       <PayPalButton
           intent="subscription"
-          amount="10.00"
+          amount="8.00"
           currency="USD"
           createSubscription={(data, actions) => {
               return actions.subscription.create({
-                  plan_id: 'P-3EH722805N167060UMCDYYAY'
+                  plan_id: 'P-5Y217733HA191054FMCDY6EI'
               });
           }}
          onApprove={(data, actions)=> {
@@ -161,14 +160,14 @@ const NonStudentButtons = ()=>{
               vault: true
           }}
       />
-      <h1>All Quizzes</h1>
+      <h1>Student All Quizzes</h1>
       <PayPalButton
           intent="subscription"
-          amount="10.00"
+          amount="16.00"
           currency="USD"
           createSubscription={(data, actions) => {
               return actions.subscription.create({
-                  plan_id: 'P-2AF92715UL720341RMCDYZ2Y'
+                  plan_id: 'P-5TW65977XU1328341MCDY6RY'
               });
           }}
          onApprove={(data, actions)=> {
@@ -212,4 +211,4 @@ const NonStudentButtons = ()=>{
     )
 };
 
-export default NonStudentButtons;
+export default StudentButtons;
