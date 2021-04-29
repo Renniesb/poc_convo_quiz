@@ -8,29 +8,25 @@ function StudentModal() {
   
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const discount = "P0C20";
   
     return (
       <>
-  
-        <Modal
-          show={show}
-          onHide={handleClose}
-          backdrop="static"
-          keyboard={false}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Modal title</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            I will not close if you click outside me. Don't even try to press
-            escape key.
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="primary">Understood</Button>
-          </Modal.Footer>
+        <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+            <Modal.Title>POC Student Discount</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>If you are a POC student enter in your POC student discount code
+                <br/><input/>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    I'm not a POC student
+                </Button>
+                <Button variant="primary" onClick={handleClose}>
+                    Submit Code
+                </Button>
+            </Modal.Footer>
         </Modal>
       </>
     );

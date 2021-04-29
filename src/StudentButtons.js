@@ -9,9 +9,12 @@ const StudentButtons = ()=>{
     const [paypalSDKReady, setPaypalSDKReady] = useState(false);
     const { user , getAccessTokenSilently} = useAuth0();
 
+
+    
+
     let history = useHistory();
   
-  
+    
   
       const toHome = () =>{
   
