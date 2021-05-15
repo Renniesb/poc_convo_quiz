@@ -21,9 +21,10 @@ const NonStudentButtons = ()=>{
   
       }
       const center = {
-          display:"flex",
-          flexDirection: "column", 
-          alignItems: "center"
+        display:"flex",
+        flexDirection: "column", 
+        alignItems: "stretch",
+        textAlign: "center"
       }
   
     return (
