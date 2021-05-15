@@ -89,6 +89,12 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
                 if(plan_id==="P-0PV8622658083934GMCDYXEY"|| plan_id==="P-6J031653GD3854721MCDY5KI"){
                     changeLevel({target:{value:"Intermediate"}})
                 }
+                if(plan_id==="P-3EH722805N167060UMCDYYAY"|| plan_id==="P-5Y217733HA191054FMCDY6EI"){
+                    changeLevel({target:{value:"Advanced"}})
+                }
+                if(plan_id==="P-2AF92715UL720341RMCDYZ2Y"|| plan_id==="P-5TW65977XU1328341MCDY6RY"){
+                    changeLevel({target:{value:"All Levels"}})
+                }
             })
             .catch(error => console.log('error', error));
         })
@@ -171,8 +177,13 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
                     {planInfo?.id === "P-2YC99808UJ9321133MCDY4EY" && <h2>Beginner Quizzes</h2> }
                     {planInfo?.id === "P-0PV8622658083934GMCDYXEY" && <h2>Intermediate Quizzes</h2> }
                     {planInfo?.id === "P-6J031653GD3854721MCDY5KI" && <h2>Intermediate Quizzes</h2> }
+                    {planInfo?.id === "P-3EH722805N167060UMCDYYAY" && <h2>Advanced Quizzes</h2> }
+                    {planInfo?.id === "P-5Y217733HA191054FMCDY6EI" && <h2>Advanced Quizzes</h2> }
+                    {planInfo?.id === "P-2AF92715UL720341RMCDYZ2Y" && <h2>All Levels</h2> }
+                    {planInfo?.id === "P-5TW65977XU1328341MCDY6RY" && <h2>All Levels</h2> }
                     {!planInfo?.id && filterBar()}
-                    
+                    {planInfo?.id === "P-2AF92715UL720341RMCDYZ2Y" && filterBar()}
+                    {planInfo?.id === "P-5TW65977XU1328341MCDY6RY" && filterBar() }
                     <h1 id="quizzes" className={styles.whitetext}>Choose a Quiz Below</h1>
                     {                    
                     filteredQuizzes.map((quiz,i) => {
