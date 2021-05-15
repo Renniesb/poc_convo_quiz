@@ -16,7 +16,7 @@ function StudentModal() {
             <Modal.Header closeButton>
             <Modal.Title>POC Student Discount</Modal.Title>
             </Modal.Header>
-            <Modal.Body>If you are a POC student enter in your POC student discount code
+            <Modal.Body>If you are a POC student enter in your POC student {discount} code
                 <br/><input/>
             </Modal.Body>
             <Modal.Footer>
