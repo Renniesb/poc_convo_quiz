@@ -83,10 +83,11 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
                 const {plan_id, status} = planData
                 setPlanInfo({id:plan_id,status: status})
 
-                console.log(plan_id)
-
-                if(plan_id==="P-3UG35541FL986113FMB5ZVRY"|| "P-2YC99808UJ9321133MCDY4EY"){
+                if(plan_id==="P-3UG35541FL986113FMB5ZVRY"|| plan_id==="P-2YC99808UJ9321133MCDY4EY"){
                     changeLevel({target:{value:"Beginner"}})
+                }
+                if(plan_id==="P-0PV8622658083934GMCDYXEY"|| plan_id==="P-6J031653GD3854721MCDY5KI"){
+                    changeLevel({target:{value:"Intermediate"}})
                 }
             })
             .catch(error => console.log('error', error));
@@ -166,7 +167,10 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
                             </ol>
                     </div>
 
-                    {planInfo?.id === "P-3UG35541FL986113FMB5ZVRY" || "P-2YC99808UJ9321133MCDY4EY"? <h2>Beginner Quizzes</h2>: <></> }
+                    {planInfo?.id === "P-3UG35541FL986113FMB5ZVRY" && <h2>Beginner Quizzes</h2> }
+                    {planInfo?.id === "P-2YC99808UJ9321133MCDY4EY" && <h2>Beginner Quizzes</h2> }
+                    {planInfo?.id === "P-0PV8622658083934GMCDYXEY" && <h2>Intermediate Quizzes</h2> }
+                    {planInfo?.id === "P-6J031653GD3854721MCDY5KI" && <h2>Intermediate Quizzes</h2> }
                     {!planInfo?.id && filterBar()}
                     
                     <h1 id="quizzes" className={styles.whitetext}>Choose a Quiz Below</h1>
