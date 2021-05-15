@@ -4,9 +4,6 @@ import styles from './AllQuizzes.module.css';
 import 'react-slideshow-image/dist/styles.css';
 import { Slide } from 'react-slideshow-image';
 import slideImages from './../slideImages';
-import LoginButton from './../LoginButton';
-import LogoutButton from './../LogoutButton';
-import SignupButton from './../SignupButton';
 import { useAuth0 } from "@auth0/auth0-react";
 import { useHistory } from 'react-router-dom';
 
@@ -14,7 +11,7 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
         let history = useHistory();
 
 
-        const {  user, getAccessTokenSilently } = useAuth0();
+        const {  user, getAccessTokenSilently,loginWithRedirect,logout } = useAuth0();
 
         const [planInfo, setPlanInfo] = useState(null);
     
@@ -86,7 +83,9 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
                 const {plan_id, status} = planData
                 setPlanInfo({id:plan_id,status: status})
 
-                if(plan_id==="P-3UG35541FL986113FMB5ZVRY"){
+                console.log(plan_id)
+
+                if(plan_id==="P-3UG35541FL986113FMB5ZVRY"|| "P-2YC99808UJ9321133MCDY4EY"){
                     changeLevel({target:{value:"Beginner"}})
                 }
             })
@@ -124,6 +123,12 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
 
         return (
             <div className={styles.gamebackground}>
+                <nav>
+                    {!user && <><a role="button" href="#login" onClick={()=>loginWithRedirect()}>Login</a><a role="button" href="#signup" onClick={()=>loginWithRedirect({screen_hint: "signup",})}>Sign-up</a></>}
+                    {user && <a role="button" href="#logout" onClick={()=>logout({ returnTo: window.location.origin })}>Logout</a>}
+                    
+                    <a href="#quizzes">Quizzes</a>
+                </nav>
                 <div className={styles.hero}>
                     <img alt="statue-of-liberty-hero-img" src="https://user-images.githubusercontent.com/7147957/88594242-de027f00-d02e-11ea-9e89-625a083b38e8.jpg"/>
                 </div>
@@ -142,9 +147,6 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
                 
                 </div>
                 <div style={{display: "flex", justifyContent: "flex-end"}}>
-                <LoginButton />
-                <LogoutButton />
-                <SignupButton />
                     {/* <Link style={{marginRight: "5px"}} className="myButton"  to="/EditQuizzes">Admin</Link> */}
                 </div>
                 
@@ -164,10 +166,10 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
                             </ol>
                     </div>
 
-                    {planInfo?.id === "P-3UG35541FL986113FMB5ZVRY" ? <h2>Beginner Quizzes</h2>: <></> }
+                    {planInfo?.id === "P-3UG35541FL986113FMB5ZVRY" || "P-2YC99808UJ9321133MCDY4EY"? <h2>Beginner Quizzes</h2>: <></> }
                     {!planInfo?.id && filterBar()}
                     
-                    <h1 className={styles.whitetext}>Choose a Quiz Below</h1>
+                    <h1 id="quizzes" className={styles.whitetext}>Choose a Quiz Below</h1>
                     {                    
                     filteredQuizzes.map((quiz,i) => {
                     return <Quiz planInfo={planInfo} key={`key${i}`} quiz={quiz}/>
