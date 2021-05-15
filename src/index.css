@@ -8,7 +8,7 @@ body {
 
 nav {
   z-index: 12;
-  display: flex !important;
+  display: flex;
   justify-content: center;
   overflow: hidden;
   background-color: #18344f;

@@ -14,6 +14,15 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
         const {  user, getAccessTokenSilently,loginWithRedirect,logout } = useAuth0();
 
         const [planInfo, setPlanInfo] = useState(null);
+
+        let beginner = "P-16565993Y1138362UMB5WY4A",
+        POCbeginner="P-06H33289B21818347MB5W5PI",
+        intermediate="P-06H37107S33634647MB5WZ4Y",
+        POCintermediate="P-6F670249G0692881SMB5W6KI",
+        advanced="P-9YA52118L81437406MB5W23I",
+        POCadvanced="P-6F847277FE783133HMB5W7CA",
+        allLevels="P-6KA37019G6605400AMB5W4BI",
+        POCallLevels="P-75756649GA995821LMB5W7QY";
     
     useEffect(() => {
       
@@ -83,16 +92,16 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
                 const {plan_id, status} = planData
                 setPlanInfo({id:plan_id,status: status})
 
-                if(plan_id==="P-3UG35541FL986113FMB5ZVRY"|| plan_id==="P-2YC99808UJ9321133MCDY4EY"){
+                if(plan_id===beginner|| plan_id===POCbeginner){
                     changeLevel({target:{value:"Beginner"}})
                 }
-                if(plan_id==="P-0PV8622658083934GMCDYXEY"|| plan_id==="P-6J031653GD3854721MCDY5KI"){
+                if(plan_id===intermediate|| plan_id===POCintermediate){
                     changeLevel({target:{value:"Intermediate"}})
                 }
-                if(plan_id==="P-3EH722805N167060UMCDYYAY"|| plan_id==="P-5Y217733HA191054FMCDY6EI"){
+                if(plan_id===advanced|| plan_id===POCadvanced){
                     changeLevel({target:{value:"Advanced"}})
                 }
-                if(plan_id==="P-2AF92715UL720341RMCDYZ2Y"|| plan_id==="P-5TW65977XU1328341MCDY6RY"){
+                if(plan_id===allLevels|| plan_id===POCallLevels){
                     changeLevel({target:{value:"All Levels"}})
                 }
             })
@@ -173,22 +182,24 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
                             </ol>
                     </div>
 
-                    {planInfo?.id === "P-3UG35541FL986113FMB5ZVRY" && <h2>Beginner Quizzes</h2> }
-                    {planInfo?.id === "P-2YC99808UJ9321133MCDY4EY" && <h2>Beginner Quizzes</h2> }
-                    {planInfo?.id === "P-0PV8622658083934GMCDYXEY" && <h2>Intermediate Quizzes</h2> }
-                    {planInfo?.id === "P-6J031653GD3854721MCDY5KI" && <h2>Intermediate Quizzes</h2> }
-                    {planInfo?.id === "P-3EH722805N167060UMCDYYAY" && <h2>Advanced Quizzes</h2> }
-                    {planInfo?.id === "P-5Y217733HA191054FMCDY6EI" && <h2>Advanced Quizzes</h2> }
-                    {planInfo?.id === "P-2AF92715UL720341RMCDYZ2Y" && <h2>All Levels</h2> }
-                    {planInfo?.id === "P-5TW65977XU1328341MCDY6RY" && <h2>All Levels</h2> }
+                    {planInfo?.id === beginner && <h2>Beginner Quizzes</h2> }
+                    {planInfo?.id === POCbeginner && <h2>Beginner Quizzes</h2> }
+                    {planInfo?.id === intermediate && <h2>Intermediate Quizzes</h2> }
+                    {planInfo?.id === POCintermediate && <h2>Intermediate Quizzes</h2> }
+                    {planInfo?.id === advanced && <h2>Advanced Quizzes</h2> }
+                    {planInfo?.id === POCadvanced && <h2>Advanced Quizzes</h2> }
+                    {planInfo?.id === allLevels && <h2>All Levels</h2> }
+                    {planInfo?.id === POCallLevels && <h2>All Levels</h2> }
                     {!planInfo?.id && filterBar()}
-                    {planInfo?.id === "P-2AF92715UL720341RMCDYZ2Y" && filterBar()}
-                    {planInfo?.id === "P-5TW65977XU1328341MCDY6RY" && filterBar() }
+                    {planInfo?.id === allLevels && filterBar()}
+                    {planInfo?.id === POCallLevels && filterBar() }
                     <h1 id="quizzes" className={styles.whitetext}>Choose a Quiz Below</h1>
                     {                    
                     filteredQuizzes.map((quiz,i) => {
                     return <Quiz planInfo={planInfo} key={`key${i}`} quiz={quiz}/>
                     })}
+                    
+                    {planInfo?.id && <div style={{marginBottom:"30px"}}><h5>To change or cancel your plan</h5><b>email: pocconversational@gmail.com</b></div>}
                 </div>
             </div>
             

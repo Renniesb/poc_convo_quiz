@@ -3,7 +3,7 @@ import StudentButtons   from './StudentButtons';
 import NonStudentButtons from './NonStudentButtons';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 const SignUp = () => {
     let textInput = React.createRef();   
     const [show, setShow] = useState(true);  
