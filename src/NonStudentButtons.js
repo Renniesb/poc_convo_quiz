@@ -10,10 +10,17 @@ import {useHistory} from 'react-router-dom'
 const NonStudentButtons = ()=>{
     const [paypalSDKReady, setPaypalSDKReady] = useState(false);
     const { user , getAccessTokenSilently} = useAuth0();
+    let beginner = "P-16565993Y1138362UMB5WY4A",
+        intermediate="P-06H37107S33634647MB5WZ4Y",
+        advanced="P-9YA52118L81437406MB5W23I",
+        allLevels="P-6KA37019G6605400AMB5W4BI";
+    let cID = "Afnz9iDHmgQYfTxWsDxYLf9l88eZ8NlAjXH6aPYCgpXUC7S00D9UTP3Jq47Mpo0LwLdsASJ5I3TpiFRa";
+    let amt = 10;
+    let amtAll = 20;
 
     let history = useHistory();
   
-  
+    
   
       const toHome = () =>{
   
@@ -30,14 +37,15 @@ const NonStudentButtons = ()=>{
     return (
         <>
     <div style={center}>
-        <h1>Beginner Quizzes</h1>
+        <h1 style={{marginBottom:"60px"}}><u>Choose a Quiz</u></h1>
+        <h2>Beginner Quizzes: ${amt}</h2>
       <PayPalButton
           intent="subscription"
           amount="10.00"
           currency="USD"
           createSubscription={(data, actions) => {
               return actions.subscription.create({
-                  plan_id: 'P-3UG35541FL986113FMB5ZVRY'
+                  plan_id: beginner
               });
           }}
          onApprove={(data, actions)=> {
@@ -69,21 +77,21 @@ const NonStudentButtons = ()=>{
               });
           }}
           options={{
-              clientId: "AZtOnHX2UszILBZRbp3xZKR8WzSzhths383RAzfYNL0unXQrZbX_1CDJLyftIuwGobGyKdR5GTWJoJjO",
+              clientId: cID,
               vault: true
           }}
           onButtonReady={() => setPaypalSDKReady(true)}
       />
       {paypalSDKReady ? (
     <>
-      <h1>Intermediate Quizzes</h1>
+      <h2>Intermediate Quizzes: ${amt}</h2>
       <PayPalButton
           intent="subscription"
           amount="10.00"
           currency="USD"
           createSubscription={(data, actions) => {
               return actions.subscription.create({
-                  plan_id: 'P-0PV8622658083934GMCDYXEY'
+                  plan_id: intermediate
               });
           }}
          onApprove={(data, actions)=> {
@@ -115,18 +123,18 @@ const NonStudentButtons = ()=>{
               });
           }}
           options={{
-              clientId: "AZtOnHX2UszILBZRbp3xZKR8WzSzhths383RAzfYNL0unXQrZbX_1CDJLyftIuwGobGyKdR5GTWJoJjO",
+              clientId: cID,
               vault: true
           }}
       />
-      <h1>Advanced Quizzes</h1>
+      <h2>Advanced Quizzes: ${amt}</h2>
       <PayPalButton
           intent="subscription"
           amount="10.00"
           currency="USD"
           createSubscription={(data, actions) => {
               return actions.subscription.create({
-                  plan_id: 'P-3EH722805N167060UMCDYYAY'
+                  plan_id: advanced
               });
           }}
          onApprove={(data, actions)=> {
@@ -158,18 +166,18 @@ const NonStudentButtons = ()=>{
               });
           }}
           options={{
-              clientId: "AZtOnHX2UszILBZRbp3xZKR8WzSzhths383RAzfYNL0unXQrZbX_1CDJLyftIuwGobGyKdR5GTWJoJjO",
+              clientId: cID,
               vault: true
           }}
       />
-      <h1>All Quizzes</h1>
+      <h2>All Quizzes: ${amtAll}</h2>
       <PayPalButton
           intent="subscription"
-          amount="10.00"
+          amount="20.00"
           currency="USD"
           createSubscription={(data, actions) => {
               return actions.subscription.create({
-                  plan_id: 'P-2AF92715UL720341RMCDYZ2Y'
+                  plan_id: allLevels
               });
           }}
          onApprove={(data, actions)=> {
@@ -201,7 +209,7 @@ const NonStudentButtons = ()=>{
               });
           }}
           options={{
-              clientId: "AZtOnHX2UszILBZRbp3xZKR8WzSzhths383RAzfYNL0unXQrZbX_1CDJLyftIuwGobGyKdR5GTWJoJjO",
+              clientId: cID,
               vault: true
           }}
       />

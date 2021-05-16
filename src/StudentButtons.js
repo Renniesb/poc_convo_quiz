@@ -9,9 +9,15 @@ const StudentButtons = ()=>{
     const [paypalSDKReady, setPaypalSDKReady] = useState(false);
     const { user , getAccessTokenSilently} = useAuth0();
 
+    let cID = "Afnz9iDHmgQYfTxWsDxYLf9l88eZ8NlAjXH6aPYCgpXUC7S00D9UTP3Jq47Mpo0LwLdsASJ5I3TpiFRa";
 
+    let POCbeginner="P-06H33289B21818347MB5W5PI",
+        POCintermediate="P-6F670249G0692881SMB5W6KI",
+        POCadvanced="P-6F847277FE783133HMB5W7CA",
+        POCallLevels="P-75756649GA995821LMB5W7QY";
     
-
+    let amt = 8;
+    let amtAll = 16;
     let history = useHistory();
   
     
@@ -31,14 +37,15 @@ const StudentButtons = ()=>{
     return (
         <>
         <div style={center}>
-        <h1>Student Beginner Quizzes</h1>
+        <h1 style={{marginBottom:"60px"}}><u>Choose a Quiz</u></h1>
+        <h2>Student Beginner Quizzes: ${amt}</h2>
       <PayPalButton
           intent="subscription"
           amount="8.00"
           currency="USD"
           createSubscription={(data, actions) => {
               return actions.subscription.create({
-                  plan_id: 'P-2YC99808UJ9321133MCDY4EY'
+                  plan_id: POCbeginner
               });
           }}
          onApprove={(data, actions)=> {
@@ -70,21 +77,21 @@ const StudentButtons = ()=>{
               });
           }}
           options={{
-              clientId: "AZtOnHX2UszILBZRbp3xZKR8WzSzhths383RAzfYNL0unXQrZbX_1CDJLyftIuwGobGyKdR5GTWJoJjO",
+              clientId: cID,
               vault: true
           }}
           onButtonReady={() => setPaypalSDKReady(true)}
       />
       {paypalSDKReady ? (
     <>
-      <h1>Student Intermediate Quizzes</h1>
+      <h2>Student Intermediate Quizzes: ${amt}</h2>
       <PayPalButton
           intent="subscription"
           amount="8.00"
           currency="USD"
           createSubscription={(data, actions) => {
               return actions.subscription.create({
-                  plan_id: 'P-6J031653GD3854721MCDY5KI'
+                  plan_id: POCintermediate
               });
           }}
          onApprove={(data, actions)=> {
@@ -116,18 +123,18 @@ const StudentButtons = ()=>{
               });
           }}
           options={{
-              clientId: "AZtOnHX2UszILBZRbp3xZKR8WzSzhths383RAzfYNL0unXQrZbX_1CDJLyftIuwGobGyKdR5GTWJoJjO",
+              clientId: cID,
               vault: true
           }}
       />
-      <h1>Student Advanced Quizzes</h1>
+      <h2>Student Advanced Quizzes: ${amt}</h2>
       <PayPalButton
           intent="subscription"
           amount="8.00"
           currency="USD"
           createSubscription={(data, actions) => {
               return actions.subscription.create({
-                  plan_id: 'P-5Y217733HA191054FMCDY6EI'
+                  plan_id: POCadvanced
               });
           }}
          onApprove={(data, actions)=> {
@@ -159,18 +166,18 @@ const StudentButtons = ()=>{
               });
           }}
           options={{
-              clientId: "AZtOnHX2UszILBZRbp3xZKR8WzSzhths383RAzfYNL0unXQrZbX_1CDJLyftIuwGobGyKdR5GTWJoJjO",
+              clientId: cID,
               vault: true
           }}
       />
-      <h1>Student All Quizzes</h1>
+      <h2>Student All Quizzes: ${amtAll}</h2>
       <PayPalButton
           intent="subscription"
           amount="16.00"
           currency="USD"
           createSubscription={(data, actions) => {
               return actions.subscription.create({
-                  plan_id: 'P-5TW65977XU1328341MCDY6RY'
+                  plan_id: POCallLevels
               });
           }}
          onApprove={(data, actions)=> {
@@ -202,7 +209,7 @@ const StudentButtons = ()=>{
               });
           }}
           options={{
-              clientId: "AZtOnHX2UszILBZRbp3xZKR8WzSzhths383RAzfYNL0unXQrZbX_1CDJLyftIuwGobGyKdR5GTWJoJjO",
+              clientId: cID,
               vault: true
           }}
       />

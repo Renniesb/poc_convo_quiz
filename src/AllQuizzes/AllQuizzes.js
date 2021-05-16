@@ -45,14 +45,15 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
                 },
               }).then(data=>data.json()).then(result=>{
       
-                  if(!result.user_metadata?.paypal_id){
+                  if(!result.user_metadata?.paypal_id && user.sub !== "auth0|60a04609966070006aa00eb4"){
                       history.push('/signup')
                   }
                   getPaypalPlanId(result.user_metadata?.paypal_id);
               })
+              console.log(user.sub)
         }
         
-  
+            
 
         
 
@@ -63,7 +64,7 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
     };
     const getPaypalPlanId = async (paypal_id) => {
         let myHeaders = new Headers();
-        myHeaders.append("Authorization", "Basic QVp0T25IWDJVc3pJTEJaUmJwM3haS1I4V3pTemh0aHMzODNSQXpmWU5MMHVuWFFyWmJYXzFDREpMeWZ0SXV3R29iR3lLZFI1R1RXSm9Kak86RUNjcGtEcnk5QXBDRFRpWWxhcndhSEtDNzd0Uk9zT0J4ME1JbHhRQ2pCUGp5Rl9xSURaeHY5b0lHMXhMVTVXOXdfQTNXaEIxdnEzaVpJMjI=");
+        myHeaders.append("Authorization", "Basic QWZuejlpREhtZ1FZZlR4V3NEeFlMZjlsODhlWjhObEFqWEg2YVBZQ2dwWFVDN1MwMEQ5VVRQM0pxNDdNcG8wTHdMZHNBU0o1STNUcGlGUmE6RUk0cEFQWWtFQ1JnWmtpR1ZGbFdqMjF1RXdNYUI4Y0pSMUxKeVVOT2M2RWE2SlNNQVVjVjlNZWxBeDJHdzBJQzdEUlJTWnB6bTh5aWZqd2w=");
         myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
  
         let urlencoded = new URLSearchParams();
@@ -77,7 +78,7 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
         };
         let myPlanHeaders = new Headers();
         
-            return fetch("https://api-m.sandbox.paypal.com/v1/oauth2/token", requestOptions)
+            return fetch("https://api-m.paypal.com/v1/oauth2/token", requestOptions)
         .then(response => response.json())
         .then((result)=>{
             myPlanHeaders.append("Authorization", `Bearer ${result.access_token}`);
@@ -86,7 +87,7 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
                 headers: myPlanHeaders,
                 redirect: 'follow'
             };
-            return fetch(`https://api-m.sandbox.paypal.com/v1/billing/subscriptions/${paypal_id}`, planRequestOptions)
+            return fetch(`https://api-m.paypal.com/v1/billing/subscriptions/${paypal_id}`, planRequestOptions)
             .then(data => data.json())
             .then(planData => {
                 const {plan_id, status} = planData
@@ -101,7 +102,7 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
                 if(plan_id===advanced|| plan_id===POCadvanced){
                     changeLevel({target:{value:"Advanced"}})
                 }
-                if(plan_id===allLevels|| plan_id===POCallLevels){
+                if(plan_id===allLevels|| plan_id===POCallLevels|| user.sub === "auth0|60a04609966070006aa00eb4"){
                     changeLevel({target:{value:"All Levels"}})
                 }
             })
@@ -196,7 +197,7 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
                     <h1 id="quizzes" className={styles.whitetext}>Choose a Quiz Below</h1>
                     {                    
                     filteredQuizzes.map((quiz,i) => {
-                    return <Quiz planInfo={planInfo} key={`key${i}`} quiz={quiz}/>
+                    return <Quiz user={user} planInfo={planInfo} key={`key${i}`} quiz={quiz}/>
                     })}
                     
                     {planInfo?.id && <div style={{marginBottom:"30px"}}><h5>To change or cancel your plan</h5><b>email: pocconversational@gmail.com</b></div>}
