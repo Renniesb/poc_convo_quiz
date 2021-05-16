@@ -50,7 +50,7 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
                   }
                   getPaypalPlanId(result.user_metadata?.paypal_id);
               })
-              console.log(user.sub)
+
         }
         
             
