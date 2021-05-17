@@ -9,12 +9,12 @@ const StudentButtons = ()=>{
     const [paypalSDKReady, setPaypalSDKReady] = useState(false);
     const { user , getAccessTokenSilently} = useAuth0();
 
-    let cID = "Afnz9iDHmgQYfTxWsDxYLf9l88eZ8NlAjXH6aPYCgpXUC7S00D9UTP3Jq47Mpo0LwLdsASJ5I3TpiFRa";
+    let cID = "AdE0DkfoKEQEZTfAsrVIVrHoE3TqzhSlDjO_xvXz1VtIUuxl-v5Flbiu9svB22vNisva1JoGVq3telxP";
 
-    let POCbeginner="P-06H33289B21818347MB5W5PI",
-        POCintermediate="P-6F670249G0692881SMB5W6KI",
-        POCadvanced="P-6F847277FE783133HMB5W7CA",
-        POCallLevels="P-75756649GA995821LMB5W7QY";
+    let POCbeginner="P-4CN878497G476905SMCQ4E7A",
+        POCintermediate="P-6G388154PF961390XMCQ4G6Q",
+        POCadvanced="P-6T238973L8435340YMCQ4IHI",
+        POCallLevels="P-42G604889F7457649MCQ4JWQ";
     
     let amt = 8;
     let amtAll = 16;

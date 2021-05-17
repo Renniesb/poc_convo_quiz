@@ -10,11 +10,11 @@ import {useHistory} from 'react-router-dom'
 const NonStudentButtons = ()=>{
     const [paypalSDKReady, setPaypalSDKReady] = useState(false);
     const { user , getAccessTokenSilently} = useAuth0();
-    let beginner = "P-16565993Y1138362UMB5WY4A",
-        intermediate="P-06H37107S33634647MB5WZ4Y",
-        advanced="P-9YA52118L81437406MB5W23I",
-        allLevels="P-6KA37019G6605400AMB5W4BI";
-    let cID = "Afnz9iDHmgQYfTxWsDxYLf9l88eZ8NlAjXH6aPYCgpXUC7S00D9UTP3Jq47Mpo0LwLdsASJ5I3TpiFRa";
+    let beginner = "P-5R249716RG461752AMCQ4LDY",
+        intermediate="P-09B05317JB645351RMCQ4LZY",
+        advanced="P-7PH74335AV8507305MCQ4MHA",
+        allLevels="P-82811235566500232MCQ4M6A";
+    let cID = "AdE0DkfoKEQEZTfAsrVIVrHoE3TqzhSlDjO_xvXz1VtIUuxl-v5Flbiu9svB22vNisva1JoGVq3telxP";
     let amt = 10;
     let amtAll = 20;
 

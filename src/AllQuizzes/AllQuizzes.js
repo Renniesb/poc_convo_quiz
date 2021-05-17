@@ -15,14 +15,14 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
 
         const [planInfo, setPlanInfo] = useState(null);
 
-        let beginner = "P-16565993Y1138362UMB5WY4A",
-        POCbeginner="P-06H33289B21818347MB5W5PI",
-        intermediate="P-06H37107S33634647MB5WZ4Y",
-        POCintermediate="P-6F670249G0692881SMB5W6KI",
-        advanced="P-9YA52118L81437406MB5W23I",
-        POCadvanced="P-6F847277FE783133HMB5W7CA",
-        allLevels="P-6KA37019G6605400AMB5W4BI",
-        POCallLevels="P-75756649GA995821LMB5W7QY";
+        let beginner = "P-5R249716RG461752AMCQ4LDY",
+        POCbeginner="P-4CN878497G476905SMCQ4E7A",
+        intermediate="P-09B05317JB645351RMCQ4LZY",
+        POCintermediate="P-6G388154PF961390XMCQ4G6Q",
+        advanced="P-7PH74335AV8507305MCQ4MHA",
+        POCadvanced="P-6T238973L8435340YMCQ4IHI",
+        allLevels="P-82811235566500232MCQ4M6A",
+        POCallLevels="P-42G604889F7457649MCQ4JWQ";
     
     useEffect(() => {
       
@@ -64,7 +64,7 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
     };
     const getPaypalPlanId = async (paypal_id) => {
         let myHeaders = new Headers();
-        myHeaders.append("Authorization", "Basic QWZuejlpREhtZ1FZZlR4V3NEeFlMZjlsODhlWjhObEFqWEg2YVBZQ2dwWFVDN1MwMEQ5VVRQM0pxNDdNcG8wTHdMZHNBU0o1STNUcGlGUmE6RUk0cEFQWWtFQ1JnWmtpR1ZGbFdqMjF1RXdNYUI4Y0pSMUxKeVVOT2M2RWE2SlNNQVVjVjlNZWxBeDJHdzBJQzdEUlJTWnB6bTh5aWZqd2w=");
+        myHeaders.append("Authorization", "Basic QWRFMERrZm9LRVFFWlRmQXNyVklWckhvRTNUcXpoU2xEak9feHZYejFWdElVdXhsLXY1RmxiaXU5c3ZCMjJ2TmlzdmExSm9HVnEzdGVseFA6RUdxZ1RRb1VScVcxVHFMQ0g1bEplbEdvNE9TRTJ6bVhPZDZaWk9XYkpiMzZLQm1IOWIwRzBhM25uNWlIb2IyVi1tbF9yREFZVUhvUnhaYjc=");
         myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
  
         let urlencoded = new URLSearchParams();
@@ -77,7 +77,7 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
             redirect: 'follow'
         };
         let myPlanHeaders = new Headers();
-        
+        console.log(paypal_id);
             return fetch("https://api-m.paypal.com/v1/oauth2/token", requestOptions)
         .then(response => response.json())
         .then((result)=>{
