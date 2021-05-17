@@ -37,7 +37,7 @@ const NonStudentButtons = ()=>{
     return (
         <>
     <div style={center}>
-        <h1 style={{marginBottom:"60px"}}><u>Choose a Quiz</u></h1>
+        <h1 style={{marginBottom:"60px"}}><u>Choose a Plan</u></h1>
         <h2>Beginner Quizzes: ${amt}</h2>
       <PayPalButton
           intent="subscription"
