@@ -77,7 +77,6 @@ const AllQuizzes = ({quizzes, level, changeLevel}) =>  {
             redirect: 'follow'
         };
         let myPlanHeaders = new Headers();
-        console.log(paypal_id);
             return fetch("https://api-m.paypal.com/v1/oauth2/token", requestOptions)
         .then(response => response.json())
         .then((result)=>{
