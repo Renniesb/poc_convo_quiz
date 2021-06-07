@@ -16,8 +16,8 @@ const StudentButtons = ()=>{
         POCadvanced="P-6T238973L8435340YMCQ4IHI",
         POCallLevels="P-42G604889F7457649MCQ4JWQ";
     
-    let amt = 8;
-    let amtAll = 16;
+    let amt = 4;
+    let amtAll = 8;
     let history = useHistory();
   
     
@@ -41,7 +41,7 @@ const StudentButtons = ()=>{
         <h2>Student Beginner Quizzes: ${amt}</h2>
       <PayPalButton
           intent="subscription"
-          amount="8.00"
+          amount="4.00"
           currency="USD"
           createSubscription={(data, actions) => {
               return actions.subscription.create({
@@ -87,7 +87,7 @@ const StudentButtons = ()=>{
       <h2>Student Intermediate Quizzes: ${amt}</h2>
       <PayPalButton
           intent="subscription"
-          amount="8.00"
+          amount="4.00"
           currency="USD"
           createSubscription={(data, actions) => {
               return actions.subscription.create({
@@ -130,7 +130,7 @@ const StudentButtons = ()=>{
       <h2>Student Advanced Quizzes: ${amt}</h2>
       <PayPalButton
           intent="subscription"
-          amount="8.00"
+          amount="4.00"
           currency="USD"
           createSubscription={(data, actions) => {
               return actions.subscription.create({
@@ -173,7 +173,7 @@ const StudentButtons = ()=>{
       <h2>Student All Quizzes: ${amtAll}</h2>
       <PayPalButton
           intent="subscription"
-          amount="16.00"
+          amount="8.00"
           currency="USD"
           createSubscription={(data, actions) => {
               return actions.subscription.create({

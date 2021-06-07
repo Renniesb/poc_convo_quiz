@@ -15,8 +15,8 @@ const NonStudentButtons = ()=>{
         advanced="P-7PH74335AV8507305MCQ4MHA",
         allLevels="P-82811235566500232MCQ4M6A";
     let cID = "AdE0DkfoKEQEZTfAsrVIVrHoE3TqzhSlDjO_xvXz1VtIUuxl-v5Flbiu9svB22vNisva1JoGVq3telxP";
-    let amt = 10;
-    let amtAll = 20;
+    let amt = 6;
+    let amtAll = 12;
 
     let history = useHistory();
   
@@ -41,7 +41,7 @@ const NonStudentButtons = ()=>{
         <h2>Beginner Quizzes: ${amt}</h2>
       <PayPalButton
           intent="subscription"
-          amount="10.00"
+          amount="6.00"
           currency="USD"
           createSubscription={(data, actions) => {
               return actions.subscription.create({
@@ -87,7 +87,7 @@ const NonStudentButtons = ()=>{
       <h2>Intermediate Quizzes: ${amt}</h2>
       <PayPalButton
           intent="subscription"
-          amount="10.00"
+          amount="6.00"
           currency="USD"
           createSubscription={(data, actions) => {
               return actions.subscription.create({
@@ -130,7 +130,7 @@ const NonStudentButtons = ()=>{
       <h2>Advanced Quizzes: ${amt}</h2>
       <PayPalButton
           intent="subscription"
-          amount="10.00"
+          amount="6.00"
           currency="USD"
           createSubscription={(data, actions) => {
               return actions.subscription.create({
@@ -173,7 +173,7 @@ const NonStudentButtons = ()=>{
       <h2>All Quizzes: ${amtAll}</h2>
       <PayPalButton
           intent="subscription"
-          amount="20.00"
+          amount="12.00"
           currency="USD"
           createSubscription={(data, actions) => {
               return actions.subscription.create({
