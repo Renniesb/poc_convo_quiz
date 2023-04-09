@@ -1,6 +1,7 @@
 import React, {createRef} from 'react';
 import ResponseText from './Response/ResponseText';
 import SignUp from './SignUp';
+import StudyDeck from './studyDeck';
 import StartQuiz from './StartQuiz/StartQuiz'
 import EndQuiz from './EndQuiz/EndQuiz'
 import { Route,Switch } from 'react-router-dom';
@@ -571,6 +572,7 @@ class App extends React.Component {
             <EndQuiz quizInfo={this.state.quizInfo} correct={this.state.correct} incorrect={this.state.incorrect} questionTotal={this.state.questions.length} location={location} history={history} OnNewQuiz={this.handleNewQuiz}/>
           )} />
           <Route path="/StartQuiz" render={routeProps=><StartQuiz {...routeProps} setQuizInfo={this.setQuizInfo} quizInfo={this.state.quizInfo} setQuestions={this.setQuestions} OnNewQuiz={this.handleNewQuiz} />} />
+          <Route path="/FlashCards" render={location=><StudyDeck location={location} />} />
           
           <Route path="/EditQuizzes">
             <EditQuizzes setQuizzes={this.setQuizzes} quizzes={this.state.quizzes} onDelete={this.delete}/>
