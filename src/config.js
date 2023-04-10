@@ -1,1 +1,1 @@
-export default { ENDPOINT: process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000/api/', FlashCards: process.env.REACT_FLASHCARDS_ENDPOINT || 'http://localhost:8001/api/' }
+export default { ENDPOINT: process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000/api/', FlashCards: process.env.REACT_FLASHCARDS_ENDPOINT }
