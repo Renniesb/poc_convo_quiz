@@ -1,5 +1,5 @@
 {
-  "homepage": ".",
+  "homepage": "https://poc-conversational-quizzes.vercel.app/",
   "name": "poc_convo_quizzes",
   "version": "0.1.0",
   "private": true,
